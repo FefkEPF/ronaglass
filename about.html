@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumina Eyewear - Cartier ilhamıyla tasarlanmış lüks gözlük koleksiyonu. 3D deneyimle keşfet.">
+    <meta property="og:title" content="Lumina Eyewear - Premium Lüks Gözlük">
+    <meta property="og:description" content="3D etkileşimli Cartier tarzı lüks gözlük koleksiyonu.">
+    <title>Lumina Eyewear | Premium Lüks Gözlük</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Google model-viewer for real 3D -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <!-- Vanilla Tilt for 3D image effect -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="logo-text" style="font-size:24px;margin-bottom:20px;letter-spacing:8px;font-weight:200;">LUMINA</div>
+            <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
+            <p class="loader-text">Deneyim Yükleniyor</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="nav-trigger"></div>
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="logo-text" style="font-size:16px;letter-spacing:5px;font-weight:300;color:var(--text);text-decoration:none;">LUMINA</a>
+        <ul class="nav-links">
+            <li><a href="index.html#home" class="nav-link active">Ana Sayfa</a></li>
+            <li><a href="index.html#collection" class="nav-link">Koleksiyon</a></li>
+            <li><a href="products.html" class="nav-link">Ürünler</a></li>
+            <li><a href="index.html#experience" class="nav-link">3D Deneyim</a></li>
+            <li><a href="about.html" class="nav-link">Hakkımızda</a></li>
+            <li><a href="faq.html" class="nav-link">S.S.S.</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="cart-btn" id="cart-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html#home" class="mobile-link">Ana Sayfa</a></li>
+            <li><a href="index.html#collection" class="mobile-link">Koleksiyon</a></li>
+            <li><a href="products.html" class="mobile-link">Ürünler</a></li>
+            <li><a href="index.html#experience" class="mobile-link">3D Deneyim</a></li>
+            <li><a href="about.html" class="mobile-link">Hakkımızda</a></li>
+            <li><a href="faq.html" class="mobile-link">S.S.S.</a></li>
+            <li><a href="blog.html" class="mobile-link">Blog</a></li>
+        </ul>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="product-modal-overlay" id="product-modal-overlay"></div>
+    <div class="product-modal" id="product-modal">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-left">
+            <img src="" id="modal-img" alt="">
+            <video id="webcam" autoplay playsinline style="display:none; width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
+            <img id="tryon-glasses" src="" style="display:none; position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); width:60%; opacity:0.9; pointer-events:none;">
+        </div>
+        <div class="modal-right">
+            <h3 id="modal-title">Lumina</h3>
+            <p class="modal-price" id="modal-price">₺0</p>
+            <p class="modal-desc" id="modal-desc">Detaylar...</p>
+            <div class="modal-actions">
+                <button class="btn-primary" id="modal-add-cart">Sepete Ekle</button>
+                <button class="btn-secondary" id="modal-tryon">Sanal Deneme</button>
+            </div>
+            <p id="tryon-error" style="color:#e74c3c; font-size:12px; margin-top:10px; display:none;"></p>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header"><h3 id="cart-title">Sepetim</h3><button class="cart-close" id="cart-close">&times;</button></div>
+        
+        <div id="cart-content-area">
+            <div class="cart-items" id="cart-items"><p class="cart-empty">Sepetiniz boş</p></div>
+            <div class="cart-footer" id="cart-footer">
+                <div class="cart-total"><span>Toplam:</span><span id="cart-total-price">₺0</span></div>
+                <button class="checkout-btn" id="go-checkout-btn">Ödemeye Geç</button>
+            </div>
+        </div>
+
+        <div id="checkout-content-area" style="display:none; padding:20px; flex-direction:column; gap:15px; overflow-y:auto; flex:1;">
+            <p style="font-size:14px; color:var(--dim); margin-bottom:10px;">Lütfen teslimat ve ödeme bilgilerinizi giriniz.</p>
+            <form id="checkout-form">
+                <div class="form-group"><input type="text" placeholder="Adınız Soyadınız" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
+                <div class="form-group"><input type="text" placeholder="Teslimat Adresi" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
+                <div class="form-group"><input type="text" placeholder="Kart Numarası (0000 0000 0000 0000)" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
+                <div style="display:flex; gap:10px;">
+                    <div class="form-group" style="flex:1;"><input type="text" placeholder="SKT (AA/YY)" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
+                    <div class="form-group" style="flex:1;"><input type="text" placeholder="CVV" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:20px;" id="complete-order-btn">Siparişi Tamamla</button>
+                <button type="button" id="back-to-cart-btn" style="width:100%; margin-top:10px; background:none; border:none; color:var(--dim); cursor:pointer; font-size:12px; text-decoration:underline;">Geri Dön</button>
+            </form>
+            <div id="order-success" style="display:none; text-align:center; padding:40px 0;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" style="margin-bottom:20px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3 style="font-size:24px; color:var(--accent); margin-bottom:10px;">Sipariş Alındı!</h3>
+                <p style="color:var(--dim); font-size:14px;">Teşekkür ederiz. Gözlüğünüz özenle hazırlanıp en kısa sürede kargolanacaktır.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ABOUT DETAILED ==================== -->
+    <section id="about" class="about-section" style="padding-top:120px; padding-bottom:100px;">
+        <div class="section-header">
+            <p class="section-tag">HAKKIMIZDA</p>
+            <h2 class="section-title">Lumina'nın Doğuşu</h2>
+        </div>
+        <div style="max-width:800px; margin:0 auto; text-align:center; color:var(--accent2); line-height:1.8; font-size:16px;">
+            <p style="margin-bottom:20px;">2026 yılında İstanbul'un kalbinde, zamansız zarafet arayışıyla kurulan Lumina Eyewear, lüks gözlük dünyasında yeni bir standart belirlemek için yola çıktı. Cartier'in klasik ve ikonik tasarım felsefesinden ilham alan markamız, geleneksel el işçiliğini modern teknolojinin sağladığı en ileri materyallerle harmanlıyor.</p>
+            <p style="margin-bottom:40px;">Gözlüklerimiz sadece birer aksesuar değil; titanyumun hafifliği ve 24K altının asaletini taşıyan birer sanat eseridir. Kullanılan her bir vida, her bir asetat çerçeve parçası, usta ellerde 150'den fazla işlemden geçerek son halini alır.</p>
+            
+            <h3 style="color:var(--accent); margin-bottom:20px; font-family:'Playfair Display', serif; font-size:24px;">Vizyonumuz</h3>
+            <p style="margin-bottom:40px;">Dünyanın dört bir yanındaki elit müşterilerimize, sadece güneşi engelleyen değil, aynı zamanda kişisel tarzlarını en üst düzeyde yansıtan eşsiz parçalar sunmak. Polarize UV400 lenslerimizle göz sağlığınızı en üst düzeyde korurken, tavizsiz şıklığınızı tamamlıyoruz.</p>
+
+            <div class="about-stats" style="display:flex; justify-content:center; gap:50px; margin-top:50px;">
+                <div class="stat"><span class="stat-number" data-count="1200">0</span><span class="stat-label">Mutlu Müşteri</span></div>
+                <div class="stat"><span class="stat-number" data-count="48">0</span><span class="stat-label">Özel Tasarım</span></div>
+                <div class="stat"><span class="stat-number" data-count="15">0</span><span class="stat-label">İhracat Ülkesi</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand"><div class="logo-text" style="font-size:20px;letter-spacing:6px;font-weight:200;margin-bottom:10px;">LUMINA</div><p>Zarafeti gözlerinden yaşa.</p></div>
+            <div class="footer-links"><h4>Sayfalar</h4><a href="#home">Ana Sayfa</a><a href="#collection">Koleksiyon</a><a href="#experience">3D Deneyim</a></div>
+            <div class="footer-links"><h4>Kurumsal</h4><a href="#about">Hakkımızda</a><a href="#contact">İletişim</a><a href="#">Gizlilik</a></div>
+            <div class="footer-links"><h4>Sosyal</h4><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Pinterest</a></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Lumina Eyewear. Tüm Hakları Saklıdır.</p></div>
+    </footer>
+
+    <script src="script.js?v=7"></script>
+</body>
+</html>

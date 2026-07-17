@@ -1,7 +1,7 @@
 /* ========================================
-   LUMINA EYEWEAR - ULTRA PREMIUM V3
-   No scrollbar, dynamic text positions
-======================================== */
+   RONA AUTO GLASS - OTO CAM SHOWCASE V1
+   Scroll-driven video, services grid, cart
+========================================= */
 :root{--bg:#050505;--bg2:#0a0a0a;--text:#f5f5f5;--dim:#777777;--accent:#ffffff;--accent2:#bbbbbb;--gold:#c8a45c;--gold2:#a68b4b;--glow:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.08);--r:4px;--t:0.4s cubic-bezier(.25,.46,.45,.94)}
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -28,6 +28,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .nav-trigger:hover + .navbar, .navbar:hover, .navbar.force-show{transform:translateY(0); z-index:10002;}
 .navbar.scrolled{background:rgba(5,5,5,.94);backdrop-filter:blur(20px);padding:12px 50px;border-bottom:1px solid var(--border); z-index:10002;}
 .logo-text{font-family:'Outfit',sans-serif;}
+.logo-img img{height:36px;width:auto;display:block;filter:drop-shadow(0 0 10px rgba(0,0,0,0.5));}
 .nav-links{list-style:none;display:flex;gap:32px}
 .nav-link{color:var(--dim);text-decoration:none;font-size:11px;font-weight:400;letter-spacing:2.5px;text-transform:uppercase;position:relative;transition:color var(--t)}
 .nav-link::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width var(--t)}
@@ -192,19 +193,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .product-card-price{font-size:14px;font-weight:400;color:var(--accent)}
 .add-to-cart-btn{padding:8px 18px;background:transparent;border:1px solid var(--border);color:var(--accent);border-radius:var(--r);cursor:pointer;font-size:10px;font-weight:500;letter-spacing:1px;transition:all .3s}
 .add-to-cart-btn:hover{background:var(--accent);color:var(--bg)}
-
-/* 3D EXPERIENCE */
-.experience-section{padding:100px 50px;background:linear-gradient(180deg,var(--bg) 0%,#040408 100%)}
-.experience-container{display:flex;align-items:center;gap:50px;max-width:1100px;margin:0 auto}
-.experience-viewer{flex:1.2;position:relative;display:flex;align-items:center;justify-content:center;min-height:450px}
-.experience-controls{flex:1}
-.exp-info h3{font-size:28px;font-weight:300;margin-bottom:10px;letter-spacing:-1px}
-.exp-info p{color:var(--dim);line-height:1.6;font-size:13px;font-weight:300}
-.exp-price{font-size:24px !important;font-weight:400;color:var(--accent) !important;margin:18px 0 22px}
-.exp-color-options{display:flex;gap:10px;margin-bottom:24px}
-.exp-color{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .3s}
-.exp-color:hover,.exp-color.active{border-color:var(--accent);transform:scale(1.15)}
-.exp-add-cart{width:100%;text-align:center}
 
 /* ABOUT */
 .about-section{padding:120px 50px}

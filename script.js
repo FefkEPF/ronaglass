@@ -318,7 +318,30 @@ if (contactForm) {
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
-    video.play();
+    video.preload = 'metadata';
+    video.pause();
+
+    var videoReady = false;
+    var videoDuration = 0;
+
+    video.addEventListener('loadedmetadata', function() {
+        videoDuration = video.duration;
+        videoReady = true;
+    });
+
+    video.addEventListener('canplay', function() {
+        videoReady = true;
+        if (!videoDuration && video.duration) {
+            videoDuration = video.duration;
+        }
+    });
+
+    if (video.readyState >= 1) {
+        videoReady = true;
+        videoDuration = video.duration || 0;
+    }
+
+    var lastTargetProgress = 0;
 
     var ranges = [
         [0.00, 0.16],
@@ -424,6 +447,27 @@ if (contactForm) {
             lockEndTime = 0;
         }
 
+        // Video time control based on scroll
+        if (videoReady && videoDuration > 0) {
+            var targetTime = targetProgress * videoDuration;
+            
+            if (Math.abs(targetTime - video.currentTime) > 0.15) {
+                video.currentTime = targetTime;
+            }
+            
+            if (Math.abs(targetProgress - lastTargetProgress) > 0.001) {
+                if (video.paused) {
+                    video.play().catch(function() {});
+                }
+            } else {
+                if (!video.paused && targetProgress < 0.01) {
+                    video.pause();
+                }
+            }
+            
+            lastTargetProgress = targetProgress;
+        }
+
         // Progress bar
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
 
@@ -495,6 +539,14 @@ if (contactForm) {
         if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {
             window.scrollTo(0, limitY);
             sy = limitY;
+        }
+
+        if (sy < sTop - 100 || sy > sTop + sH + 100) {
+            if (!video.paused) video.pause();
+        } else {
+            if (video.paused && videoReady && videoDuration > 0) {
+                video.play().catch(function() {});
+            }
         }
 
         var cTop = collection ? collection.offsetTop : 0;

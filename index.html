@@ -16,7 +16,7 @@
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-inner">
-            <div class="logo-text" style="font-size:24px;margin-bottom:20px;letter-spacing:8px;font-weight:200;">LUMINA</div>
+            <div class="logo-text" style="font-size:24px;margin-bottom:20px;letter-spacing:8px;font-weight:200;">RONA</div>
             <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
             <p class="loader-text">Deneyim Yükleniyor</p>
         </div>
@@ -25,21 +25,17 @@
     <!-- Navbar -->
     <div class="nav-trigger"></div>
     <nav class="navbar" id="navbar">
-        <a href="#home" class="logo-text" style="font-size:16px;letter-spacing:5px;font-weight:300;color:var(--text);text-decoration:none;">LUMINA</a>
+        <a href="#home" class="logo-img"><img src="images/logo.png" alt="Rona Auto Glass"></a>
         <ul class="nav-links">
             <li><a href="index.html#home" class="nav-link active">Ana Sayfa</a></li>
-            <li><a href="index.html#collection" class="nav-link">Koleksiyon</a></li>
-            <li><a href="products.html" class="nav-link">Ürünler</a></li>
-            <li><a href="index.html#experience" class="nav-link">3D Deneyim</a></li>
+            <li><a href="index.html#collection" class="nav-link">Hizmetler</a></li>
             <li><a href="about.html" class="nav-link">Hakkımızda</a></li>
             <li><a href="faq.html" class="nav-link">S.S.S.</a></li>
             <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="index.html#contact" class="nav-link">İletişim</a></li>
         </ul>
         <div class="nav-right">
-            <button class="cart-btn" id="cart-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
-                <span class="cart-count" id="cart-count">0</span>
-            </button>
+            <a href="tel:+905346943789" class="nav-phone" style="color:var(--text);text-decoration:none;font-size:13px;letter-spacing:1px;">0534 694 37 89</a>
             <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
         </div>
     </nav>
@@ -48,74 +44,18 @@
     <div class="mobile-menu" id="mobile-menu">
         <ul>
             <li><a href="index.html#home" class="mobile-link">Ana Sayfa</a></li>
-            <li><a href="index.html#collection" class="mobile-link">Koleksiyon</a></li>
-            <li><a href="products.html" class="mobile-link">Ürünler</a></li>
-            <li><a href="index.html#experience" class="mobile-link">3D Deneyim</a></li>
+            <li><a href="index.html#collection" class="mobile-link">Hizmetler</a></li>
             <li><a href="about.html" class="mobile-link">Hakkımızda</a></li>
             <li><a href="faq.html" class="mobile-link">S.S.S.</a></li>
             <li><a href="blog.html" class="mobile-link">Blog</a></li>
+            <li><a href="index.html#contact" class="mobile-link">İletişim</a></li>
         </ul>
-    </div>
-
-    <!-- Product Modal -->
-    <div class="product-modal-overlay" id="product-modal-overlay"></div>
-    <div class="product-modal" id="product-modal">
-        <button class="modal-close" id="modal-close">&times;</button>
-        <div class="modal-left">
-            <img src="" id="modal-img" alt="">
-            <video id="webcam" autoplay playsinline style="display:none; width:100%; height:100%; object-fit:cover; border-radius:16px;"></video>
-            <img id="tryon-glasses" src="" style="display:none; position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); width:60%; opacity:0.9; pointer-events:none;">
-        </div>
-        <div class="modal-right">
-            <h3 id="modal-title">Lumina</h3>
-            <p class="modal-price" id="modal-price">₺0</p>
-            <p class="modal-desc" id="modal-desc">Detaylar...</p>
-            <div class="modal-actions">
-                <button class="btn-primary" id="modal-add-cart">Sepete Ekle</button>
-                <button class="btn-secondary" id="modal-tryon">Sanal Deneme</button>
-            </div>
-            <p id="tryon-error" style="color:#e74c3c; font-size:12px; margin-top:10px; display:none;"></p>
-        </div>
-    </div>
-
-    <!-- Cart Sidebar -->
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header"><h3 id="cart-title">Sepetim</h3><button class="cart-close" id="cart-close">&times;</button></div>
-        
-        <div id="cart-content-area">
-            <div class="cart-items" id="cart-items"><p class="cart-empty">Sepetiniz boş</p></div>
-            <div class="cart-footer" id="cart-footer">
-                <div class="cart-total"><span>Toplam:</span><span id="cart-total-price">₺0</span></div>
-                <button class="checkout-btn" id="go-checkout-btn">Ödemeye Geç</button>
-            </div>
-        </div>
-
-        <div id="checkout-content-area" style="display:none; padding:20px; flex-direction:column; gap:15px; overflow-y:auto; flex:1;">
-            <p style="font-size:14px; color:var(--dim); margin-bottom:10px;">Lütfen teslimat ve ödeme bilgilerinizi giriniz.</p>
-            <form id="checkout-form">
-                <div class="form-group"><input type="text" placeholder="Adınız Soyadınız" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
-                <div class="form-group"><input type="text" placeholder="Teslimat Adresi" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
-                <div class="form-group"><input type="text" placeholder="Kart Numarası (0000 0000 0000 0000)" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
-                <div style="display:flex; gap:10px;">
-                    <div class="form-group" style="flex:1;"><input type="text" placeholder="SKT (AA/YY)" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
-                    <div class="form-group" style="flex:1;"><input type="text" placeholder="CVV" required style="width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:#fff; border-radius:8px;"></div>
-                </div>
-                <button type="submit" class="btn-primary" style="width:100%; margin-top:20px;" id="complete-order-btn">Siparişi Tamamla</button>
-                <button type="button" id="back-to-cart-btn" style="width:100%; margin-top:10px; background:none; border:none; color:var(--dim); cursor:pointer; font-size:12px; text-decoration:underline;">Geri Dön</button>
-            </form>
-            <div id="order-success" style="display:none; text-align:center; padding:40px 0;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" style="margin-bottom:20px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <h3 style="font-size:24px; color:var(--accent); margin-bottom:10px;">Sipariş Alındı!</h3>
-                <p style="color:var(--dim); font-size:14px;">Teşekkür ederiz. Gözlüğünüz özenle hazırlanıp en kısa sürede kargolanacaktır.</p>
-            </div>
-        </div>
     </div>
 
     <!-- ==================== CINEMATIC SCROLL VIDEO ==================== -->
     <section id="home" class="cinema-section">
         <div class="cinema-sticky" id="cinema-sticky">
-            <video id="cinema-video" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <video id="cinema-video" muted playsinline preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
                 <source src="images/hero-video.mp4" type="video/mp4">
             </video>
             <div class="cinema-overlay"></div>
@@ -162,7 +102,7 @@
         </div>
     </section>
 
-    <!-- ==================== COLLECTION ==================== -->
+    <!-- ==================== COLLECTION / SERVICES ==================== -->
     <section id="collection" class="collection-section">
         <div class="section-header">
             <p class="section-tag">HİZMETLER</p>
@@ -176,94 +116,58 @@
         </div>
     </section>
 
-    <!-- ==================== 3D EXPERIENCE ==================== -->
-    <section id="experience" class="experience-section">
-        <div class="section-header">
-            <p class="section-tag">3D DENEYİM</p>
-            <h2 class="section-title">Her Açıdan İncele</h2>
-            <p class="section-desc">3D gözlüğü döndür, yakınlaştır, keşfet.</p>
-        </div>
-        <div class="experience-container">
-            <div class="experience-viewer">
-                <model-viewer
-                    id="model-viewer-3d"
-                    src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/SunglassesKhronos/glTF-Binary/SunglassesKhronos.glb"
-                    alt="3D Gözlük Modeli"
-                    auto-rotate
-                    rotation-per-second="30deg"
-                    camera-controls
-                    touch-action="pan-y"
-                    shadow-intensity="1"
-                    shadow-softness="1"
-                    exposure="1.2"
-                    environment-image="neutral"
-                    camera-orbit="45deg 75deg 105m"
-                    field-of-view="30deg"
-                    style="width:100%;height:450px;border-radius:16px;border:1px solid rgba(201,169,110,0.1);background:radial-gradient(circle,#0e0e16 0%,#050508 100%);"
-                ></model-viewer>
-            </div>
-            <div class="experience-controls">
-                <div class="exp-info">
-                    <h3 id="exp-name">Lumina Aviator</h3>
-                    <p id="exp-desc">24K altın kaplama çerçeve, polarize cam lensler</p>
-                    <p class="exp-price" id="exp-price">₺18,900</p>
-                </div>
-                <button class="btn-primary" onclick="window.location.href='#collection'">Koleksiyonu İncele</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== BRAND STORY & CRAFTSMANSHIP ==================== -->
+    <!-- ==================== BRAND STORY ==================== -->
     <section id="story" class="story-section">
         <div class="story-container">
             <div class="story-image">
-                <img src="images/craftsmanship.png" alt="Lumina Craftsmanship">
+                <img src="images/craftsmanship.png" alt="Rona Auto Glass Atölye">
             </div>
             <div class="story-content">
-                <p class="section-tag">ZANAATKARLIK</p>
-                <h2 class="section-title">Detaylardaki Mükemmellik</h2>
-                <p class="story-text">Her bir Lumina çerçevesi, ustalarımızın ellerinde şekillenir. 24K altın kaplama detaylar, havacılık sınıfı titanyum ve 150 adımlık el işçiliği süreciyle üretilen her parça, sadece bir gözlük değil, bir sanat eseridir.</p>
+                <p class="section-tag">HİKAYEMİZ</p>
+                <h2 class="section-title">Güvenli Yolculuklar İçin Şeffaf Çözüm</h2>
+                <p class="story-text">Rona Auto Glass olarak Ankara Etimesgut'ta hizmet veren ekibimiz, oto cam değişimi ve tamiri alanında yıllara dayanan deneyime sahiptir. Alanında uzman ekibimiz, yüksek kaliteli malzemeler ve modern ekipmanlar kullanarak güvenilir ve uzun ömürlü çözümler sunar. İster küçük bir çatlak, ister daha büyük bir hasar olsun, her duruma özel tamir yöntemlerimizle aracınızın camını ilk günkü gibi sağlam ve güvenli hale getiriyoruz.</p>
                 <a href="about.html" class="btn-primary" style="margin-top:20px;display:inline-block;">Hikayemizi Keşfet</a>
             </div>
         </div>
     </section>
 
-    <!-- ==================== TESTIMONIALS / PRESS ==================== -->
+    <!-- ==================== REFERENCES ==================== -->
     <section id="testimonials" class="testimonials-section">
         <div class="section-header">
-            <p class="section-tag">BASIN & YORUMLAR</p>
-            <h2 class="section-title">Elegansın Sesi</h2>
+            <p class="section-tag">REFERANSLAR & ANLAŞMALAR</p>
+            <h2 class="section-title">Bize Güvenenler</h2>
         </div>
         <div class="test-grid">
             <div class="test-card">
-                <p class="test-quote">"Modern gözlük tasarımında yeni bir zirve. Titanyum ve altının kusursuz uyumu."</p>
-                <p class="test-author">— VOGUE</p>
+                <p class="test-quote">"Rona Auto Glass ile çalışmak çok profesyonel bir deneyim. Cam değişimi sürecindeki hız ve kalite gerçekten etkileyici."</p>
+                <p class="test-author">— T.C YARGITAY BAŞKANLIĞI</p>
             </div>
             <div class="test-card">
-                <p class="test-quote">"Gözünüzde olduğunu unutacağınız kadar hafif, herkesin dönüp bakacağı kadar iddialı."</p>
-                <p class="test-author">— GQ STYLE</p>
+                <p class="test-quote">"Filo araçlarımızın cam değişimlerini Rona Auto Glass'e yaptırıyoruz. Güvenilir, hızlı ve sözleşmeli hizmet."</p>
+                <p class="test-author">— TUR OTO</p>
             </div>
             <div class="test-card">
-                <p class="test-quote">"Klasik Cartier zarafetini 2026 teknolojisiyle birleştiren harika bir koleksiyon."</p>
-                <p class="test-author">— HARPER'S BAZAAR</p>
+                <p class="test-quote">"Müşterilerimize önerdiğimiz, güvenilir oto cam hizmeti. Profesyonel ekip ve kaliteli malzeme."</p>
+                <p class="test-author">— OTOKOÇ BİRMOT</p>
             </div>
         </div>
     </section>
 
     <!-- ==================== CONTACT ==================== -->
     <section id="contact" class="contact-section">
-        <div class="section-header"><p class="section-tag">İLETİŞİM</p><h2 class="section-title">Sizin İçin Buradayız</h2></div>
+        <div class="section-header"><p class="section-tag">İLETİŞİM</p><h2 class="section-title">Bize Ulaşın</h2></div>
         <div class="contact-grid">
             <form class="contact-form" id="contact-form">
                 <div class="form-group"><input type="text" placeholder="Adınız Soyadınız" required></div>
                 <div class="form-group"><input type="email" placeholder="E-posta Adresiniz" required></div>
-                <div class="form-group"><textarea placeholder="Mesajınız" rows="5" required></textarea></div>
+                <div class="form-group"><input type="tel" placeholder="Telefon Numaranız" required></div>
+                <div class="form-group"><textarea placeholder="Mesajınız / Aracınızın Modeli ve Cam Türü" rows="5" required></textarea></div>
                 <button type="submit" class="btn-primary">Gönder</button>
             </form>
             <div class="contact-info">
-                <div class="contact-card"><h4>Showroom</h4><p>Nişantaşı, Abdi İpekçi Cad. No:42<br>Şişli / İstanbul</p></div>
-                <div class="contact-card"><h4>İletişim</h4><p>info@luminaeyewear.com<br>+90 212 555 00 42</p></div>
-                <div class="contact-card"><h4>Çalışma Saatleri</h4><p>Pzt-Cmt: 10:00-20:00<br>Pazar: 12:00-18:00</p></div>
+                <div class="contact-card"><h4>Servis Noktamız</h4><p>2474 Cad 4/1 Şaşmaz<br>Etimesgut / Ankara</p></div>
+                <div class="contact-card"><h4>İletişim</h4><p>info@ronaglass.com.tr<br>0534 694 37 89</p></div>
+                <div class="contact-card"><h4>Çalışma Saatleri</h4><p>Pzt-Cmt: 08:30-19:00<br>Pazar: 10:00-17:00</p></div>
             </div>
         </div>
     </section>
@@ -271,12 +175,12 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-grid">
-            <div class="footer-brand"><div class="logo-text" style="font-size:20px;letter-spacing:6px;font-weight:200;margin-bottom:10px;">LUMINA</div><p>Zarafeti gözlerinden yaşa.</p></div>
-            <div class="footer-links"><h4>Sayfalar</h4><a href="#home">Ana Sayfa</a><a href="#collection">Koleksiyon</a><a href="#experience">3D Deneyim</a></div>
-            <div class="footer-links"><h4>Kurumsal</h4><a href="#about">Hakkımızda</a><a href="#contact">İletişim</a><a href="#">Gizlilik</a></div>
-            <div class="footer-links"><h4>Sosyal</h4><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Pinterest</a></div>
+            <div class="footer-brand"><a href="index.html#home" class="logo-text" style="font-size:20px;letter-spacing:6px;font-weight:200;margin-bottom:10px;display:inline-block;">RONA AUTO GLASS</a><p>Camda Şeffaf Çözüm.</p></div>
+            <div class="footer-links"><h4>Sayfalar</h4><a href="#home">Ana Sayfa</a><a href="#collection">Hizmetler</a><a href="#story">Hikayemiz</a></div>
+            <div class="footer-links"><h4>Kurumsal</h4><a href="about.html">Hakkımızda</a><a href="faq.html">S.S.S.</a><a href="blog.html">Blog</a></div>
+            <div class="footer-links"><h4>İletişim</h4><a href="#contact">Bize Ulaşın</a><a href="tel:+905346943789">0534 694 37 89</a><a href="mailto:info@ronaglass.com.tr">E-posta</a></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 Lumina Eyewear. Tüm Hakları Saklıdır.</p></div>
+        <div class="footer-bottom"><p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p></div>
     </footer>
 
     <script src="script.js?v=7"></script>

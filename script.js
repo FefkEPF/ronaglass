@@ -1,24 +1,20 @@
 /* =============================================
-   LUMINA EYEWEAR - ULTRA PREMIUM V3 JS
-   Cinema scroll, 3D model-viewer, Snap, Cart
+   RONA AUTO GLASS - OTO CAM SHOWCASE V1
+   Video sinematik scroll, ürün kataloğu, sepet
 ============================================= */
 
 // ============ DATA ============
 var products = [
-    { id:1, name:"Lumina Aviator", type:"aviator", cat:"Aviator", price:18900, priceText:"₺18,900", img:"images/p1.png?v=5", desc:"24K altın kaplama çerçeve, polarize cam lensler" },
-    { id:2, name:"Lumina Round", type:"round", cat:"Yuvarlak", price:15500, priceText:"₺15,500", img:"images/p2.png?v=5", desc:"Rose gold ince çerçeve, degrade kahverengi lensler" },
-    { id:3, name:"Lumina Cat-Eye", type:"cateye", cat:"Cat-Eye", price:16200, priceText:"₺16,200", img:"images/p3.png?v=5", desc:"Platin gümüş çerçeve, mavi degrade lensler" },
-    { id:4, name:"Lumina Bold", type:"rectangle", cat:"Dikdörtgen", price:14800, priceText:"₺14,800", img:"images/p4.png?v=5", desc:"Siyah asetat ve altın çerçeve, füme lensler" },
-    { id:5, name:"Lumina Aviator II", type:"aviator", cat:"Aviator", price:21500, priceText:"₺21,500", img:"images/p1.png?v=5", desc:"Titanyum çerçeve, çift köprü, polarize lensler" },
-    { id:6, name:"Lumina Round Elite", type:"round", cat:"Yuvarlak", price:19200, priceText:"₺19,200", img:"images/p2.png?v=5", desc:"18K altın kaplama, anti-reflektif lensler" },
-    { id:7, name:"Lumina Cat-Eye Noir", type:"cateye", cat:"Cat-Eye", price:17800, priceText:"₺17,800", img:"images/p3.png?v=5", desc:"Mat siyah çerçeve, degrade gri lensler" },
-    { id:8, name:"Lumina Bold Sport", type:"rectangle", cat:"Dikdörtgen", price:13900, priceText:"₺13,900", img:"images/p4.png?v=5", desc:"Hafif karbon fiber, UV400 koruma" },
-    { id:9, name:"Lumina Tortoise Classic", type:"rectangle", cat:"Dikdörtgen", price:16500, priceText:"₺16,500", img:"images/p5.png", desc:"İtalyan asetat kaplumbağa deseni, kahverengi degrade lensler" },
-    { id:10, name:"Lumina Oversize Glam", type:"cateye", cat:"Cat-Eye", price:22000, priceText:"₺22,000", img:"images/p6.png", desc:"Ekstra geniş siyah çerçeve, kalın altın sap detayları" },
-    { id:11, name:"Lumina Crystal Vision", type:"aviator", cat:"Aviator", price:15800, priceText:"₺15,800", img:"images/p7.png", desc:"Şeffaf kristal çerçeve, gümüş aynalı camlar" },
-    { id:12, name:"Lumina Rose Elegance", type:"round", cat:"Yuvarlak", price:19500, priceText:"₺19,500", img:"images/p8.png", desc:"Rose altın kaplama, pembe yansımalı gradient lensler" },
-    { id:13, name:"Lumina Hexa Dark", type:"rectangle", cat:"Dikdörtgen", price:14200, priceText:"₺14,200", img:"images/p9.png", desc:"Mat siyah altıgen köşeler, zümrüt yeşili camlar" },
-    { id:14, name:"Lumina Retro White", type:"round", cat:"Yuvarlak", price:18000, priceText:"₺18,000", img:"images/p10.png", desc:"Kalın beyaz vintage asetat, kömür karası lensler" }
+    { id:1, name:"Parke Cam", type:"parke", cat:"Parke Cam", price:2500, priceText:"₺2,500", img:"images/p1.png", desc:"Orijinal ekipman kalitesinde parke cam değişimi" },
+    { id:2, name:"Dikiz Aynası", type:"dikiz", cat:"Dikiz Aynası", price:1800, priceText:"₺1,800", img:"images/p2.png", desc:"Her marka araç uyumlu dikiz aynası değişimi" },
+    { id:3, name:"Arka Cam", type:"arka", cat:"Arka Cam", price:3200, priceText:"₺3,200", img:"images/p3.png", desc:"Arka cam değişimi ve kurulumu" },
+    { id:4, name:"Yan Cam", type:"yan", cat:"Yan Cam", price:2200, priceText:"₺2,200", img:"images/p4.png", desc:"Ön ve yan cam değişimi hizmeti" },
+    { id:5, name:"Tuning Cam", type:"tuning", cat:"Tuning Cam", price:4500, priceText:"₺4,500", img:"images/p5.png", desc:"Tuning ve estetik cam değişimleri" },
+    { id:6, name:"Bandrol Cam", type:"bandrol", cat:"Bandrol Cam", price:1500, priceText:"₺1,500", img:"images/p6.png", desc:"Bandrol ve cam filmi uygulaması" },
+    { id:7, name:"Isıyansıtmalı Cam", type:"isiyansitmali", cat:"Isıyansıtmalı Cam", price:3800, priceText:"₺3,800", img:"images/p7.png", desc:"Isıyansıtmalı cam değişimi ve montajı" },
+    { id:8, name:"Çatlak Tamiri", type:"tamir", cat:"Çatlak Tamiri", price:800, priceText:"₺800", img:"images/p8.png", desc:"Hızlı ve kalıcı cam çatlak tamiri" },
+    { id:9, name:"Ön Cam", type:"on", cat:"Ön Cam", price:5500, priceText:"₺5,500", img:"images/p9.png", desc:"Ön cam değişimi ve ADAS kalibrasyonu" },
+    { id:10, name:"Klasik Cam", type:"klasik", cat:"Klasik Cam", price:1900, priceText:"₺1,900", img:"images/p10.png", desc:"Klasik araç cam değişim hizmeti" }
 ];
 var cart = [];
 
@@ -35,26 +31,19 @@ window.addEventListener('load', function() {
     }, 70);
 });
 
-
-
 // ============ NAVBAR & ACTIVE LINKS ============
 var navbar = document.getElementById('navbar');
-var isIndex = document.getElementById('cinema-canvas') !== null;
+var isIndex = document.getElementById('cinema-video') !== null;
 var currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-// Highlight correct active link based on current page
 document.querySelectorAll('.nav-link, .mobile-link').forEach(function(l) {
     var href = l.getAttribute('href');
     if (!href) return;
-    
-    // clean up href (e.g. index.html#home -> index.html)
     var targetPage = href.split('#')[0];
     if (targetPage === '') targetPage = 'index.html';
-    
-    // Exact match for pages, or specific section matching for index.html
     if (targetPage === currentPage) {
         if (!isIndex) {
-            l.classList.add('active'); // On non-index pages, just highlight the matching page link
+            l.classList.add('active');
         }
     } else {
         l.classList.remove('active');
@@ -62,7 +51,6 @@ document.querySelectorAll('.nav-link, .mobile-link').forEach(function(l) {
 });
 
 if (!isIndex && navbar) {
-    // Force show navbar on non-index pages
     navbar.classList.add('force-show');
     navbar.classList.add('scrolled');
 }
@@ -79,7 +67,6 @@ window.addEventListener('scroll', function() {
         }
     }
     
-    // Only do section-based active link toggling on index.html
     if (isIndex) {
         var secs = document.querySelectorAll('section');
         var links = document.querySelectorAll('.nav-link');
@@ -118,7 +105,6 @@ function render(filter) {
     
     var list = filter === 'all' ? products : products.filter(function(p) { return p.type === filter; });
     
-    // On the homepage, only show the first 4 products if no filter is applied
     if (isIndex && filter === 'all') {
         list = list.slice(0, 4);
     }
@@ -142,22 +128,18 @@ function render(filter) {
     observe(); bindCart();
 }
 
-// ============ PRODUCT MODAL & TRY-ON ============
+// ============ PRODUCT MODAL ============
 var pModal = document.getElementById('product-modal'), pModalOverlay = document.getElementById('product-modal-overlay');
-var curProduct = null, webcamStream = null;
+var curProduct = null;
 
 function openProductModal(p) {
     curProduct = p;
-    document.getElementById('modal-img').src = p.img.split('?')[0]; // use clean src
+    document.getElementById('modal-img').src = p.img;
     document.getElementById('modal-img').style.display = 'block';
-    document.getElementById('webcam').style.display = 'none';
-    document.getElementById('tryon-glasses').style.display = 'none';
-    document.getElementById('tryon-error').style.display = 'none';
-    document.getElementById('modal-tryon').textContent = 'Sanal Deneme';
-    
     document.getElementById('modal-title').textContent = p.name;
     document.getElementById('modal-desc').textContent = p.desc;
     document.getElementById('modal-price').textContent = p.priceText;
+    document.getElementById('modal-tryon').style.display = 'none';
     
     pModal.classList.add('open');
     pModalOverlay.classList.add('open');
@@ -166,7 +148,6 @@ function openProductModal(p) {
 function closeProductModal() {
     pModal.classList.remove('open');
     pModalOverlay.classList.remove('open');
-    stopWebcam();
 }
 
 document.getElementById('modal-close').addEventListener('click', closeProductModal);
@@ -181,46 +162,6 @@ document.getElementById('modal-add-cart').addEventListener('click', function() {
     }
 });
 
-// Mockup Virtual Try-On logic
-document.getElementById('modal-tryon').addEventListener('click', function() {
-    var video = document.getElementById('webcam');
-    var glimg = document.getElementById('tryon-glasses');
-    var btn = document.getElementById('modal-tryon');
-    var err = document.getElementById('tryon-error');
-    
-    if (webcamStream) { stopWebcam(); return; }
-    
-    err.style.display = 'none';
-    btn.textContent = 'Kamera Açılıyor...';
-    
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-            webcamStream = stream;
-            video.srcObject = stream;
-            video.style.display = 'block';
-            document.getElementById('modal-img').style.display = 'none';
-            glimg.src = curProduct.img.split('?')[0];
-            glimg.style.display = 'block';
-            btn.textContent = 'Kamerayı Kapat';
-        })
-        .catch(function(error) {
-            console.error("Camera error:", error);
-            err.textContent = "Kamera erişimi reddedildi veya bulunamadı.";
-            err.style.display = 'block';
-            btn.textContent = 'Sanal Deneme';
-        });
-});
-
-function stopWebcam() {
-    if (webcamStream) {
-        webcamStream.getTracks().forEach(function(track) { track.stop(); });
-        webcamStream = null;
-    }
-    document.getElementById('webcam').style.display = 'none';
-    document.getElementById('tryon-glasses').style.display = 'none';
-    document.getElementById('modal-img').style.display = 'block';
-    document.getElementById('modal-tryon').textContent = 'Sanal Deneme';
-}
 document.querySelectorAll('.filter-btn').forEach(function(b) {
     b.addEventListener('click', function() {
         document.querySelectorAll('.filter-btn').forEach(function(x) { x.classList.remove('active'); });
@@ -240,7 +181,7 @@ function observe() {
 var secOb = new IntersectionObserver(function(es) {
     es.forEach(function(e) { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
 }, { threshold: 0.1 });
-document.querySelectorAll('.section-header,.about-text,.about-visual,.contact-form,.contact-info,.experience-container').forEach(function(el) {
+document.querySelectorAll('.section-header,.about-text,.about-visual,.contact-form,.contact-info').forEach(function(el) {
     el.style.opacity = '0'; el.style.transform = 'translateY(36px)'; el.style.transition = 'opacity .7s ease,transform .7s ease';
     secOb.observe(el);
 });
@@ -295,7 +236,7 @@ cartClose.addEventListener('click', closeCart); cartOverlay.addEventListener('cl
 function closeCart() { 
     cartSidebar.classList.remove('open'); 
     cartOverlay.classList.remove('open'); 
-    setTimeout(resetCheckout, 300); // reset state when closed
+    setTimeout(resetCheckout, 300);
 }
 
 // Checkout Logic
@@ -357,10 +298,10 @@ if (contactForm) {
     });
 }
 
-// ============ CINEMATIC SCROLL ENGINE (IMAGE SEQUENCE) ============
+// ============ VIDEO CINEMATIC SCROLL ============
 (function() {
-    var canvas = document.getElementById('cinema-canvas');
-    if (!canvas) return; // Exit if no canvas (other pages)
+    var video = document.getElementById('cinema-video');
+    if (!video) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -372,25 +313,12 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!canvas || !section) return;
-    
-    var ctx = canvas.getContext('2d');
-    canvas.width = 1920;
-    canvas.height = 1080;
-    
-    // Preload frames
-    var framesCount = 120;
-    var images = [];
-    var loaded = 0;
-    for (var i = 0; i < framesCount; i++) {
-        var img = new Image();
-        img.src = 'images/frame_' + i + '.jpg?v=5';
-        img.onload = function() {
-            loaded++;
-            if (loaded === 1 && images[0]) ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height);
-        };
-        images.push(img);
-    }
+    if (!video || !section) return;
+
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.play();
 
     var ranges = [
         [0.00, 0.16],
@@ -405,14 +333,11 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
-    var currentFrameIndex = -1;
 
-    // Scroll lock variables for Keşfet (Text 5) section
     var ct5Locked = false;
     var lockEndTime = 0;
     var touchStartY = 0;
 
-    // Wheel event blocking (prevent scroll down while locked)
     window.addEventListener('wheel', function(e) {
         if (!ct5Locked || Date.now() >= lockEndTime) return;
         if (e.deltaY > 0) {
@@ -421,7 +346,6 @@ if (contactForm) {
         }
     }, { passive: false });
 
-    // Touch event blocking (prevent swipe down while locked)
     window.addEventListener('touchstart', function(e) {
         if (e.touches.length > 0) {
             touchStartY = e.touches[0].clientY;
@@ -432,7 +356,7 @@ if (contactForm) {
         if (!ct5Locked || Date.now() >= lockEndTime) return;
         if (e.touches.length > 0) {
             var touchY = e.touches[0].clientY;
-            var deltaY = touchStartY - touchY; // positive means scrolling down
+            var deltaY = touchStartY - touchY;
             if (deltaY > 0) {
                 e.preventDefault();
                 return false;
@@ -440,7 +364,6 @@ if (contactForm) {
         }
     }, { passive: false });
 
-    // Keyboard event blocking (ArrowDown, PageDown, Space)
     window.addEventListener('keydown', function(e) {
         if (!ct5Locked || Date.now() >= lockEndTime) return;
         var keys = ['ArrowDown', 'PageDown', ' '];
@@ -466,11 +389,9 @@ if (contactForm) {
     function update() {
         var scrollY = window.pageYOffset || document.documentElement.scrollTop;
         
-        // Calculate velocity for motion blur
         velocity = lerp(velocity, Math.abs(scrollY - lastScrollY), 0.1);
         lastScrollY = scrollY;
         
-        // Hard cap scroll position at progress = 0.88 if lock is not yet completed
         var limitY = sTop + scrollable * 0.88;
         var hasFinishedLock = ct5Locked && Date.now() >= lockEndTime;
         if (!hasFinishedLock && scrollY > limitY && scrollY < sTop + sH) {
@@ -478,7 +399,6 @@ if (contactForm) {
             window.scrollTo(0, limitY);
         }
 
-        // Skip heavy calculations if we are past the cinema section
         if (scrollY > sTop + sH) {
              requestAnimationFrame(update);
              return;
@@ -487,51 +407,21 @@ if (contactForm) {
         var scrolled = scrollY - sTop;
         targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
         
-        // Smoothly interpolate progress
         currentProgress = lerp(currentProgress, targetProgress, 0.08);
         if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
 
-        // Trigger lock when entering Keşfet area (range 0.80 to 1.00)
         if (targetProgress >= 0.80 && targetProgress < 0.98 && !ct5Locked) {
             ct5Locked = true;
-            lockEndTime = Date.now() + 1200; // 1.2 seconds lock
+            lockEndTime = Date.now() + 1200;
             window.scrollTo({
                 top: sTop + scrollable * 0.88,
                 behavior: 'smooth'
             });
         }
         
-        // Reset lock if user scrolls back up
         if (targetProgress < 0.75) {
             ct5Locked = false;
             lockEndTime = 0;
-        }
-
-        // Draw Sequence to Canvas
-        if (loaded > 0) {
-            var exactFrame = currentProgress * (framesCount - 1);
-            var frameIdx = Math.floor(exactFrame);
-            var nextFrameIdx = Math.min(framesCount - 1, Math.ceil(exactFrame));
-            var alpha = exactFrame - frameIdx;
-            
-            // Motion blur effect based on scroll velocity
-            var blurAmount = Math.min(8, velocity * 0.05);
-            if (blurAmount > 0.5) {
-                canvas.style.filter = 'blur(' + blurAmount + 'px)';
-            } else {
-                canvas.style.filter = 'none';
-            }
-
-            // Only draw if frame changed or we need to crossfade
-            if (images[frameIdx] && images[frameIdx].complete) {
-                ctx.globalAlpha = 1;
-                ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
-                
-                if (alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete) {
-                    ctx.globalAlpha = alpha;
-                    ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
-                }
-            }
         }
 
         // Progress bar
@@ -600,7 +490,6 @@ if (contactForm) {
     window.addEventListener('scroll', function() {
         var sy = window.pageYOffset || document.documentElement.scrollTop;
         
-        // Enforce hard cap on scroll event for instant responsiveness
         var limitY = sTop + scrollable * 0.88;
         var hasFinishedLock = ct5Locked && Date.now() >= lockEndTime;
         if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {

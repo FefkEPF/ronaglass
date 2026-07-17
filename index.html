@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lumina Eyewear - Cartier ilhamıyla tasarlanmış lüks gözlük koleksiyonu. 3D deneyimle keşfet.">
-    <meta property="og:title" content="Lumina Eyewear - Premium Lüks Gözlük">
-    <meta property="og:description" content="3D etkileşimli Cartier tarzı lüks gözlük koleksiyonu.">
-    <title>Lumina Eyewear | Premium Lüks Gözlük</title>
+    <meta name="description" content="Rona Auto Glass - Ankara Etimesgut'ta oto cam değişimi, cam tamiri, tuning cam ve daha fazlası. Sözleşmeli sigorta kabul eden profesyonel oto cam servisi.">
+    <meta property="og:title" content="Rona Auto Glass | Oto Cam Değişimi & Tamiri">
+    <meta property="og:description" content="Ankara'nın güvenilir oto cam merkezi. Hızlı cam değişimi, sözleşmeli sigorta, profesyonel montaj.">
+    <title>Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara</title>
     <link rel="stylesheet" href="style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Google model-viewer for real 3D -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <!-- Vanilla Tilt for 3D image effect -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 </head>
@@ -117,42 +115,44 @@
     <!-- ==================== CINEMATIC SCROLL VIDEO ==================== -->
     <section id="home" class="cinema-section">
         <div class="cinema-sticky" id="cinema-sticky">
-            <canvas id="cinema-canvas"></canvas>
+            <video id="cinema-video" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <source src="images/hero-video.mp4" type="video/mp4">
+            </video>
             <div class="cinema-overlay"></div>
-            <div class="cinema-brand-title">LUMINA</div>
+            <div class="cinema-brand-title">RONA AUTO GLASS</div>
             <div class="cinema-progress-bar"><div class="cinema-progress-fill" id="cinema-progress-fill"></div></div>
 
             <!-- Text 1: Center -->
             <div class="cinema-text" id="ct1" data-pos="center">
-                <p class="cinema-tag">— LUMINA EYEWEAR —</p>
-                <h2>Zarafeti<br><em>Gözlerinden</em> Yaşa</h2>
-                <a href="#collection" class="btn-cinema">Koleksiyonu Keşfet</a>
+                <p class="cinema-tag">— OTO CAM MERKEZİ —</p>
+                <h2>Camda Şeffaf<br><em>Çözüm</em></h2>
+                <a href="#collection" class="btn-cinema">Hizmetleri İncele</a>
             </div>
             <!-- Text 2: Left -->
             <div class="cinema-text" id="ct2" data-pos="left">
-                <p class="cinema-tag">— EL İŞÇİLİĞİ —</p>
-                <h2>24K Altın<br>Kaplama</h2>
-                <p class="cinema-sub">Titanyum çerçeve, İtalyan ustalığı.</p>
-                <a href="#experience" class="btn-cinema">3D Deneyim →</a>
+                <p class="cinema-tag">— HIZLI DEĞİŞİM —</p>
+                <h2>Oto Cam<br>Değişimi</h2>
+                <p class="cinema-sub">Aracınız için orijinal ekipman kalitesinde cam çözümleri.</p>
+                <a href="#collection" class="btn-cinema">Detaylı Bilgi →</a>
             </div>
             <!-- Text 3: Right -->
             <div class="cinema-text" id="ct3" data-pos="right">
-                <p class="cinema-tag">— LENS TEKNOLOJİSİ —</p>
-                <h2>Polarize<br>UV400</h2>
-                <p class="cinema-sub">Kristal netlik, tam güneş koruması.</p>
-                <a href="about.html" class="btn-cinema">Hikayemizi Keşfet →</a>
+                <p class="cinema-tag">— CAM TAMİRİ —</p>
+                <h2>Çatlak<br>Tamiri</h2>
+                <p class="cinema-sub">Hızlı, kalıcı ve sigortalı cam tamiri hizmeti.</p>
+                <a href="faq.html" class="btn-cinema">S.S.S. →</a>
             </div>
             <!-- Text 4: Center -->
             <div class="cinema-text" id="ct4" data-pos="center">
-                <p class="cinema-tag">— CARTIER İLHAMI —</p>
-                <h2><em>Zamansız</em><br>Elegans</h2>
-                <p class="cinema-sub">Her açıdan mükemmel, her detayda lüks.</p>
+                <p class="cinema-tag">— ANLAŞMALI SIGORTA —</p>
+                <h2><em>Sözleşmeli</em><br>Değişim</h2>
+                <p class="cinema-sub">Tüm sigorta şirketleriyle anlaşmalı değişim imkanı.</p>
             </div>
             <!-- Text 5: Center Big -->
             <div class="cinema-text" id="ct5" data-pos="center">
-                <p class="cinema-tag">— 2026 KOLEKSİYON —</p>
+                <p class="cinema-tag">— PROFESYONEL EKİP —</p>
                 <h2>Keşfet</h2>
-                <a href="#collection" class="btn-cinema">Mağazaya Gir ↓</a>
+                <a href="#collection" class="btn-cinema">Hizmetler ↓</a>
             </div>
 
             <div class="cinema-scroll-hint" id="cinema-scroll-hint">
@@ -165,13 +165,14 @@
     <!-- ==================== COLLECTION ==================== -->
     <section id="collection" class="collection-section">
         <div class="section-header">
-            <p class="section-tag">KOLEKSİYON</p>
-            <h2 class="section-title">Özel Tasarım Gözlükler</h2>
+            <p class="section-tag">HİZMETLER</p>
+            <h2 class="section-title">Cam Hizmetlerimiz</h2>
+            <p class="section-desc">Oto cam değişimi, tamiri ve tuning hizmetlerimiz ile aracınızın güvenliğini sağlayın.</p>
         </div>
 
         <div class="product-grid" id="product-grid"></div>
         <div style="text-align:center; margin-top:50px;">
-            <a href="products.html" class="btn-primary">Tüm Ürünleri Gör</a>
+            <a href="products.html" class="btn-primary">Tüm Hizmetleri Gör</a>
         </div>
     </section>
 

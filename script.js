@@ -448,7 +448,6 @@ if (contactForm) {
         var hasFinishedLock = ct5Locked && Date.now() >= lockEndTime;
         if (!hasFinishedLock && scrollY > limitY && scrollY < sTop + sH) {
             scrollY = limitY;
-            window.scrollTo(0, limitY);
         }
 
         if (scrollY > sTop + sH) {
@@ -459,16 +458,16 @@ if (contactForm) {
         var scrolled = scrollY - sTop;
         targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
         
-        currentProgress = lerp(currentProgress, targetProgress, 0.08);
-        if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+        if (ct5Locked && Date.now() < lockEndTime) {
+            currentProgress = lerp(currentProgress, 0.90, 0.12);
+        } else {
+            currentProgress = lerp(currentProgress, targetProgress, 0.08);
+            if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+        }
 
         if (targetProgress >= 0.80 && targetProgress < 0.98 && !ct5Locked) {
             ct5Locked = true;
             lockEndTime = Date.now() + 1200;
-            window.scrollTo({
-                top: sTop + scrollable * 0.88,
-                behavior: 'smooth'
-            });
         }
         
         if (targetProgress < 0.75) {
@@ -506,18 +505,20 @@ if (contactForm) {
         if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
         
         var brandTitle = document.querySelector('.cinema-brand-title');
+        var logoVisible = false;
         if (brandTitle) {
             var bOp = 1 - (currentProgress / 0.03);
             if (bOp < 0) bOp = 0;
             brandTitle.style.opacity = bOp;
             brandTitle.style.transform = 'translateX(-50%) translateY(' + ((1 - bOp) * -40) + 'px)';
+            logoVisible = bOp > 0.001;
         }
 
         for (var i = 0; i < texts.length; i++) {
             var el = texts[i];
             if (!el) continue;
             var s = ranges[i][0], e = ranges[i][1];
-            if (targetProgress >= s && targetProgress <= e) {
+            if (!logoVisible && targetProgress >= s && targetProgress <= e) {
                 var rp = (targetProgress - s) / (e - s);
                 var op = 1;
                 if (rp < 0.15) op = rp / 0.15;
@@ -561,13 +562,6 @@ if (contactForm) {
     var lastSY = 0;
     window.addEventListener('scroll', function() {
         var sy = window.pageYOffset || document.documentElement.scrollTop;
-        
-        var limitY = sTop + scrollable * 0.88;
-        var hasFinishedLock = ct5Locked && Date.now() >= lockEndTime;
-        if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {
-            window.scrollTo(0, limitY);
-            sy = limitY;
-        }
 
         var cTop = collection ? collection.offsetTop : 0;
         var delta = sy - lastSY;

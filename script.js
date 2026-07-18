@@ -8,6 +8,7 @@
 function hideLoader() {
     var loader = document.getElementById('loader');
     if (!loader) return;
+    console.log('[Loader] Hiding loader');
     loader.style.display = 'none';
     loader.classList.add('hidden');
 }
@@ -15,22 +16,29 @@ function hideLoader() {
 function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
+    console.log('[Loader] Starting loader, loader found:', !!loader, 'progress found:', !!progress);
     if (!loader || !progress) return;
     var p = 0;
     var iv = setInterval(function() {
         p += Math.random() * 20 + 6;
-        if (p >= 100) { p = 100; clearInterval(iv); }
+        if (p >= 100) { p = 100; clearInterval(iv); console.log('[Loader] Progress reached 100%'); }
         progress.style.width = p + '%';
         if (p >= 100) {
             setTimeout(hideLoader, 250);
         }
     }, 70);
-    setTimeout(hideLoader, 4000);
+    setTimeout(function() {
+        console.log('[Loader] 4s fallback timeout reached, current progress:', p);
+        hideLoader();
+    }, 4000);
 }
 
+console.log('[Loader] DOM readyState:', document.readyState);
 if (document.readyState === 'loading') {
+    console.log('[Loader] Waiting for DOMContentLoaded');
     window.addEventListener('DOMContentLoaded', startLoader);
 } else {
+    console.log('[Loader] DOM already loaded, starting immediately');
     startLoader();
 }
 
@@ -122,12 +130,13 @@ if (contactForm) {
 
 // ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
 (function() {
+    console.log('[Cinema] Initializing cinematic scroll');
     var canvas = document.getElementById('cinema-canvas');
-    if (!canvas) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
     var collection = document.getElementById('collection');
+    console.log('[Cinema] Elements found - canvas:', !!canvas, 'section:', !!section, 'collection:', !!collection);
     if (!canvas || !section) return;
 
     var ctx = canvas.getContext('2d');
@@ -190,6 +199,7 @@ if (contactForm) {
         sH = section.offsetHeight;
         vH = window.innerHeight;
         scrollable = Math.max(1, sH - vH);
+        console.log('[Cinema] onResize - sTop:', sTop, 'sH:', sH, 'vH:', vH, 'scrollable:', scrollable);
     }
     window.addEventListener('resize', onResize);
     onResize();
@@ -280,17 +290,20 @@ if (contactForm) {
     }
 
     setTimeout(function() {
+        console.log('[Cinema] Starting RAF loop');
         onResize();
         requestAnimationFrame(update);
     }, 120);
 
     window.addEventListener('touchstart', function(e) {
+        console.log('[Cinema] touchstart, isTouch:', isTouch);
         isTouch = true;
         touchStartY = e.touches[0].clientY;
         touchDelta = 0;
         if (section) {
             var rect = section.getBoundingClientRect();
             var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
+            console.log('[Cinema] touchstart inSection:', inSection, 'rect.top:', rect.top, 'rect.bottom:', rect.bottom);
             if (inSection) {
                 e.preventDefault();
             }
@@ -315,13 +328,16 @@ if (contactForm) {
     }, {passive: false});
 
     window.addEventListener('touchend', function() {
+        console.log('[Cinema] touchend');
         setTimeout(function() { isTouch = false; touchDelta = 0; }, 300);
     }, {passive: true});
 
     window.addEventListener('wheel', function(e) {
+        console.log('[Cinema] wheel, isTouch:', isTouch, 'deltaY:', e.deltaY);
         if (!isTouch && section) {
             var rect = section.getBoundingClientRect();
             var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
+            console.log('[Cinema] wheel inSection:', inSection, 'rect.top:', rect.top, 'rect.bottom:', rect.bottom);
             if (inSection) {
                 e.preventDefault();
                 var delta = e.deltaY || 0;

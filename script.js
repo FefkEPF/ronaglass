@@ -87,9 +87,11 @@ window.addEventListener('scroll', function() {
 
 // ============ HAMBURGER ============
 var ham = document.getElementById('hamburger'), mob = document.getElementById('mobile-menu');
-document.querySelectorAll('.mobile-link').forEach(function(l) {
-    l.addEventListener('click', function() { ham.classList.remove('active'); mob.classList.remove('open'); });
-});
+if (ham && mob) {
+    document.querySelectorAll('.mobile-link').forEach(function(l) {
+        l.addEventListener('click', function() { ham.classList.remove('active'); mob.classList.remove('open'); });
+    });
+}
 
 // ============ SMOOTH SCROLL ============
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
@@ -133,27 +135,36 @@ var pModal = document.getElementById('product-modal'), pModalOverlay = document.
 var curProduct = null;
 
 function openProductModal(p) {
+    if (!pModal) return;
     curProduct = p;
-    document.getElementById('modal-img').src = p.img;
-    document.getElementById('modal-img').style.display = 'block';
-    document.getElementById('modal-title').textContent = p.name;
-    document.getElementById('modal-desc').textContent = p.desc;
-    document.getElementById('modal-price').textContent = p.priceText;
-    document.getElementById('modal-tryon').style.display = 'none';
+    var modalImg = document.getElementById('modal-img');
+    var modalTitle = document.getElementById('modal-title');
+    var modalDesc = document.getElementById('modal-desc');
+    var modalPrice = document.getElementById('modal-price');
+    var modalTryon = document.getElementById('modal-tryon');
+    if (modalImg) { modalImg.src = p.img; modalImg.style.display = 'block'; }
+    if (modalTitle) modalTitle.textContent = p.name;
+    if (modalDesc) modalDesc.textContent = p.desc;
+    if (modalPrice) modalPrice.textContent = p.priceText;
+    if (modalTryon) modalTryon.style.display = 'none';
     
     pModal.classList.add('open');
-    pModalOverlay.classList.add('open');
+    if (pModalOverlay) pModalOverlay.classList.add('open');
 }
 
 function closeProductModal() {
+    if (!pModal) return;
     pModal.classList.remove('open');
-    pModalOverlay.classList.remove('open');
+    if (pModalOverlay) pModalOverlay.classList.remove('open');
 }
 
-document.getElementById('modal-close').addEventListener('click', closeProductModal);
-pModalOverlay.addEventListener('click', closeProductModal);
+var modalCloseBtn = document.getElementById('modal-close');
+if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeProductModal);
+var pModalOverlay = document.getElementById('product-modal-overlay');
+if (pModalOverlay) pModalOverlay.addEventListener('click', closeProductModal);
 
-document.getElementById('modal-add-cart').addEventListener('click', function() {
+var modalAddCartBtn = document.getElementById('modal-add-cart');
+if (modalAddCartBtn) modalAddCartBtn.addEventListener('click', function() {
     if(curProduct) {
         addToCart(curProduct.id);
         closeProductModal();
@@ -220,7 +231,11 @@ function addToCart(id) {
 }
 function removeFromCart(id) { cart = cart.filter(function(x) { return x.id !== id; }); updateCart(); }
 function updateCart() {
-    var cnt = document.getElementById('cart-count'), items = document.getElementById('cart-items'), tp = document.getElementById('cart-total-price');
+    var cnt = document.getElementById('cart-count');
+    var items = document.getElementById('cart-items');
+    var tp = document.getElementById('cart-total-price');
+    if (!cnt || !items || !tp) return;
+    
     var q = cart.reduce(function(s, c) { return s + c.qty; }, 0);
     cnt.textContent = q;
     if (!cart.length) { items.innerHTML = '<p class="cart-empty">Sepetiniz boş</p>'; tp.textContent = '₺0'; return; }
@@ -230,12 +245,16 @@ function updateCart() {
     tp.textContent = cart.reduce(function(s, c) { return s + c.price * c.qty; }, 0).toLocaleString('tr-TR') + ' ₺';
     items.querySelectorAll('.cart-item-remove').forEach(function(b) { b.addEventListener('click', function() { removeFromCart(parseInt(b.dataset.id)); }); });
 }
-var cartBtn = document.getElementById('cart-btn'), cartSidebar = document.getElementById('cart-sidebar'), cartOverlay = document.getElementById('cart-overlay'), cartClose = document.getElementById('cart-close');
-cartBtn.addEventListener('click', function() { cartSidebar.classList.add('open'); cartOverlay.classList.add('open'); });
-cartClose.addEventListener('click', closeCart); cartOverlay.addEventListener('click', closeCart);
+var cartBtn = document.getElementById('cart-btn');
+var cartSidebar = document.getElementById('cart-sidebar');
+var cartOverlay = document.getElementById('cart-overlay');
+var cartClose = document.getElementById('cart-close');
+if (cartBtn) cartBtn.addEventListener('click', function() { if (cartSidebar) cartSidebar.classList.add('open'); if (cartOverlay) cartOverlay.classList.add('open'); });
+if (cartClose) cartClose.addEventListener('click', closeCart);
+if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 function closeCart() { 
-    cartSidebar.classList.remove('open'); 
-    cartOverlay.classList.remove('open'); 
+    if (cartSidebar) cartSidebar.classList.remove('open'); 
+    if (cartOverlay) cartOverlay.classList.remove('open'); 
     setTimeout(resetCheckout, 300);
 }
 
@@ -248,30 +267,21 @@ var cartTitle = document.getElementById('cart-title');
 var checkoutForm = document.getElementById('checkout-form');
 var orderSuccess = document.getElementById('order-success');
 
-function resetCheckout() {
-    cartContent.style.display = 'block';
-    checkoutContent.style.display = 'none';
-    cartTitle.textContent = 'Sepetim';
-    checkoutForm.style.display = 'block';
-    orderSuccess.style.display = 'none';
-    checkoutForm.reset();
-}
-
-btnGoCheckout.addEventListener('click', function() {
+if (btnGoCheckout) btnGoCheckout.addEventListener('click', function() {
     if (cart.length === 0) return;
-    cartContent.style.display = 'none';
-    checkoutContent.style.display = 'flex';
-    cartTitle.textContent = 'Ödeme';
+    if (cartContent) cartContent.style.display = 'none';
+    if (checkoutContent) checkoutContent.style.display = 'flex';
+    if (cartTitle) cartTitle.textContent = 'Ödeme';
 });
 
-btnBackCart.addEventListener('click', function() {
+if (btnBackCart) btnBackCart.addEventListener('click', function() {
     resetCheckout();
 });
 
-checkoutForm.addEventListener('submit', function(e) {
+if (checkoutForm) checkoutForm.addEventListener('submit', function(e) {
     e.preventDefault();
     checkoutForm.style.display = 'none';
-    orderSuccess.style.display = 'block';
+    if (orderSuccess) orderSuccess.style.display = 'block';
     cart = [];
     updateCart();
     setTimeout(closeCart, 3000);

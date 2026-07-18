@@ -257,3 +257,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
     .about-stats{flex-direction:column;gap:16px}
     .filter-btn{padding:7px 12px;font-size:10px}
 }
+
+/* ============ SLIDER (1 SCROLL SCREEN) ============ */
+.slider-section{position:relative;height:100vh;width:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#050505 0%,#0a0a0f 100%);overflow:hidden}
+.slider-inner{text-align:center;padding:0 24px;max-width:760px}
+.slider-title{font-family:'Playfair Display',serif;font-size:clamp(38px,7vw,84px);font-weight:400;line-height:1.05;color:#fff;margin:14px 0 18px}
+.slider-title em{color:var(--gold);font-style:normal}
+.slider-sub{color:var(--dim);font-size:clamp(13px,1.4vw,16px);line-height:1.7;margin-bottom:30px;font-weight:300}
+
+/* ============ BLACK TRANSITION (KEŞFET) ============ */
+.discover-section{position:relative;height:100vh;width:100%;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.discover-inner{text-align:center;padding:0 24px}
+.discover-title{font-family:'Playfair Display',serif;font-size:clamp(48px,10vw,120px);font-weight:400;color:#fff;margin:14px 0 28px;letter-spacing:1px}
+.discover-inner .btn-cinema{font-size:12px;letter-spacing:3px}

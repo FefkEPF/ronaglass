@@ -316,9 +316,6 @@ if (contactForm) {
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
     var collection = document.getElementById('collection');
-    var texts = [
-        document.getElementById('ct5')
-    ];
     if (!canvas || !section) return;
 
     var ctx = canvas.getContext('2d');
@@ -368,11 +365,6 @@ if (contactForm) {
         ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
     }
 
-    var ranges = [
-        [0.80, 1.00]
-    ];
-
-    var snapped = false;
     var sTop = 0, sH = 0, vH = 0, scrollable = 0;
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
@@ -448,43 +440,6 @@ if (contactForm) {
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
 
         if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
-        
-        for (var i = 0; i < texts.length; i++) {
-            var el = texts[i];
-            if (!el) continue;
-            var s = ranges[i][0], e = ranges[i][1];
-            if (targetProgress >= s && targetProgress <= e) {
-                var rp = (targetProgress - s) / (e - s);
-                var op = 1;
-                if (rp < 0.15) op = rp / 0.15;
-                else if (rp > 0.85) op = (1 - rp) / 0.15;
-                op = Math.max(0, Math.min(1, op));
-
-                var pos = el.dataset.pos;
-                var yOff = (1 - op) * 24;
-                if (pos === 'center') {
-                    el.style.transform = 'translateX(-50%) translateY(' + yOff + 'px)';
-                } else {
-                    el.style.transform = 'translateY(' + yOff + 'px)';
-                }
-                el.style.opacity = op;
-                el.classList.add('active');
-            } else {
-                if (el.classList.contains('active')) {
-                    el.style.opacity = '0';
-                    var pos2 = el.dataset.pos;
-                    if (pos2 === 'center') el.style.transform = 'translateX(-50%) translateY(30px)';
-                    else el.style.transform = 'translateY(30px)';
-                    el.classList.remove('active');
-                }
-            }
-        }
-
-        if (targetProgress >= 0.99 && !snapped && scrollY < sTop + sH + 100) {
-            snapped = true;
-            if (collection) collection.scrollIntoView({ behavior: 'smooth' });
-        }
-        if (targetProgress < 0.95) snapped = false;
 
         requestAnimationFrame(update);
     }

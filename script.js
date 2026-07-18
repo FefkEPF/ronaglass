@@ -301,7 +301,7 @@ if (contactForm) {
 // ============ VIDEO CINEMATIC SCROLL ============
 (function() {
     var video = document.getElementById('cinema-video');
-    var canvas = document.getElementById('cinema-canvas');
+    if (!video) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -313,47 +313,43 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!video || !canvas || !section) return;
+    if (!video || !section) return;
 
-    var ctx = canvas.getContext('2d');
-    canvas.width = 1920;
-    canvas.height = 1080;
-
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.crossOrigin = 'anonymous';
+    video.src = 'images/hero-video.mp4';
+    video.load();
 
     var videoReady = false;
     var videoDuration = 13.033;
-    var videoStarted = false;
-    var lastDrawnTime = -1;
+    var userInteracted = false;
 
     video.addEventListener('loadedmetadata', function() {
         videoDuration = video.duration;
         videoReady = true;
     });
 
-    video.addEventListener('canplay', function() {
+    video.addEventListener('canplaythrough', function() {
         videoReady = true;
-        if (!videoStarted) {
-            videoStarted = true;
+        if (!userInteracted) {
+            userInteracted = true;
             video.play().catch(function() {});
         }
     });
 
-    video.addEventListener('seeked', function() {
-        if (video.readyState >= 2) {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            lastDrawnTime = video.currentTime;
-        }
+    video.addEventListener('error', function() {
+        console.error('Video yüklenemedi:', video.error);
     });
 
-    if (video.readyState >= 1) {
+    if (video.readyState >= 3) {
         videoReady = true;
         if (video.duration) videoDuration = video.duration;
     }
 
-    video.src = 'images/hero-video.mp4';
-    video.load();
+    var lastTargetProgress = 0;
 
     var ranges = [
         [0.00, 0.16],
@@ -462,14 +458,21 @@ if (contactForm) {
         if (videoReady && videoDuration > 0) {
             var targetTime = currentProgress * videoDuration;
             
-            if (Math.abs(targetTime - video.currentTime) > 0.05) {
+            if (Math.abs(targetTime - video.currentTime) > 0.08) {
                 video.currentTime = targetTime;
             }
-        }
-
-        if (video.readyState >= 2 && Math.abs(video.currentTime - lastDrawnTime) > 0.01) {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            lastDrawnTime = video.currentTime;
+            
+            if (Math.abs(currentProgress - lastTargetProgress) > 0.002) {
+                if (video.paused) {
+                    video.play().catch(function() {});
+                }
+            } else {
+                if (!video.paused && currentProgress < 0.005) {
+                    video.pause();
+                }
+            }
+            
+            lastTargetProgress = currentProgress;
         }
 
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
@@ -527,8 +530,8 @@ if (contactForm) {
     setTimeout(function() {
         onResize();
         if (videoReady) {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            lastDrawnTime = video.currentTime;
+            video.currentTime = 0;
+            video.play().catch(function() {});
         }
         requestAnimationFrame(update);
     }, 200);
@@ -544,13 +547,11 @@ if (contactForm) {
             sy = limitY;
         }
 
-        if (videoReady && videoDuration > 0) {
-            var scrolled = sy - sTop;
-            var progress = Math.max(0, Math.min(1, scrolled / scrollable));
-            var targetTime = progress * videoDuration;
-            
-            if (Math.abs(targetTime - video.currentTime) > 0.03) {
-                video.currentTime = targetTime;
+        if (sy < sTop - 100 || sy > sTop + sH + 100) {
+            if (!video.paused) video.pause();
+        } else {
+            if (video.paused && videoReady) {
+                video.play().catch(function() {});
             }
         }
 

@@ -437,21 +437,11 @@ if (contactForm) {
 
         if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
         
-        var brandTitle = document.querySelector('.cinema-brand-title');
-        var logoVisible = false;
-        if (brandTitle) {
-            var bOp = 1 - (currentProgress / 0.03);
-            if (bOp < 0) bOp = 0;
-            brandTitle.style.opacity = bOp;
-            brandTitle.style.transform = 'translateX(-50%) translateY(' + ((1 - bOp) * -40) + 'px)';
-            logoVisible = bOp > 0.001;
-        }
-
         for (var i = 0; i < texts.length; i++) {
             var el = texts[i];
             if (!el) continue;
             var s = ranges[i][0], e = ranges[i][1];
-            if (!logoVisible && targetProgress >= s && targetProgress <= e) {
+            if (targetProgress >= s && targetProgress <= e) {
                 var rp = (targetProgress - s) / (e - s);
                 var op = 1;
                 if (rp < 0.15) op = rp / 0.15;

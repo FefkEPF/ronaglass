@@ -8,6 +8,7 @@
 function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
+    if (!loader || !progress) return;
     var p = 0;
     var iv = setInterval(function() {
         p += Math.random() * 20 + 6;
@@ -15,16 +16,16 @@ function startLoader() {
         progress.style.width = p + '%';
         if (p >= 100) {
             setTimeout(function() {
-                if (loader) loader.classList.add('hidden');
+                loader.classList.add('hidden');
             }, 250);
         }
     }, 70);
 }
 
-if (document.readyState === 'complete') {
-    startLoader();
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', startLoader);
 } else {
-    window.addEventListener('load', startLoader);
+    startLoader();
 }
 
 // ============ NAVBAR ============

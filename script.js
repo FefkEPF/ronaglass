@@ -420,14 +420,12 @@ if (contactForm) {
             canvas.style.filter = 'none';
         }
 
-        var kefetActive = targetProgress >= 0.80;
+        var fadeToBlack = 0;
+        if (targetProgress > 0.80) {
+            fadeToBlack = Math.min(1, (targetProgress - 0.80) / 0.20);
+        }
 
-        if (kefetActive) {
-            ctx.globalAlpha = 1;
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            lastDrawnIndex = -1;
-        } else if (images[frameIdx] && images[frameIdx].complete) {
+        if (images[frameIdx] && images[frameIdx].complete) {
             ctx.globalAlpha = 1;
             ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
             lastDrawnIndex = frameIdx;
@@ -439,6 +437,13 @@ if (contactForm) {
         } else if (lastDrawnIndex >= 0) {
             drawImageSafe(lastDrawnIndex);
         }
+
+        if (fadeToBlack > 0) {
+            ctx.globalAlpha = fadeToBlack;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        if (fadeToBlack >= 0.999) lastDrawnIndex = -1;
 
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
 

@@ -420,7 +420,14 @@ if (contactForm) {
             canvas.style.filter = 'none';
         }
 
-        if (images[frameIdx] && images[frameIdx].complete) {
+        var kefetActive = targetProgress >= 0.80;
+
+        if (kefetActive) {
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            lastDrawnIndex = -1;
+        } else if (images[frameIdx] && images[frameIdx].complete) {
             ctx.globalAlpha = 1;
             ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
             lastDrawnIndex = frameIdx;

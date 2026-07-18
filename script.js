@@ -248,9 +248,26 @@ if (contactForm) {
         requestAnimationFrame(update);
     }, 100);
 
-    window.addEventListener('touchstart', function() {
+    window.addEventListener('touchstart', function(e) {
         isTouch = true;
-    }, {passive: true});
+        if (section) {
+            var rect = section.getBoundingClientRect();
+            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
+            if (inSection) {
+                e.preventDefault();
+            }
+        }
+    }, {passive: false});
+
+    window.addEventListener('touchmove', function(e) {
+        if (isTouch && section) {
+            var rect = section.getBoundingClientRect();
+            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
+            if (inSection) {
+                e.preventDefault();
+            }
+        }
+    }, {passive: false});
 
     window.addEventListener('touchend', function() {
         setTimeout(function() { isTouch = false; }, 300);

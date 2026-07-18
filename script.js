@@ -36,17 +36,24 @@ var navbar = document.getElementById('navbar');
 var isIndex = document.getElementById('cinema-video') !== null;
 var currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
+var pageToAnchor = {
+    'products.html': '#collection',
+    'about.html': 'about.html',
+    'faq.html': 'faq.html',
+    'blog.html': 'blog.html'
+};
+
 document.querySelectorAll('.nav-link, .mobile-link').forEach(function(l) {
     var href = l.getAttribute('href');
     if (!href) return;
-    var targetPage = href.split('#')[0];
-    if (targetPage === '') targetPage = 'index.html';
+    var parts = href.split('#');
+    var targetPage = parts[0] === '' ? 'index.html' : parts[0];
+    var anchor = parts[1] ? '#' + parts[1] : '';
+    l.classList.remove('active');
     if (targetPage === currentPage) {
-        if (!isIndex) {
-            l.classList.add('active');
-        }
-    } else {
-        l.classList.remove('active');
+        if (!isIndex) l.classList.add('active');
+    } else if (pageToAnchor[currentPage] && targetPage === 'index.html' && anchor === pageToAnchor[currentPage]) {
+        l.classList.add('active');
     }
 });
 
@@ -182,7 +189,46 @@ document.querySelectorAll('.filter-btn').forEach(function(b) {
 
 document.addEventListener('DOMContentLoaded', function() {
     render('all');
+    renderChipLists();
+    renderBlog();
 });
+
+// ============ CHIP LISTS (insurance / brands) ============
+function renderChipLists() {
+    var insurance = ['Aks Sigorta','Anadolu Sigorta','Bereket Sigorta','Doğa Sigorta','Ethica Sigorta','Eureko Sigorta','Generali','Hepiyi Sigorta','Koru Sigorta','Orient Sigorta','Türk Nippon','Unico Sigorta'];
+    var brands = ['Audi','BMW','Mercedes','Volkswagen','Renault','Hyundai','Toyota','Honda','Ford','Peugeot','Citroen','Fiat'];
+    function fill(id, items) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = items.map(function(n) { return '<div class="chip">' + n + '</div>'; }).join('');
+    }
+    fill('insurance-grid', insurance);
+    fill('brands-grid', brands);
+}
+
+// ============ BLOG ============
+function renderBlog() {
+    var posts = [
+        { title:'15 Dakikada Cam Tamiri: Mümkün mü?', date:'12 Haz 2025', cat:'Cam Tamiri', img:'images/p8.png',
+          excerpt:'Aracınızın camında oluşan küçük çatlaklar zamanla büyüyerek güvenliğinizi tehlikeye atabilir. Rona Auto Glass olarak modern ekipmanlar ve uzman ekibimizle çatlak tamiri sürecini hızlı ve kalıcı olarak gerçekleştiriyoruz.' },
+        { title:'Sigortalı Araç Sahiplerine Özel Avantajlar', date:'28 Haz 2025', cat:'Sigorta', img:'images/p1.png',
+          excerpt:'Anlaşmalı olduğumuz sigorta şirketleriyle sözleşmeli cam değişimi hizmeti sunuyoruz. Sigorta kapsamında cam değişimi yaparken ek ücret ödemenize gerek kalmaz; hızlı süreç ve orijinal ekipman kalitesinde camlar ile hizmetinizdeyiz.' },
+        { title:'Oto Cam Bakımı: Dikkat Edilmesi Gerekenler', date:'10 Tem 2025', cat:'Bakım', img:'images/p4.png',
+          excerpt:'Camlarınızın ömrünü uzatmak için cam yüzeyini çizilmelere karşı koruyun, aşınma paylarına dikkat edin ve hasar görürse derhal müdahale edin. Dikiz aynası ve yan camlardaki küçük çatlaklar zamanla büyüyebilir.' }
+    ];
+    var grid = document.getElementById('blog-grid');
+    if (!grid) return;
+    grid.innerHTML = posts.map(function(p) {
+        return '<article class="blog-card">' +
+            '<img class="blog-card-img" src="' + p.img + '" alt="' + p.title + '" loading="lazy">' +
+            '<div class="blog-card-body">' +
+            '<div class="blog-card-meta">' + p.cat + ' &middot; ' + p.date + '</div>' +
+            '<h3>' + p.title + '</h3>' +
+            '<p>' + p.excerpt + '</p>' +
+            '<a href="blog.html" class="blog-card-more">Devamını Oku</a>' +
+            '</div></article>';
+    }).join('');
+}
 
 // ============ SCROLL ANIMATIONS ============
 function observe() {

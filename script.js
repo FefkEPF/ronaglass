@@ -13,7 +13,10 @@ window.addEventListener('load', function() {
         p += Math.random() * 20 + 6;
         if (p >= 100) { p = 100; clearInterval(iv); }
         progress.style.width = p + '%';
-        if (p === 100) setTimeout(function() { loader.classList.add('hidden'); }, 300);
+        if (p === 100) setTimeout(function() {
+            loader.classList.add('hidden');
+            setTimeout(onResize, 350);
+        }, 300);
     }, 70);
 });
 

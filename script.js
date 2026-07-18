@@ -5,6 +5,13 @@
 ============================================= */
 
 // ============ LOADER ============
+function hideLoader() {
+    var loader = document.getElementById('loader');
+    if (!loader) return;
+    loader.style.display = 'none';
+    loader.classList.add('hidden');
+}
+
 function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
@@ -15,11 +22,10 @@ function startLoader() {
         if (p >= 100) { p = 100; clearInterval(iv); }
         progress.style.width = p + '%';
         if (p >= 100) {
-            setTimeout(function() {
-                loader.classList.add('hidden');
-            }, 250);
+            setTimeout(hideLoader, 250);
         }
     }, 70);
+    setTimeout(hideLoader, 4000);
 }
 
 if (document.readyState === 'loading') {

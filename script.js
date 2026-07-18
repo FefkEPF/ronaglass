@@ -164,6 +164,7 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
+    var ticking = false;
 
     function onResize() {
         sTop = section.offsetTop;
@@ -255,5 +256,5 @@ if (contactForm) {
             window.scrollTo({ top: cinBot, behavior: 'smooth' });
         }
         lastSY = sy;
-    }, {passive: false});
+    }, {passive: true});
 })();

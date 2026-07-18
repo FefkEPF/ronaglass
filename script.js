@@ -298,10 +298,10 @@ if (contactForm) {
     });
 }
 
-// ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
+// ============ VIDEO CINEMATIC SCROLL ============
 (function() {
-    var canvas = document.getElementById('cinema-canvas');
-    if (!canvas) return;
+    var video = document.getElementById('cinema-video');
+    if (!video) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -313,58 +313,35 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!canvas || !section) return;
+    if (!video || !section) return;
 
-    var ctx = canvas.getContext('2d');
-    canvas.width = 1920;
-    canvas.height = 1080;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'metadata';
+    video.pause();
 
-    ctx.fillStyle = '#050505';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    var videoReady = false;
+    var videoDuration = 0;
 
-    var framesCount = 130;
-    var images = [];
-    var loaded = 0;
-    var lastDrawnIndex = -1;
-    for (var i = 1; i <= framesCount; i++) {
-        (function(index) {
-            var img = new Image();
-            var paddedIndex = index < 10 ? '00' + index : index < 100 ? '0' + index : '' + index;
-            img.onload = function() {
-                loaded++;
-                if (lastDrawnIndex < 0) {
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    lastDrawnIndex = index - 1;
-                }
-            };
-            img.onerror = function() {
-                loaded++;
-            };
-            img.src = 'images/frame_' + paddedIndex + '.jpg';
-            images[index - 1] = img;
-        })(i);
-    }
+    video.addEventListener('loadedmetadata', function() {
+        videoDuration = video.duration;
+        videoReady = true;
+    });
 
-    if (loaded === 0) {
-        ctx.fillStyle = '#050505';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-    
-    setTimeout(function() {
-        if (loaded === 0) {
-            ctx.fillStyle = '#111';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#c8a45c';
-            ctx.font = '24px Outfit, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
+    video.addEventListener('canplay', function() {
+        videoReady = true;
+        if (!videoDuration && video.duration) {
+            videoDuration = video.duration;
         }
-    }, 2000);
-    
-    setTimeout(function() {
-        onResize();
-        requestAnimationFrame(update);
-    }, 100);
+    });
+
+    if (video.readyState >= 1) {
+        videoReady = true;
+        videoDuration = video.duration || 0;
+    }
+
+    var lastTargetProgress = 0;
 
     var ranges = [
         [0.00, 0.16],
@@ -379,7 +356,6 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
-    var currentFrameIndex = -1;
 
     var ct5Locked = false;
     var lockEndTime = 0;
@@ -471,33 +447,24 @@ if (contactForm) {
             lockEndTime = 0;
         }
 
-        var exactFrame = currentProgress * (framesCount - 1);
-        var frameIdx = Math.floor(exactFrame);
-        var nextFrameIdx = Math.min(framesCount - 1, Math.ceil(exactFrame));
-        var alpha = exactFrame - frameIdx;
-
-        var blurAmount = Math.min(8, velocity * 0.05);
-        if (blurAmount > 0.5) {
-            canvas.style.filter = 'blur(' + blurAmount + 'px)';
-        } else {
-            canvas.style.filter = 'none';
-        }
-
-        var drawFrame = images[frameIdx] && images[frameIdx].complete;
-        var drawNext = alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete;
-
-        if (!drawFrame && lastDrawnIndex >= 0 && images[lastDrawnIndex] && images[lastDrawnIndex].complete) {
-            ctx.globalAlpha = 1;
-            ctx.drawImage(images[lastDrawnIndex], 0, 0, canvas.width, canvas.height);
-        } else if (drawFrame) {
-            ctx.globalAlpha = 1;
-            ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
-            lastDrawnIndex = frameIdx;
-
-            if (drawNext) {
-                ctx.globalAlpha = alpha;
-                ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
+        if (videoReady && videoDuration > 0) {
+            var targetTime = currentProgress * videoDuration;
+            
+            if (Math.abs(targetTime - video.currentTime) > 0.08) {
+                video.currentTime = targetTime;
             }
+            
+            if (Math.abs(currentProgress - lastTargetProgress) > 0.002) {
+                if (video.paused) {
+                    video.play().catch(function() {});
+                }
+            } else {
+                if (!video.paused && currentProgress < 0.005) {
+                    video.pause();
+                }
+            }
+            
+            lastTargetProgress = currentProgress;
         }
 
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
@@ -566,6 +533,14 @@ if (contactForm) {
         if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {
             window.scrollTo(0, limitY);
             sy = limitY;
+        }
+
+        if (sy < sTop - 100 || sy > sTop + sH + 100) {
+            if (!video.paused) video.pause();
+        } else {
+            if (video.paused && videoReady && videoDuration > 0) {
+                video.play().catch(function() {});
+            }
         }
 
         var cTop = collection ? collection.offsetTop : 0;

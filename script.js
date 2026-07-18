@@ -298,10 +298,10 @@ if (contactForm) {
     });
 }
 
-// ============ VIDEO CINEMATIC SCROLL ============
+// ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
 (function() {
-    var video = document.getElementById('cinema-video');
-    if (!video) return;
+    var canvas = document.getElementById('cinema-canvas');
+    if (!canvas) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -313,35 +313,29 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!video || !section) return;
+    if (!canvas || !section) return;
 
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = 'metadata';
-    video.pause();
+    var ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
 
-    var videoReady = false;
-    var videoDuration = 0;
-
-    video.addEventListener('loadedmetadata', function() {
-        videoDuration = video.duration;
-        videoReady = true;
-    });
-
-    video.addEventListener('canplay', function() {
-        videoReady = true;
-        if (!videoDuration && video.duration) {
-            videoDuration = video.duration;
-        }
-    });
-
-    if (video.readyState >= 1) {
-        videoReady = true;
-        videoDuration = video.duration || 0;
+    var framesCount = 130;
+    var images = [];
+    var loaded = 0;
+    for (var i = 1; i <= framesCount; i++) {
+        (function(index) {
+            var img = new Image();
+            var paddedIndex = index < 10 ? '00' + index : index < 100 ? '0' + index : '' + index;
+            img.src = 'images/frame_' + paddedIndex + '.jpg';
+            img.onload = function() {
+                loaded++;
+                if (loaded === 1 && images[0]) {
+                    ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height);
+                }
+            };
+            images[index - 1] = img;
+        })(i);
     }
-
-    var lastTargetProgress = 0;
 
     var ranges = [
         [0.00, 0.16],
@@ -356,6 +350,7 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
+    var currentFrameIndex = -1;
 
     var ct5Locked = false;
     var lockEndTime = 0;
@@ -447,34 +442,32 @@ if (contactForm) {
             lockEndTime = 0;
         }
 
-        // Video time control based on scroll
-        if (videoReady && videoDuration > 0) {
-            var targetTime = targetProgress * videoDuration;
-            
-            if (Math.abs(targetTime - video.currentTime) > 0.15) {
-                video.currentTime = targetTime;
-            }
-            
-            if (Math.abs(targetProgress - lastTargetProgress) > 0.001) {
-                if (video.paused) {
-                    video.play().catch(function() {});
-                }
-            } else {
-                if (!video.paused && targetProgress < 0.01) {
-                    video.pause();
-                }
-            }
-            
-            lastTargetProgress = targetProgress;
+        var exactFrame = currentProgress * (framesCount - 1);
+        var frameIdx = Math.floor(exactFrame);
+        var nextFrameIdx = Math.min(framesCount - 1, Math.ceil(exactFrame));
+        var alpha = exactFrame - frameIdx;
+
+        var blurAmount = Math.min(8, velocity * 0.05);
+        if (blurAmount > 0.5) {
+            canvas.style.filter = 'blur(' + blurAmount + 'px)';
+        } else {
+            canvas.style.filter = 'none';
         }
 
-        // Progress bar
+        if (images[frameIdx] && images[frameIdx].complete) {
+            ctx.globalAlpha = 1;
+            ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
+            
+            if (alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete) {
+                ctx.globalAlpha = alpha;
+                ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
+            }
+        }
+
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
 
-        // Scroll hint
         if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
         
-        // Brand Title Fade
         var brandTitle = document.querySelector('.cinema-brand-title');
         if (brandTitle) {
             var bOp = 1 - (currentProgress / 0.03);
@@ -483,7 +476,6 @@ if (contactForm) {
             brandTitle.style.transform = 'translateX(-50%) translateY(' + ((1 - bOp) * -40) + 'px)';
         }
 
-        // Text overlays
         for (var i = 0; i < texts.length; i++) {
             var el = texts[i];
             if (!el) continue;
@@ -515,7 +507,6 @@ if (contactForm) {
             }
         }
 
-        // Snap to collection when cinema ends
         if (targetProgress >= 0.99 && !snapped && scrollY < sTop + sH + 100) {
             snapped = true;
             if (collection) collection.scrollIntoView({ behavior: 'smooth' });
@@ -539,14 +530,6 @@ if (contactForm) {
         if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {
             window.scrollTo(0, limitY);
             sy = limitY;
-        }
-
-        if (sy < sTop - 100 || sy > sTop + sH + 100) {
-            if (!video.paused) video.pause();
-        } else {
-            if (video.paused && videoReady && videoDuration > 0) {
-                video.play().catch(function() {});
-            }
         }
 
         var cTop = collection ? collection.offsetTop : 0;

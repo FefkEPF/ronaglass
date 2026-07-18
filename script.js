@@ -319,23 +319,52 @@ if (contactForm) {
     canvas.width = 1920;
     canvas.height = 1080;
 
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     var framesCount = 130;
     var images = [];
     var loaded = 0;
+    var lastDrawnIndex = -1;
     for (var i = 1; i <= framesCount; i++) {
         (function(index) {
             var img = new Image();
             var paddedIndex = index < 10 ? '00' + index : index < 100 ? '0' + index : '' + index;
-            img.src = 'images/frame_' + paddedIndex + '.jpg';
             img.onload = function() {
                 loaded++;
-                if (loaded === 1 && images[0]) {
-                    ctx.drawImage(images[0], 0, 0, canvas.width, canvas.height);
+                if (lastDrawnIndex < 0) {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    lastDrawnIndex = index - 1;
                 }
             };
+            img.onerror = function() {
+                loaded++;
+            };
+            img.src = 'images/frame_' + paddedIndex + '.jpg';
             images[index - 1] = img;
         })(i);
     }
+
+    if (loaded === 0) {
+        ctx.fillStyle = '#050505';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    setTimeout(function() {
+        if (loaded === 0) {
+            ctx.fillStyle = '#111';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#c8a45c';
+            ctx.font = '24px Outfit, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
+        }
+    }, 2000);
+    
+    setTimeout(function() {
+        onResize();
+        requestAnimationFrame(update);
+    }, 100);
 
     var ranges = [
         [0.00, 0.16],
@@ -454,11 +483,18 @@ if (contactForm) {
             canvas.style.filter = 'none';
         }
 
-        if (images[frameIdx] && images[frameIdx].complete) {
+        var drawFrame = images[frameIdx] && images[frameIdx].complete;
+        var drawNext = alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete;
+
+        if (!drawFrame && lastDrawnIndex >= 0 && images[lastDrawnIndex] && images[lastDrawnIndex].complete) {
+            ctx.globalAlpha = 1;
+            ctx.drawImage(images[lastDrawnIndex], 0, 0, canvas.width, canvas.height);
+        } else if (drawFrame) {
             ctx.globalAlpha = 1;
             ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
-            
-            if (alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete) {
+            lastDrawnIndex = frameIdx;
+
+            if (drawNext) {
                 ctx.globalAlpha = alpha;
                 ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
             }

@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rona Auto Glass - Ankara Etimesgut'ta oto cam değişimi, cam tamiri, tuning cam ve daha fazlası. Sözleşmeli sigorta kabul eden profesyonel oto cam servisi.">
-    <title>Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara</title>
+    <meta name="description" content="Rona Auto Glass — Ankara'nın premium oto cam merkezi. ADAS kalibrasyonu, cam değişimi, tamiri, sigorta desteği ve mobil servis. 10+ yıl deneyim, 5.000+ proje, sözleşmeli sigorta.">
+    <meta name="keywords" content="oto cam, Ankara oto cam, cam değişimi, ADAS kalibrasyonu, cam tamiri, sigorta cam değişimi, mobil cam servisi, Rona Auto Glass">
+    <meta property="og:title" content="Rona Auto Glass | Ankara'nın Güvenilir Oto Cam Merkezi">
+    <meta property="og:description" content="ADAS kalibrasyonu, OEM cam değişimi, sigorta desteği ve 7/24 mobil servis. Ankara Etimesgut'ta 10+ yıl deneyim.">
+    <title>Rona Auto Glass | ADAS Kalibrasyonu & Oto Cam Değişimi - Ankara</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-inner">
-            <div class="logo-text" style="font-size:24px;margin-bottom:20px;letter-spacing:8px;font-weight:200;">RONA</div>
+            <div class="logo-text">RONA</div>
             <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
             <p class="loader-text">Deneyim Yükleniyor</p>
         </div>
@@ -21,13 +26,19 @@
     <!-- Navbar -->
     <div class="nav-trigger"></div>
     <nav class="navbar" id="navbar">
-        <a href="#home" class="logo-img"><img src="images/logo.png" alt="Rona Auto Glass"></a>
+        <a href="#home" class="logo-img"><img src="images/logo.png" alt="Rona Auto Glass" width="36" height="36"></a>
         <ul class="nav-links">
             <li><a href="#home" class="nav-link active">Ana Sayfa</a></li>
+            <li><a href="#about" class="nav-link">Hakkımızda</a></li>
+            <li><a href="#services" class="nav-link">Hizmetler</a></li>
+            <li><a href="#process" class="nav-link">Süreç</a></li>
+            <li><a href="#insurance" class="nav-link">Sigorta</a></li>
+            <li><a href="#contact" class="nav-link">İletişim</a></li>
         </ul>
         <div class="nav-right">
-            <a href="tel:+905346943789" class="nav-phone" style="color:var(--text);text-decoration:none;font-size:13px;letter-spacing:1px;">0534 694 37 89</a>
-            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            <a href="tel:+905346943789" class="nav-phone">0534 694 37 89</a>
+            <a href="https://wa.me/905346943789" class="nav-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>
+            <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
@@ -35,16 +46,20 @@
     <div class="mobile-menu" id="mobile-menu">
         <ul>
             <li><a href="#home" class="mobile-link">Ana Sayfa</a></li>
+            <li><a href="#about" class="mobile-link">Hakkımızda</a></li>
+            <li><a href="#services" class="mobile-link">Hizmetler</a></li>
+            <li><a href="#process" class="mobile-link">Süreç</a></li>
+            <li><a href="#insurance" class="mobile-link">Sigorta</a></li>
+            <li><a href="#contact" class="mobile-link">İletişim</a></li>
         </ul>
     </div>
 
     <!-- ==================== CINEMATIC SCROLL IMAGE SEQUENCE ==================== -->
     <section id="home" class="cinema-section">
         <div class="cinema-sticky" id="cinema-sticky">
-            <canvas id="cinema-canvas" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;background:#000;"></canvas>
+            <canvas id="cinema-canvas" aria-hidden="true"></canvas>
             <div class="cinema-overlay"></div>
             <div class="cinema-progress-bar"><div class="cinema-progress-fill" id="cinema-progress-fill"></div></div>
-
             <div class="cinema-scroll-hint" id="cinema-scroll-hint">
                 <div class="cinema-mouse"><div class="cinema-mouse-dot"></div></div>
                 <span>Aşağı Kaydır</span>
@@ -52,9 +67,520 @@
         </div>
     </section>
 
+    <!-- ==================== ABOUT COMPANY ==================== -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">HAKKIMIZDA</p>
+                <h2 class="section-title">Camda Şeffaf Çözümler<br>10 Yıldır Burada</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-visual">
+                    <div class="about-image-wrapper">
+                        <img src="images/craftsmanship.png" alt="Rona Auto Glass Atölye" loading="lazy">
+                    </div>
+                </div>
+                <div class="about-content">
+                    <p class="about-text">Rona Auto Glass, Ankara Etimesgut'ta 10 yılı aşkın süredir oto cam değişimi, tamiri ve ADAS kalibrasyonu alanında hizmet veren sektörün öncü kuruluşudur. 25 yıllık montaj tecrübesiyle, her marka ve model araca uygun OEM kalitede cam çözümleri sunuyoruz. Sözleşmeli sigorta şirketleriyle anlaşmalı olarak, kaskolu hasarlarda ücretsiz değişim imkanı sağlıyoruz.</p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <span class="feature-number">10+</span>
+                            <span class="feature-label">Yıl Deneyim</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-number">25</span>
+                            <span class="feature-label">Yıllık Uzman Ekip</span>
+                        </div>
+                        <div class="about-feature">
+                            <span class="feature-number">5.000+</span>
+                            <span class="feature-label">Tamamlanan Proje</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== STATISTICS ==================== -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" data-count="10">0</span>
+                    <span class="stat-label">Yıl Deneyim</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="25">0</span>
+                    <span class="stat-label">Şehirde Hizmet</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="5000">0</span>
+                    <span class="stat-label">Tamamlanan Proje</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="15">0</span>
+                    <span class="stat-label">Sigorta Partneri</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="3000">0</span>
+                    <span class="stat-label">Mutlu Müşteri</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="800">0</span>
+                    <span class="stat-label">Tamamlanan Kalibrasyon</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="4500">0</span>
+                    <span class="stat-label">Cam Değişimi</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="12">0</span>
+                    <span class="stat-label">Aracılık Noktası</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== WHY CHOOSE US ==================== -->
+    <section id="why-us" class="why-us-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">NEDEN BİZ?</p>
+                <h2 class="section-title">Farkımızı Hissediyorsunuz</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">&#9733;</div>
+                    <h3>Sertifikalı Usta Kadro</h3>
+                    <p>25 yıllık ortalama tecrübeli montaj ustaları. Her iş titizlik ve kalitede yapılır.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9881;</div>
+                    <h3>OEM Kalite Camlar</h3>
+                    <p>Uluslararası kalite standartlarına uygun, orijinal ekipman kalitesinde camlar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128664;</div>
+                    <h3>7/24 Mobil Servis</h3>
+                    <p>Aracınızın nerede olursa olsun, mobil ekibimizle hizmetinizdeyiz.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#128176;</div>
+                    <h3>Sigorta Desteği</h3>
+                    <p>Anlaşmalı sigorta şirketleriyle kapsamlı kasko desteği ve ücretsiz montaj imkanı.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9889;</div>
+                    <h3>Hızlı Teslimat</h3>
+                    <p>Stoklarımızda 500+ cam çeşidi. Aynı gün değişim ve teslimat imkanı.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#10004;</div>
+                    <h3>Tam Garanti</h3>
+                    <p>Tüm işlerimize işçilik ve malzeme garantisi veriyoruz. Güveniniz bizim için önemli.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">HİZMETLERİMİZ</p>
+                <h2 class="section-title">Kapsamlı Cam Çözümleri</h2>
+                <p class="section-desc">ADAS kalibrasyonundan fleet çözümlerine, her türlü oto cam ihtiyacınız için tek adres.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">&#128249;</div>
+                    <h3>ADAS Kalibrasyonu</h3>
+                    <p>Lane Assist, Radar, Camera ve Collision Prevention sistemleri için profesyonel kalibrasyon.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128663;</div>
+                    <h3>Ön Cam Değişimi</h3>
+                    <p>ADAS kalibrasyonu ile birlikte OEM kalitede ön cam değişimi ve montajı.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128663;</div>
+                    <h3>Yan Cam Değişimi</h3>
+                    <p>Ön ve yan cam değişimi, tamiri ve ses yalıtımlı cam uygulamaları.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128663;</div>
+                    <h3>Arka Cam Değişimi</h3>
+                    <p>Arka cam, tavan camı ve ısıyansıtmalı cam değişimi hizmetleri.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128248;</div>
+                    <h3>Cam Tamiri</h3>
+                    <p>Çatlak, taş darbesi ve kırık tamiri. Hızlı, kalıcı ve sigortalı çözüm.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128188;</div>
+                    <h3>Fleet Solutions</h3>
+                    <p>Kurumsal filo müşterileri için özel cam değişimi, kalibrasyon ve bakım paketleri.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128230;</div>
+                    <h3>Ticari Araç Camları</h3>
+                    <p>Otobüs, kamyon, tır ve iş makineleri için ağır hizmet cam çözümleri.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#128065;</div>
+                    <h3>Mobil Servis</h3>
+                    <p>7/24 yerde cam değişimi ve tamiri. Acil durumlarda hızlı müdahale.</p>
+                    <a href="#contact" class="service-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROCESS ==================== -->
+    <section id="process" class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">ÇALIŞMA SÜRECİMİZ</p>
+                <h2 class="section-title">Nasıl Çalışıyoruz?</h2>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h4>Randevu</h4>
+                        <p>Online veya telefon ile kolay randevu oluşturun.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h4>Araç Kontrolü</h4>
+                        <p>Uzman ekibimiz aracınızı detaylı inceleyerek hasarı belirler.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h4>Hasar Analizi</h4>
+                        <p>Cam hasarı ve ADAS sistemleri üzerinden kapsamlı analiz.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h4>Cam Seçimi</h4>
+                        <p>OEM veya aftermarket cam seçenekleri ile bütçenize en uygun çözüm.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h4>Kalibrasyon</h4>
+                        <p>ADAS sensörleri kalibre edilir, sistem doğrulanır.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">06</div>
+                    <div class="step-content">
+                        <h4>Montaj</h4>
+                        <p>Usta montaj ekibi camı titizlikle yerine getirir.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">07</div>
+                    <div class="step-content">
+                        <h4>Test & Kontrol</h4>
+                        <p>Su testi, ADAS testi ve kalite kontrol tamamlanır.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">08</div>
+                    <div class="step-content">
+                        <h4>Teslimat</h4>
+                        <p>Aracınız teslim edilir ve garanti süreci başlatılır.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INSURANCE ==================== -->
+    <section id="insurance" class="insurance-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">SİGORTA DESTEĞİ</p>
+                <h2 class="section-title">Sözleşmeli Sigorta Değişimi</h2>
+            </div>
+            <div class="insurance-content">
+                <div class="insurance-text">
+                    <p>Anlaşmalı olduğumuz 15+ sigorta şirketiyle kaskolu araç sahiplerine ücretsiz cam değişimi hizmeti sunuyoruz. Sigorta sürecini biz yönetiyoruz, siz aracınızı teslim alın.</p>
+                    <ul class="insurance-list">
+                        <li>Kaskolu hasarlarda ücretsiz değişim</li>
+                        <li>Sigorta şirketiyle direkt iletişim</li>
+                        <li>Hızlı onay ve montaj süreci</li>
+                        <li>Tüm marka ve modeller için geçerli</li>
+                    </ul>
+                </div>
+                <div class="insurance-logos" id="insurance-logos">
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/AksSigorta.jpg" alt="Aks Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/AnaSigorta.jpg" alt="Anadolu Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/BereketSigorta.jpg" alt="Bereket Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/DoğaSigorta.png" alt="Doğa Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/EthicaSigorta.jpg" alt="Ethica Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/EurekoSigorta.png" alt="Eureko Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/OrientSigorta.png" alt="Orient Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/GeneraliSigorta.jpg" alt="Generali" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/HepiyiSigorta.jpg" alt="Hepiyi Sigorta" loading="lazy"></div>
+                    <div class="logo-item"><img src="https://ronaglass.com.tr/img/sigorta/AnkaraSigorta.jpg" alt="Ankara Sigorta" loading="lazy"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ADAS EDUCATION ==================== -->
+    <section id="adas" class="adas-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">ADAS EĞİTİMİ</p>
+                <h2 class="section-title">ADAS Kalibrasyonu Neden Önemli?</h2>
+            </div>
+            <div class="adas-grid">
+                <div class="adas-card">
+                    <div class="adas-icon">&#128064;</div>
+                    <h4>ADAS Nedir?</h4>
+                    <p>Advanced Driver Assistance Systems (ADAS), sürücüyü destekleyen kamera, radar ve sensör tabanlı güvenlik sistemleridir.</p>
+                </div>
+                <div class="adas-card">
+                    <div class="adas-icon">&#9881;</div>
+                    <h4>Neden Kalibrasyon Gerekli?</h4>
+                    <p>Cam değişimi sonrası sensörlerin doğruluğu bozulabilir. Kalibrasyon, ADAS sistemlerinin doğru çalışmasını sağlar.</p>
+                </div>
+                <div class="adas-card">
+                    <div class="adas-icon">&#9888;</div>
+                    <h4>Kalibrasyon Yapılmazsa Ne Olur?</h4>
+                    <p>Yanlış alarmlar, sistemsel hatalar ve kaza riski artar. Hayat kurtaran sistemlerin güvenilirliği korunmalıdır.</p>
+                </div>
+                <div class="adas-card">
+                    <div class="adas-icon">&#128640;</div>
+                    <h4>Hangi Sistemleri Destekliyoruz?</h4>
+                    <p>Lane Assist, Adaptive Cruise Control, Collision Warning, Traffic Sign Recognition ve daha fazlası.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FLEET SOLUTIONS ==================== -->
+    <section id="fleet" class="fleet-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">KURUMSAL ÇÖZÜMLER</p>
+                <h2 class="section-title">Fleet & Kurumsal Hizmetler</h2>
+            </div>
+            <div class="fleet-grid">
+                <div class="fleet-card">
+                    <h4>Kiralık Firmalar</h4>
+                    <p>Filolara özel cam değişimi, kalibrasyon ve bakım paketleri.</p>
+                </div>
+                <div class="fleet-card">
+                    <h4>Bayi & Distribütör</h4>
+                    <p>Yetkili servis ağları için ADAS kalibrasyon desteği.</p>
+                </div>
+                <div class="fleet-card">
+                    <h4>Kamu & Belediye</h4>
+                    <p>Zorlu koşullar için ağır hizmet camları ve hızlı değişim.</p>
+                </div>
+                <div class="fleet-card">
+                    <h4>Lojistik Firmaları</h4>
+                    <p>Tır ve kamyon filoları için özel cam çözümleri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">REFERANSLAR</p>
+                <h2 class="section-title">Bize Güvenenler</h2>
+            </div>
+            <div class="test-grid">
+                <div class="test-card">
+                    <p class="test-quote">"Rona Auto Glass ile çalışmak çok profesyonel bir deneyim. Cam değişimi sürecindeki hız ve kalite gerçekten etkileyici. ADAS kalibrasyonu da kusursuz yapıldı."</p>
+                    <p class="test-author">T.C YARGITAY BAŞKANLIĞI</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Filo araçlarımızın cam değişimlerini Rona Auto Glass'e yaptırıyoruz. Güvenilir, hızlı ve sözleşmeli hizmet. Sigorta sürecini de yönetiyorlar."</p>
+                    <p class="test-author">TUR OTO</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Müşterilerimize önerdiğimiz, güvenilir oto cam hizmeti. Profesyonel ekip, kaliteli malzeme ve garantili iş."</p>
+                    <p class="test-author">OTOKOÇ BİRMOT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">S.S.S.</p>
+                <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-q">Kaskolu araçlara ücretsiz cam montajı nasıl gerçekleştiriliyor? <span>+</span></div>
+                    <div class="faq-a"><p>Kaskolu araç sahipleri, cam değişimi veya onarımı gerektiğinde poliçelerine bağlı olarak ücretsiz hizmet alabilirler. Rona Auto Glass olarak, kaskolu araçlar için gerekli belgeleri inceledikten sonra, cam montajını kasko şartlarına uygun olarak ücretsiz gerçekleştiriyoruz.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Mobil cam montajı ne zaman gereklidir? <span>+</span></div>
+                    <div class="faq-a"><p>Mobil cam montajı, aracınızın camının hasar gördüğü durumlarda, özellikle yolculuk sırasında oluşan çatlaklar veya kırıklar gibi aniden ortaya çıkan durumlarda tercih edilir. Acil durumlarda veya aracınızın bulunduğu yerde hızlı bir çözüme ihtiyaç duyulduğunda mobil hizmetimiz devreye girer.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Kaskosuz araçlarda iskonto nasıl uygulanıyor? <span>+</span></div>
+                    <div class="faq-a"><p>Kaskosuz araç sahipleri için, araç markasına göre %10 ile %30 arasında iskonto uyguluyoruz. Bu, müşterilerimizin bütçelerini düşünerek kaliteli cam hizmetine erişimini kolaylaştırmak amacıyla yapılan bir avantajdır.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Otomobil cam tamiri ne kadar sürede gerçekleştirilir? <span>+</span></div>
+                    <div class="faq-a"><p>Otomobil cam tamiri, hasarın büyüklüğüne ve tipine bağlı olarak değişebilir. Genellikle küçük çatlaklar veya taş darbeleri hızlıca onarılabilir ve bu işlem genellikle birkaç saat içinde tamamlanabilir. Daha büyük hasarlar ise daha fazla zaman alabilir.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Cam değişimi garantili mi? <span>+</span></div>
+                    <div class="faq-a"><p>Evet, Rona Auto Glass olarak yaptığımız her işe tam garanti veriyoruz. Müşterilerimizin güvenliği ve memnuniyeti bizim önceliğimizdir. Bu nedenle, sunduğumuz hizmetlerde tam bir memnuniyet ve güvence sağlamak için çalışıyoruz.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Hangi araç tipleri için cam montajı yapılıyor? <span>+</span></div>
+                    <div class="faq-a"><p>Rona Auto Glass olarak, otomobillerden ticari araçlara, otobüslerden iş makinelerine, traktörlerden kamyonlara ve hatta tren camlarına kadar geniş bir yelpazede cam montajı hizmeti sunuyoruz.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BLOG PREVIEW ==================== -->
+    <section id="blog" class="blog-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">BLOG & REHBERLER</p>
+                <h2 class="section-title">Cam Bakımı & Değişim Rehberleri</h2>
+            </div>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="images/p8.png" alt="Cam Tamiri" class="blog-card-img" loading="lazy">
+                    <div class="blog-card-body">
+                        <span class="blog-card-meta">Cam Tamiri · 12 Haz 2025</span>
+                        <h3>15 Dakikada Cam Tamiri: Mümkün mü?</h3>
+                        <p>Küçük çatlakların erken müdahale ile nasıl 15 dakikada onarıldığını anlatıyoruz. Erken müdahale büyük tasarruf sağlar.</p>
+                        <a href="#contact" class="blog-card-more">Randevu Al →</a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="images/p1.png" alt="Sigorta" class="blog-card-img" loading="lazy">
+                    <div class="blog-card-body">
+                        <span class="blog-card-meta">Sigorta · 28 Haz 2025</span>
+                        <h3>Sigortalı Araç Sahiplerine Özel Avantajlar</h3>
+                        <p>Anlaşmalı sigorta şirketleriyle sözleşmeli cam değişimi hizmeti. Sigorta kapsamında ek ücret ödemenize gerek kalmaz.</p>
+                        <a href="#contact" class="blog-card-more">Detaylı Bilgi →</a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="images/p4.png" alt="Bakım" class="blog-card-img" loading="lazy">
+                    <div class="blog-card-body">
+                        <span class="blog-card-meta">Bakım · 10 Tem 2025</span>
+                        <h3>Oto Cam Bakımı: Dikkat Edilmesi Gerekenler</h3>
+                        <p>Cam ömrünü uzatmak için yapabileceğiniz basit adımlar. Dikiz aynası ve yan camlardaki küçük çatlaklar zamanla büyüyebilir.</p>
+                        <a href="#contact" class="blog-card-more">Rehberi Oku →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">İLETİŞİM</p>
+                <h2 class="section-title">Bize Ulaşın</h2>
+            </div>
+            <div class="contact-grid">
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group"><label for="name" class="sr-only">Adınız Soyadınız</label><input type="text" id="name" placeholder="Adınız Soyadınız" required></div>
+                    <div class="form-group"><label for="email" class="sr-only">E-posta</label><input type="email" id="email" placeholder="E-posta Adresiniz" required></div>
+                    <div class="form-group"><label for="phone" class="sr-only">Telefon</label><input type="tel" id="phone" placeholder="Telefon Numaranız" required></div>
+                    <div class="form-group"><label for="message" class="sr-only">Mesaj</label><textarea id="message" placeholder="Mesajınız / Aracınızın Modeli ve Cam Türü" rows="5" required></textarea></div>
+                    <button type="submit" class="btn-primary">Randevu Talep Et</button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h4>Servis Noktamız</h4>
+                        <p>2474 Cad 4/1 Şaşmaz<br>Etimesgut / Ankara</p>
+                        <a href="https://maps.google.com/?q=2474+Cad+4/1+Şaşmaz+Etimesgut+Ankara" target="_blank" rel="noopener" class="contact-link">Haritada Göster →</a>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Telefon</h4>
+                        <p><a href="tel:+905346943789">0534 694 37 89</a></p>
+                        <p><a href="https://wa.me/905346943789" target="_blank" rel="noopener">WhatsApp ile Yaz</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>Çalışma Saatleri</h4>
+                        <p>Pzt-Cmt: 08:30 - 19:00</p>
+                        <p>Pazar: 10:00 - 17:00</p>
+                        <p class="contact-emergency">Acil: 7/24 Mobil Servis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-bottom"><p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#home" class="logo-text">RONA AUTO GLASS</a>
+                    <p>Camda Şeffaf Çözüm. Ankara'nın güvenilir oto cam merkezi.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/ronaautoglass/" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
+                        <a href="https://www.instagram.com/ronaautoglass/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+                        <a href="https://www.linkedin.com/company/rona-auto-glass" target="_blank" rel="noopener" aria-label="LinkedIn">LN</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Hızlı Erişim</h4>
+                    <a href="#home">Ana Sayfa</a>
+                    <a href="#about">Hakkımızda</a>
+                    <a href="#services">Hizmetler</a>
+                    <a href="#process">Süreç</a>
+                    <a href="#contact">İletişim</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Hizmetler</h4>
+                    <a href="#services">ADAS Kalibrasyonu</a>
+                    <a href="#services">Cam Değişimi</a>
+                    <a href="#services">Cam Tamiri</a>
+                    <a href="#services">Mobil Servis</a>
+                    <a href="#services">Fleet Solutions</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Yasal</h4>
+                    <a href="#privacy">KVKK & Gizlilik</a>
+                    <a href="#privacy">Kullanım Şartları</a>
+                    <a href="#privacy">Çerez Politikası</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır. Ankara Etimesgut'ta kaliteli oto cam hizmeti.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>

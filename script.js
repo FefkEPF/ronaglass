@@ -255,5 +255,5 @@ if (contactForm) {
             window.scrollTo({ top: cinBot, behavior: 'smooth' });
         }
         lastSY = sy;
-    }, {passive: true});
+    }, {passive: false});
 })();

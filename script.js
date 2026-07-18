@@ -317,10 +317,6 @@ if (contactForm) {
     var hint = document.getElementById('cinema-scroll-hint');
     var collection = document.getElementById('collection');
     var texts = [
-        document.getElementById('ct1'),
-        document.getElementById('ct2'),
-        document.getElementById('ct3'),
-        document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
     if (!canvas || !section) return;
@@ -373,10 +369,6 @@ if (contactForm) {
     }
 
     var ranges = [
-        [0.00, 0.16],
-        [0.19, 0.36],
-        [0.39, 0.56],
-        [0.59, 0.76],
         [0.80, 1.00]
     ];
 
@@ -385,45 +377,6 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
-
-    var ct5Locked = false;
-    var lockEndTime = 0;
-    var touchStartY = 0;
-
-    window.addEventListener('wheel', function(e) {
-        if (!ct5Locked || Date.now() >= lockEndTime) return;
-        if (e.deltaY > 0) {
-            e.preventDefault();
-            return false;
-        }
-    }, { passive: false });
-
-    window.addEventListener('touchstart', function(e) {
-        if (e.touches.length > 0) {
-            touchStartY = e.touches[0].clientY;
-        }
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function(e) {
-        if (!ct5Locked || Date.now() >= lockEndTime) return;
-        if (e.touches.length > 0) {
-            var touchY = e.touches[0].clientY;
-            var deltaY = touchStartY - touchY;
-            if (deltaY > 0) {
-                e.preventDefault();
-                return false;
-            }
-        }
-    }, { passive: false });
-
-    window.addEventListener('keydown', function(e) {
-        if (!ct5Locked || Date.now() >= lockEndTime) return;
-        var keys = ['ArrowDown', 'PageDown', ' '];
-        if (keys.indexOf(e.key) !== -1 || e.keyCode === 32 || e.keyCode === 40 || e.keyCode === 34) {
-            e.preventDefault();
-            return false;
-        }
-    });
 
     function onResize() {
         sTop = section.offsetTop;
@@ -444,12 +397,6 @@ if (contactForm) {
         velocity = lerp(velocity, Math.abs(scrollY - lastScrollY), 0.1);
         lastScrollY = scrollY;
         
-        var limitY = sTop + scrollable * 0.88;
-        var hasFinishedLock = ct5Locked && Date.now() >= lockEndTime;
-        if (!hasFinishedLock && scrollY > limitY && scrollY < sTop + sH) {
-            scrollY = limitY;
-        }
-
         if (scrollY > sTop + sH) {
              requestAnimationFrame(update);
              return;
@@ -458,22 +405,8 @@ if (contactForm) {
         var scrolled = scrollY - sTop;
         targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
         
-        if (ct5Locked && Date.now() < lockEndTime) {
-            currentProgress = lerp(currentProgress, 0.90, 0.12);
-        } else {
-            currentProgress = lerp(currentProgress, targetProgress, 0.08);
-            if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
-        }
-
-        if (targetProgress >= 0.80 && targetProgress < 0.98 && !ct5Locked) {
-            ct5Locked = true;
-            lockEndTime = Date.now() + 1200;
-        }
-        
-        if (targetProgress < 0.75) {
-            ct5Locked = false;
-            lockEndTime = 0;
-        }
+        currentProgress = lerp(currentProgress, targetProgress, 0.08);
+        if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
 
         var exactFrame = currentProgress * (framesCount - 1);
         var frameIdx = Math.floor(exactFrame);

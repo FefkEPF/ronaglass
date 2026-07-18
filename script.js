@@ -13,10 +13,15 @@ window.addEventListener('load', function() {
         p += Math.random() * 20 + 6;
         if (p >= 100) { p = 100; clearInterval(iv); }
         progress.style.width = p + '%';
-        if (p === 100) setTimeout(function() {
-            loader.classList.add('hidden');
-            setTimeout(onResize, 350);
-        }, 300);
+        if (p === 100) {
+            setTimeout(function() {
+                loader.classList.add('hidden');
+                setTimeout(function() {
+                    onResize();
+                    requestAnimationFrame(update);
+                }, 120);
+            }, 300);
+        }
     }, 70);
 });
 
@@ -242,6 +247,13 @@ if (contactForm) {
             }
         } else if (lastDrawnIndex >= 0) {
             drawImageSafe(lastDrawnIndex);
+        } else if (loaded === 0) {
+            ctx.fillStyle = '#111';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#c8a45c';
+            ctx.font = '24px Outfit, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
         }
 
         if (fadeToBlack > 0) {
@@ -261,7 +273,7 @@ if (contactForm) {
     setTimeout(function() {
         onResize();
         requestAnimationFrame(update);
-    }, 100);
+    }, 120);
 
     window.addEventListener('touchstart', function(e) {
         isTouch = true;
@@ -305,7 +317,10 @@ if (contactForm) {
                 e.preventDefault();
                 var delta = e.deltaY || 0;
                 var newProgress = currentProgress + delta / scrollable;
-                setProgressFromValue(newProgress * scrollable);
+                targetProgress = Math.max(0, Math.min(1, newProgress));
+                currentProgress = targetProgress;
+                if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
+                if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
                 setScrollFromProgress(currentProgress);
             }
         }

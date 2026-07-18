@@ -61,6 +61,48 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     });
 });
 
+// ============ LOGO GRIDS (insurance / brands) ============
+var insuranceLogos = [
+    'AksSigorta.jpg','AnaSigorta.jpg','BereketSigorta.jpg','Do%C4%9FaSigorta.png',
+    'EthicaSigorta.jpg','EurekoSigorta.png','KuruSigorta.jpg','MagdeburgerSigorta.jpg',
+    'OrientSigorta.png','T%C3%BCrknipponSigorta.jpg','UnicoSigorta.jpg','A1-Photoroom.png',
+    'AL-Photoroom.png','AN-Photoroom.png','H2-Photoroom.png','NE-Photoroom.png',
+    'RA-Photoroom.png','SO-Photoroom.png','TRS-Photoroom.png','ZU-Photoroom.png',
+    '%C5%9EekerSigorta.jpg','GeneraliSigorta.jpg','HepiyiSigorta.jpg','AnkaraSigorta.jpg','AtlasSigorta.jpg'
+];
+var carLogos = [
+    'audi-rona-1.png','bmw-rona-1.png','citroen-rona.png','chery-rona.png',
+    'ds-rona.png','fiat-rona.png','ford-rona2.png','honda-rona.png',
+    'hyundai-rona.png','mazda-rona.png','mercedes-rona.png','mini-rona.png',
+    'nissan-rona.png','peugeot-rona.png','renault-rona.png','seat-rona.png',
+    'skoda-rona.png','toyota-rona.png','volkswagen-rona.png','volvo-rona2.png',
+    'tesla_360.png','mg_360.png','gmc_360.png'
+];
+
+function renderLogoGrid(id, items, base) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = items.map(function(name) {
+        return '<div class="logo-item"><img src="' + base + name + '" alt="" loading="lazy"></div>';
+    }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    renderLogoGrid('insurance-grid', insuranceLogos, 'https://ronaglass.com.tr/img/sigorta/');
+    renderLogoGrid('brands-grid', carLogos, 'https://ronaglass.com.tr/img/car-logos/');
+});
+
+// ============ CONTACT FORM ============
+var contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var b = e.target.querySelector('.btn-primary');
+        if (b) { b.textContent = '✓ Gönderildi!'; b.style.background = '#27ae60'; }
+        setTimeout(function() { if (b) { b.textContent = 'Gönder'; b.style.background = ''; } e.target.reset(); }, 2200);
+    });
+}
+
 // ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
 (function() {
     var canvas = document.getElementById('cinema-canvas');

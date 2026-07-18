@@ -572,9 +572,9 @@
                 </div>
                 <div class="footer-links">
                     <h4>Yasal</h4>
-                    <a href="#privacy">KVKK & Gizlilik</a>
-                    <a href="#privacy">Kullanım Şartları</a>
-                    <a href="#privacy">Çerez Politikası</a>
+                    <a href="#" class="privacy-trigger" data-target="privacy-modal">KVKK & Gizlilik</a>
+                    <a href="#" class="privacy-trigger" data-target="terms-modal">Kullanım Şartları</a>
+                    <a href="#" class="privacy-trigger" data-target="cookies-modal">Çerez Politikası</a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -582,6 +582,57 @@
             </div>
         </div>
     </footer>
+
+    <!-- ==================== MODALS ==================== -->
+    <div class="modal-overlay" id="privacy-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>KVKK & Gizlilik Politikası</h3>
+                <button class="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Rona Auto Glass</strong> olarak kişisel verilerinizin güvenliği bizim için önceliklidir. Bu politika, 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında hazırlanmıştır.</p>
+                <h4>Toplanan Veriler</h4>
+                <p>Randevu formu, iletişim formu ve telefon kayıtları üzerinden adınız, soyadınız, telefon numaranız, e-posta adresiniz ve aracınızla ilgili bilgiler toplanmaktadır.</p>
+                <h4>Verilerin Kullanım Amacı</h4>
+                <p>Toplanan veriler, size hizmet sunmak, randevu oluşturmak, sigorta süreçlerini yönetmek ve size özel teklifler sunmak amacıyla kullanılmaktadır.</p>
+                <h4>Veri Güvenliği</h4>
+                <p>Verileriniz güvenli sunucularda saklanmakta ve yetkisiz erişime karşı korunmaktadır. Verileriniz hiçbir şekilde üçüncü taraflarla paylaşılmaz.</p>
+                <h4>Haklarınız</h4>
+                <p>Kişisel verilerinizle ilgili erişim, düzeltme, silme ve itiraz haklarınız için info@ronaglass.com.tr adresine başvurabilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="terms-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Kullanım Şartları</h3>
+                <button class="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Bu web sitesini kullanarak aşağıdaki şartları kabul etmiş olursunuz. Tüm içerikler yalnızca bilgilendirme amaçlıdır ve kesin hukuki öneri değildir.</p>
+                <h4>Hizmetler</h4>
+                <p>Rona Auto Glass olarak sunulan tüm cam değişimi, tamiri ve kalibrasyon hizmetleri, anlaşmalı sigorta şirketleri ile sözleşmeli olarak yürütülmektedir.</p>
+                <h4>Sorumluluk</h4>
+                <p>Hizmetlerimiz sırasında oluşabilecek arızalardan doğacak sorumluluk, yasal süreçlerimiz çerçevesinde sınırlıdır.</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="cookies-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Çerez Politikası</h3>
+                <button class="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Sitemiz, kullanıcı deneyimini iyileştirmek amacıyla çerezler kullanmaktadır. Çerezler, tarayıcınızda saklanan küçük metin dosyalarıdır.</p>
+                <h4>Çerez Türleri</h4>
+                <p>Zorunlu çerezler (site çalışması için gerekli), analitik çerezler (ziyaret istatistikleri) ve tercih çerezleri (dil ve görünüm tercihleri) kullanılmaktadır.</p>
+                <h4>Çerez Yönetimi</h4>
+                <p>Tarayıcı ayarlarınız üzerinden çerezleri engelleyebilir veya silebilirsiniz. Ancak bu durumda site bazı işlevleri düzgün çalışmayabilir.</p>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

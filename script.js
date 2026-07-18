@@ -168,6 +168,8 @@ if (contactForm) {
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
     var isTouch = false;
+    var touchStartY = 0;
+    var touchDelta = 0;
 
     function onResize() {
         sTop = section.offsetTop;
@@ -177,6 +179,17 @@ if (contactForm) {
     }
     window.addEventListener('resize', onResize);
     onResize();
+
+    function setProgressFromValue(value) {
+        targetProgress = Math.max(0, Math.min(1, value / scrollable));
+        currentProgress = targetProgress;
+        if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
+    }
+
+    function setScrollFromProgress(progress) {
+        var newScroll = sTop + progress * scrollable;
+        window.scrollTo({ top: newScroll, behavior: 'instant' });
+    }
 
     function lerp(start, end, factor) {
         return start + (end - start) * factor;
@@ -193,11 +206,13 @@ if (contactForm) {
              return;
         }
 
-        var scrolled = scrollY - sTop;
-        targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
+        if (!isTouch) {
+            var scrolled = scrollY - sTop;
+            targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
 
-        currentProgress = lerp(currentProgress, targetProgress, 0.08);
-        if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+            currentProgress = lerp(currentProgress, targetProgress, 0.08);
+            if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+        }
 
         var exactFrame = currentProgress * (framesCount - 1);
         var frameIdx = Math.floor(exactFrame);
@@ -250,6 +265,8 @@ if (contactForm) {
 
     window.addEventListener('touchstart', function(e) {
         isTouch = true;
+        touchStartY = e.touches[0].clientY;
+        touchDelta = 0;
         if (section) {
             var rect = section.getBoundingClientRect();
             var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
@@ -265,12 +282,19 @@ if (contactForm) {
             var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
             if (inSection) {
                 e.preventDefault();
+                var currentY = e.touches[0].clientY;
+                var delta = touchStartY - currentY;
+                touchDelta = delta;
+                var newProgress = currentProgress + delta / scrollable;
+                setProgressFromValue(newProgress * scrollable);
+                setScrollFromProgress(currentProgress);
+                touchStartY = currentY;
             }
         }
     }, {passive: false});
 
     window.addEventListener('touchend', function() {
-        setTimeout(function() { isTouch = false; }, 300);
+        setTimeout(function() { isTouch = false; touchDelta = 0; }, 300);
     }, {passive: true});
 
     window.addEventListener('wheel', function(e) {
@@ -279,6 +303,10 @@ if (contactForm) {
             var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
             if (inSection) {
                 e.preventDefault();
+                var delta = e.deltaY || 0;
+                var newProgress = currentProgress + delta / scrollable;
+                setProgressFromValue(newProgress * scrollable);
+                setScrollFromProgress(currentProgress);
             }
         }
     }, {passive: false});
@@ -294,4 +322,5 @@ if (contactForm) {
         }
         lastSY = sy;
     }, {passive: true});
+})();
 })();

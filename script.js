@@ -5,7 +5,7 @@
 ============================================= */
 
 // ============ LOADER ============
-window.addEventListener('load', function() {
+function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
     var p = 0;
@@ -13,17 +13,19 @@ window.addEventListener('load', function() {
         p += Math.random() * 20 + 6;
         if (p >= 100) { p = 100; clearInterval(iv); }
         progress.style.width = p + '%';
-        if (p === 100) {
+        if (p >= 100) {
             setTimeout(function() {
-                loader.classList.add('hidden');
-                setTimeout(function() {
-                    onResize();
-                    requestAnimationFrame(update);
-                }, 120);
-            }, 300);
+                if (loader) loader.classList.add('hidden');
+            }, 250);
         }
     }, 70);
-});
+}
+
+if (document.readyState === 'complete') {
+    startLoader();
+} else {
+    window.addEventListener('load', startLoader);
+}
 
 // ============ NAVBAR ============
 var navbar = document.getElementById('navbar');

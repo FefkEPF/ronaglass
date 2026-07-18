@@ -301,7 +301,7 @@ if (contactForm) {
 // ============ VIDEO CINEMATIC SCROLL ============
 (function() {
     var video = document.getElementById('cinema-video');
-    if (!video) return;
+    var canvas = document.getElementById('cinema-canvas');
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -313,16 +313,19 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!video || !section) return;
+    if (!video || !canvas || !section) return;
 
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = 'metadata';
-    video.pause();
+    var ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     var videoReady = false;
-    var videoDuration = 0;
+    var videoDuration = 13.033;
+    var videoStarted = false;
+    var lastDrawnTime = -1;
 
     video.addEventListener('loadedmetadata', function() {
         videoDuration = video.duration;
@@ -331,17 +334,26 @@ if (contactForm) {
 
     video.addEventListener('canplay', function() {
         videoReady = true;
-        if (!videoDuration && video.duration) {
-            videoDuration = video.duration;
+        if (!videoStarted) {
+            videoStarted = true;
+            video.play().catch(function() {});
+        }
+    });
+
+    video.addEventListener('seeked', function() {
+        if (video.readyState >= 2) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            lastDrawnTime = video.currentTime;
         }
     });
 
     if (video.readyState >= 1) {
         videoReady = true;
-        videoDuration = video.duration || 0;
+        if (video.duration) videoDuration = video.duration;
     }
 
-    var lastTargetProgress = 0;
+    video.src = 'images/hero-video.mp4';
+    video.load();
 
     var ranges = [
         [0.00, 0.16],
@@ -450,21 +462,14 @@ if (contactForm) {
         if (videoReady && videoDuration > 0) {
             var targetTime = currentProgress * videoDuration;
             
-            if (Math.abs(targetTime - video.currentTime) > 0.08) {
+            if (Math.abs(targetTime - video.currentTime) > 0.05) {
                 video.currentTime = targetTime;
             }
-            
-            if (Math.abs(currentProgress - lastTargetProgress) > 0.002) {
-                if (video.paused) {
-                    video.play().catch(function() {});
-                }
-            } else {
-                if (!video.paused && currentProgress < 0.005) {
-                    video.pause();
-                }
-            }
-            
-            lastTargetProgress = currentProgress;
+        }
+
+        if (video.readyState >= 2 && Math.abs(video.currentTime - lastDrawnTime) > 0.01) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            lastDrawnTime = video.currentTime;
         }
 
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
@@ -521,8 +526,12 @@ if (contactForm) {
     
     setTimeout(function() {
         onResize();
+        if (videoReady) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            lastDrawnTime = video.currentTime;
+        }
         requestAnimationFrame(update);
-    }, 100);
+    }, 200);
 
     var lastSY = 0;
     window.addEventListener('scroll', function() {
@@ -535,11 +544,13 @@ if (contactForm) {
             sy = limitY;
         }
 
-        if (sy < sTop - 100 || sy > sTop + sH + 100) {
-            if (!video.paused) video.pause();
-        } else {
-            if (video.paused && videoReady && videoDuration > 0) {
-                video.play().catch(function() {});
+        if (videoReady && videoDuration > 0) {
+            var scrolled = sy - sTop;
+            var progress = Math.max(0, Math.min(1, scrolled / scrollable));
+            var targetTime = progress * videoDuration;
+            
+            if (Math.abs(targetTime - video.currentTime) > 0.03) {
+                video.currentTime = targetTime;
             }
         }
 

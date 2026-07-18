@@ -193,6 +193,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
     .test-grid{grid-template-columns:1fr}
     .cinema-text[data-pos="left"],.cinema-text[data-pos="right"]{left:50%;right:auto;text-align:center;transform:translateX(-50%) translateY(30px)}
     .cinema-text[data-pos="left"].active,.cinema-text[data-pos="right"].active{transform:translateX(-50%) translateY(0)}
+    .cinema-section{height:400vh}
+    .cinema-sticky{will-change:transform}
+    canvas,video{will-change:transform}
+    .slider-section,.discover-section,.collection-section,.story-section,.testimonials-section,.contact-section,.footer{will-change:auto}
 }
 @media(max-width:480px){
     .section-title{font-size:28px}

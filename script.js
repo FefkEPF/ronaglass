@@ -167,6 +167,7 @@ if (contactForm) {
     var targetProgress = 0, currentProgress = 0;
     var lastScrollY = window.pageYOffset;
     var velocity = 0;
+    var isTouch = false;
 
     function onResize() {
         sTop = section.offsetTop;
@@ -247,7 +248,24 @@ if (contactForm) {
         requestAnimationFrame(update);
     }, 100);
 
-    var lastSY = 0;
+    window.addEventListener('touchstart', function() {
+        isTouch = true;
+    }, {passive: true});
+
+    window.addEventListener('touchend', function() {
+        setTimeout(function() { isTouch = false; }, 300);
+    }, {passive: true});
+
+    window.addEventListener('wheel', function(e) {
+        if (!isTouch && section) {
+            var rect = section.getBoundingClientRect();
+            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
+            if (inSection) {
+                e.preventDefault();
+            }
+        }
+    }, {passive: false});
+
     window.addEventListener('scroll', function() {
         var sy = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -258,5 +276,5 @@ if (contactForm) {
             window.scrollTo({ top: cinBot, behavior: 'smooth' });
         }
         lastSY = sy;
-    }, {passive: false});
+    }, {passive: true});
 })();

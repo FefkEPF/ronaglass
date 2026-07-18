@@ -363,4 +363,3 @@ if (contactForm) {
         lastSY = sy;
     }, {passive: true});
 })();
-})();

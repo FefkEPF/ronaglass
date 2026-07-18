@@ -308,10 +308,10 @@ if (contactForm) {
     });
 }
 
-// ============ VIDEO CINEMATIC SCROLL ============
+// ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
 (function() {
-    var video = document.getElementById('cinema-video');
-    if (!video) return;
+    var canvas = document.getElementById('cinema-canvas');
+    if (!canvas) return;
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
@@ -323,43 +323,54 @@ if (contactForm) {
         document.getElementById('ct4'),
         document.getElementById('ct5')
     ];
-    if (!video || !section) return;
+    if (!canvas || !section) return;
 
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.preload = 'auto';
-    video.crossOrigin = 'anonymous';
-    video.src = 'images/hero-video.mp4';
-    video.load();
+    var ctx = canvas.getContext('2d');
+    canvas.width = 1920;
+    canvas.height = 1080;
 
-    var videoReady = false;
-    var videoDuration = 13.033;
-    var userInteracted = false;
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    video.addEventListener('loadedmetadata', function() {
-        videoDuration = video.duration;
-        videoReady = true;
-    });
+    var framesCount = 130;
+    var images = [];
+    var loaded = 0;
+    var lastDrawnIndex = -1;
 
-    video.addEventListener('canplaythrough', function() {
-        videoReady = true;
-        if (!userInteracted) {
-            userInteracted = true;
-            video.play().catch(function() {});
+    function drawImageSafe(index) {
+        if (index >= 0 && index < framesCount && images[index] && images[index].complete) {
+            ctx.globalAlpha = 1;
+            ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+            lastDrawnIndex = index;
         }
-    });
-
-    video.addEventListener('error', function() {
-        console.error('Video yüklenemedi:', video.error);
-    });
-
-    if (video.readyState >= 3) {
-        videoReady = true;
-        if (video.duration) videoDuration = video.duration;
     }
 
-    var lastTargetProgress = 0;
+    for (var i = 1; i <= framesCount; i++) {
+        (function(index) {
+            var img = new Image();
+            var paddedIndex = index < 10 ? '00' + index : index < 100 ? '0' + index : '' + index;
+            img.src = 'images/frame_' + paddedIndex + '.jpg';
+            img.onload = function() {
+                loaded++;
+                if (lastDrawnIndex < 0) {
+                    drawImageSafe(index - 1);
+                }
+            };
+            img.onerror = function() {
+                loaded++;
+            };
+            images[index - 1] = img;
+        })(i);
+    }
+
+    if (loaded === 0) {
+        ctx.fillStyle = '#111';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#c8a45c';
+        ctx.font = '24px Outfit, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
+    }
 
     var ranges = [
         [0.00, 0.16],
@@ -465,24 +476,29 @@ if (contactForm) {
             lockEndTime = 0;
         }
 
-        if (videoReady && videoDuration > 0) {
-            var targetTime = currentProgress * videoDuration;
+        var exactFrame = currentProgress * (framesCount - 1);
+        var frameIdx = Math.floor(exactFrame);
+        var nextFrameIdx = Math.min(framesCount - 1, Math.ceil(exactFrame));
+        var alpha = exactFrame - frameIdx;
+
+        var blurAmount = Math.min(8, velocity * 0.05);
+        if (blurAmount > 0.5) {
+            canvas.style.filter = 'blur(' + blurAmount + 'px)';
+        } else {
+            canvas.style.filter = 'none';
+        }
+
+        if (images[frameIdx] && images[frameIdx].complete) {
+            ctx.globalAlpha = 1;
+            ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
+            lastDrawnIndex = frameIdx;
             
-            if (Math.abs(targetTime - video.currentTime) > 0.08) {
-                video.currentTime = targetTime;
+            if (alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete) {
+                ctx.globalAlpha = alpha;
+                ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
             }
-            
-            if (Math.abs(currentProgress - lastTargetProgress) > 0.002) {
-                if (video.paused) {
-                    video.play().catch(function() {});
-                }
-            } else {
-                if (!video.paused && currentProgress < 0.005) {
-                    video.pause();
-                }
-            }
-            
-            lastTargetProgress = currentProgress;
+        } else if (lastDrawnIndex >= 0) {
+            drawImageSafe(lastDrawnIndex);
         }
 
         if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
@@ -539,12 +555,8 @@ if (contactForm) {
     
     setTimeout(function() {
         onResize();
-        if (videoReady) {
-            video.currentTime = 0;
-            video.play().catch(function() {});
-        }
         requestAnimationFrame(update);
-    }, 200);
+    }, 100);
 
     var lastSY = 0;
     window.addEventListener('scroll', function() {
@@ -555,14 +567,6 @@ if (contactForm) {
         if (!hasFinishedLock && sy > limitY && sy < sTop + sH) {
             window.scrollTo(0, limitY);
             sy = limitY;
-        }
-
-        if (sy < sTop - 100 || sy > sTop + sH + 100) {
-            if (!video.paused) video.pause();
-        } else {
-            if (video.paused && videoReady) {
-                video.play().catch(function() {});
-            }
         }
 
         var cTop = collection ? collection.offsetTop : 0;

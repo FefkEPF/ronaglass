@@ -98,7 +98,6 @@ body {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
     color: var(--text);
-    overflow-x: hidden;
     cursor: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -3167,7 +3166,6 @@ body {
 }
 
 body.menu-open {
-    position: fixed;
     width: 100%;
 }
 
@@ -3244,7 +3242,7 @@ body.menu-open {
         backface-visibility: visible !important;
     }
 
-    /* Optimize cinema section for mobile - FIXED SCROLL */
+    /* Optimize cinema section for mobile - NATIVE SCROLL */
     .cinema-section {
         height: auto !important;
         min-height: 0 !important;
@@ -3253,10 +3251,10 @@ body.menu-open {
 
     .cinema-sticky {
         position: relative !important;
-        height: 100vh;
-        height: calc(var(--vh, 1vh) * 100);
+        height: auto !important;
+        min-height: 100vh;
         top: 0 !important;
-        overflow: hidden;
+        overflow: visible !important;
     }
 
     .cinema-text {

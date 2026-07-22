@@ -3097,7 +3097,6 @@ body {
 /* Prevent 300ms tap delay on iOS */
 * {
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
 }
 
 /* Smooth scroll only on supported devices */
@@ -3250,24 +3249,6 @@ body.menu-open {
 
     .cinema-text {
         padding: 20px;
-    }
-
-    /* Disable Lenis smooth scroll on mobile for better native feel */
-    .lenis.lenis-smooth {
-        scroll-behavior: auto !important;
-    }
-
-    html {
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    body {
-        overflow-x: hidden;
-        position: relative;
-        width: 100%;
     }
 
     /* Better mobile hero video */

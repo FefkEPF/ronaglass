@@ -7,24 +7,26 @@
 // ============ LENIS SMOOTH SCROLL ============
 var lenis = null;
 if (typeof Lenis !== 'undefined') {
-    // Mobile-friendly settings: lower multipliers for smoother scroll
+    // Desktop only: disable on mobile for native scroll feel
     var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    lenis = new Lenis({
-        duration: isMobile ? 1.2 : 1.5,
-        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel: !isMobile,
-        wheelMultiplier: isMobile ? 0.7 : 1.0,
-        touchMultiplier: isMobile ? 0.8 : 1.0,
-        syncTouch: isMobile,
-        syncTouchLerp: 0.05,
-        infinite: false
-    });
+    if (!isMobile) {
+        lenis = new Lenis({
+            duration: 1.5,
+            easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+            smoothWheel: true,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.0,
+            syncTouch: false,
+            syncTouchLerp: 0.05,
+            infinite: false
+        });
 
-    function raf(time) {
-        lenis.raf(time);
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
 }
 
 // ============ LOADER WITH RING ============

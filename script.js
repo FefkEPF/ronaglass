@@ -152,8 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // ============ GALLERY SHOW MORE ============
-var galleryBtn = document.querySelector('.gallery-show-more');
-if (galleryBtn) {
+document.querySelectorAll('.gallery-show-more').forEach(function(galleryBtn) {
     var galleryGrid = galleryBtn.previousElementSibling;
     if (galleryGrid && galleryGrid.classList.contains('gallery-grid')) {
         var galleryItems = galleryGrid.querySelectorAll('.gallery-item');
@@ -168,7 +167,7 @@ if (galleryBtn) {
             galleryBtn.style.display = 'none';
         });
     }
-}
+});
 
 // ============ FAQ ACCORDION & SEARCH FILTER ============
 document.querySelectorAll('.faq-question').forEach(function(btn) {
@@ -259,11 +258,23 @@ if (contactForm) {
                 if (lastDrawnIndex < 0 && index === 1) {
                     drawImageSafe(0);
                 }
+                if (fallbackTimeout) {
+                    clearTimeout(fallbackTimeout);
+                    fallbackTimeout = null;
+                }
             };
             img.onerror = function() { loaded++; };
             images[index - 1] = img;
         })(i);
     }
+
+    var fallbackTimeout = setTimeout(function() {
+        if (loaded === 0) {
+            var fallback = document.createElement('div');
+            fallback.className = 'cinema-fallback';
+            canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
+        }
+    }, 3000);
 
     var sTop = 0, sH = 0, vH = 0, scrollable = 1;
     var targetProgress = 0, currentProgress = 0;
@@ -301,7 +312,7 @@ if (contactForm) {
         }
 
         // Dynamic text overlay toggles
-        if (txt1) txt1.classList.toggle('active', currentProgress >= 0.02 && currentProgress < 0.32);
+        if (txt1) txt1.classList.toggle('active', currentProgress >= 0.05 && currentProgress < 0.32);
         if (txt2) txt2.classList.toggle('active', currentProgress >= 0.36 && currentProgress < 0.65);
         if (txt3) txt3.classList.toggle('active', currentProgress >= 0.68 && currentProgress < 0.94);
 

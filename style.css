@@ -32,6 +32,11 @@
     box-sizing: border-box;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 html {
     scroll-behavior: auto !important;
 }
@@ -65,6 +70,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     line-height: 1.6;
+}
+
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
 
 ::selection {
@@ -322,6 +332,11 @@ body {
     color: var(--gold);
 }
 
+.mobile-menu-cta {
+    margin-top: 20px;
+    display: inline-block;
+}
+
 /* ==================== CINEMA HERO SCROLL SECTION ==================== */
 .cinema-section {
     position: relative;
@@ -350,6 +365,15 @@ body {
     background: #000;
     will-change: transform;
     transform: translateZ(0);
+}
+
+.cinema-sticky canvas + .cinema-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url('images/logo.png') center/contain no-repeat, #000;
+    opacity: 0.5;
 }
 
 .cinema-overlay {
@@ -742,10 +766,24 @@ body {
     font-weight: 300;
 }
 
+/* ==================== UTILITY CLASSES ==================== */
+.text-gold { color: var(--gold); }
+.text-left { text-align: left; }
+.footer-phone-link { color: #fff; text-decoration: none; }
+.footer-email-link { color: var(--dim); text-decoration: none; }
+.footer-phone-link:hover, .footer-email-link:hover {
+    color: var(--text);
+}
+
 /* ==================== SECTION HEADERS ==================== */
 .section-header {
     text-align: center;
     margin-bottom: 50px;
+}
+
+.section-header-offset {
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 
 .section-tag {
@@ -908,6 +946,7 @@ body {
     line-height: 1.6;
     margin-bottom: 24px;
     font-weight: 300;
+    flex: 1;
 }
 
 /* ==================== REAL WORKSHOP GALLERY GRID ==================== */
@@ -989,6 +1028,11 @@ body {
     border-color: var(--gold);
 }
 
+.articles-section {
+    padding: 90px 0;
+    background: var(--bg);
+}
+
 /* ==================== BLOG GRID ==================== */
 .blog-grid {
     display: grid;
@@ -1065,6 +1109,7 @@ body {
     line-height: 1.7;
     font-weight: 300;
     margin-bottom: 24px;
+    flex: 1;
 }
 
 /* ==================== FAQ SEARCH ==================== */
@@ -1115,6 +1160,10 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-full {
+    width: 100%;
+}
+
 .btn-secondary {
     padding: 14px 32px;
     background: transparent;
@@ -1137,6 +1186,11 @@ body {
     color: var(--gold);
     background: rgba(212, 175, 55, 0.08);
 }
+
+.text-gold { color: var(--gold); }
+.text-left { text-align: left; }
+.footer-phone-link { color: #fff; text-decoration: none; }
+.footer-email-link { color: var(--dim); text-decoration: none; }
 
 /* ==================== PARTNERS & CAR BRANDS ==================== */
 .partners-section {
@@ -1241,6 +1295,8 @@ body {
     object-fit: contain;
     border-radius: 8px;
     transition: transform var(--t);
+    min-height: 100px;
+    background: var(--bg-card);
 }
 
 .ref-card:hover .ref-img {
@@ -1529,6 +1585,12 @@ body {
     border-top: 1px solid var(--border);
 }
 
+.story-section-alt {
+    padding: 90px 0;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+}
+
 .story-container {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -1586,6 +1648,10 @@ body {
 .story-content {
     display: flex;
     flex-direction: column;
+}
+
+.story-content .section-tag {
+    text-align: left;
 }
 
 .story-text p {
@@ -1666,6 +1732,11 @@ body {
     color: var(--gold-light);
 }
 
+.section-actions {
+    text-align: center;
+    margin-top: 36px;
+}
+
 .map-container {
     border-radius: var(--r-lg);
     overflow: hidden;
@@ -1712,4 +1783,19 @@ body {
     .hero-features { grid-template-columns: 1fr; }
     .story-stats { grid-template-columns: 1fr; }
     .floating-cta { bottom: 16px; right: 16px; }
+    .page-hero { padding: 120px 0 40px; }
+    .section-header { margin-bottom: 36px; }
+    .highlights-section, .services-section, .gallery-section, .references-section, .contact-section, .faq-section, .story-section, .story-section-alt { padding: 60px 0; }
+    .hero-video-section, .presentation-section { padding: 60px 0; }
+}
+
+@media(max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .ref-grid { grid-template-columns: 1fr; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .navbar { padding: 12px 16px; }
+    .page-hero { padding: 100px 0 32px; }
+    .section-header { margin-bottom: 28px; }
+    .highlights-section, .services-section, .gallery-section, .references-section, .contact-section, .faq-section, .story-section, .story-section-alt { padding: 48px 0; }
+    .hero-video-section, .presentation-section { padding: 48px 0; }
 }

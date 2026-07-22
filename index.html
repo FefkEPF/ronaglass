@@ -3,53 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rona Auto Glass - Ankara Etimesgut'ta oto cam değişimi, cam tamiri, tuning cam ve daha fazlası. Sözleşmeli sigorta kabul eden profesyonel oto cam servisi.">
-    <meta property="og:title" content="Rona Auto Glass | Oto Cam Değişimi & Tamiri">
-    <meta property="og:description" content="Ankara'nın güvenilir oto cam merkezi. Hızlı cam değişimi, sözleşmeli sigorta, profesyonel montaj.">
-    <title>Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara</title>
-    <link rel="stylesheet" href="style.css?v=3">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <meta name="description" content="Rona Auto Glass - Ankara Etimesgut Şaşmaz'da kaskolu araçlara ücretsiz cam değişimi, 15 dakikada cam tamiri, yerinde mobil cam montajı. Güvenilir ve garantili oto cam servisi.">
+    <meta name="keywords" content="rona auto glass, ankara oto cam, şaşmaz oto cam, etimesgut oto cam, kaskolu cam değişimi, 15 dakika cam tamiri, mobil cam montajı">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.position" content="39.9390286;32.7079112">
+    <meta name="geo.region" content="TR-06">
+    <meta name="geo.placename" content="Ankara, Etimesgut, Şaşmaz">
+    <link rel="canonical" href="https://ronaglass.com.tr/index.html">
+    <meta property="og:title" content="Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara Şaşmaz">
+    <meta property="og:description" content="Kaskonuz bozulmadan sigortalı cam değişimi, 15 dakikada profesyonel tamir, mobil servis imkanı.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ronaglass.com.tr/">
+    <meta property="og:image" content="https://ronaglass.com.tr/images/logo.png">
+
+    <title>Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara Şaşmaz</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    <link rel="stylesheet" href="style.css?v=13">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Rona Auto Glass",
+      "image": "https://ronaglass.com.tr/images/logo.png",
+      "@id": "https://ronaglass.com.tr/#organization",
+      "url": "https://ronaglass.com.tr/",
+      "telephone": "+905346943789",
+      "email": "info@ronaglass.com.tr",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2474 Cad 4/1 Şaşmaz",
+        "addressLocality": "Etimesgut",
+        "addressRegion": "Ankara",
+        "postalCode": "06790",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.9390286,
+        "longitude": 32.7079112
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:30",
+          "closes": "19:00"
+        }
+      ],
+      "priceRange": "$$",
+      "areaServed": ["Ankara", "Etimesgut", "Şaşmaz", "Batıkent", "Ümitköy", "Çayyolu", "Sincan", "Yenimahalle"]
+    }
+    </script>
 </head>
 <body>
-    <!-- Loader -->
-    <div class="loader" id="loader" style="display:flex;align-items:center;justify-content:center;position:fixed;inset:0;background:#050505;z-index:100000;">
+    <!-- LOADER -->
+    <div class="loader" id="loader">
         <div class="loader-inner">
-            <div class="logo-text" style="font-size:24px;margin-bottom:20px;letter-spacing:8px;font-weight:200;">RONA</div>
+            <img src="images/logo.png" alt="Rona Auto Glass" class="loader-logo">
             <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
-            <p class="loader-text">Deneyim Yükleniyor</p>
+            <p class="loader-text">Camda Şeffaf Çözüm Yükleniyor</p>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <div class="nav-trigger"></div>
+    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
-        <a href="#home" class="logo-img"><img src="images/logo.png" alt="Rona Auto Glass"></a>
+        <a href="index.html" class="logo-brand">
+            <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+            <div class="logo-text-wrapper">
+                <span class="logo-main">RONA</span>
+                <span class="logo-sub">AUTO GLASS</span>
+            </div>
+        </a>
         <ul class="nav-links">
-            <li><a href="#home" class="nav-link active">Ana Sayfa</a></li>
-            <li><a href="#collection" class="nav-link">Hizmetler</a></li>
-            <li><a href="#contact" class="nav-link">İletişim</a></li>
+            <li><a href="index.html" class="nav-link active">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html" class="nav-link">Hakkımızda</a></li>
+            <li><a href="hizmetlerimiz.html" class="nav-link">Hizmetlerimiz</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="sss.html" class="nav-link">S.S.S</a></li>
+            <li><a href="bize-ulasin.html" class="nav-link">Bize Ulaşın</a></li>
         </ul>
         <div class="nav-right">
-            <a href="tel:+905346943789" class="nav-phone" style="color:var(--text);text-decoration:none;font-size:13px;letter-spacing:1px;">0534 694 37 89</a>
-            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            <a href="tel:+905346943789" class="nav-phone-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>0534 694 37 89</span>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobile-menu">
         <ul>
-            <li><a href="#home" class="mobile-link">Ana Sayfa</a></li>
-            <li><a href="#collection" class="mobile-link">Hizmetler</a></li>
-            <li><a href="#contact" class="mobile-link">İletişim</a></li>
+            <li><a href="index.html" class="mobile-link active">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html" class="mobile-link">Hakkımızda</a></li>
+            <li><a href="hizmetlerimiz.html" class="mobile-link">Hizmetlerimiz</a></li>
+            <li><a href="blog.html" class="mobile-link">Blog</a></li>
+            <li><a href="sss.html" class="mobile-link">S.S.S</a></li>
+            <li><a href="bize-ulasin.html" class="mobile-link">Bize Ulaşın</a></li>
         </ul>
+        <div class="mobile-contact-info">
+            <a href="tel:+905346943789" class="btn-primary" style="margin-top:20px;display:inline-block;">Hemen Ara: 0534 694 37 89</a>
+        </div>
     </div>
 
-    <!-- ==================== CINEMATIC SCROLL IMAGE SEQUENCE ==================== -->
+    <!-- ==================== CINEMATIC CANVAS HERO SCROLL ==================== -->
     <section id="home" class="cinema-section">
-        <div class="cinema-sticky" id="cinema-sticky">
-            <canvas id="cinema-canvas" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;background:#000;"></canvas>
+        <div class="cinema-sticky">
+            <canvas id="cinema-canvas"></canvas>
             <div class="cinema-overlay"></div>
             <div class="cinema-progress-bar"><div class="cinema-progress-fill" id="cinema-progress-fill"></div></div>
+
+            <div class="cinema-text" id="cinema-text-1" data-pos="center">
+                <p class="cinema-tag">— ANKARA ETİMESGUT ŞAŞMAZ —</p>
+                <h1>CAMDAKİ ŞEFFAF ÇÖZÜM<br><em>RONA AUTO GLASS</em></h1>
+                <p class="cinema-sub">Kaskonuz bozulmadan sigortalı cam değişimi ve 15 dakikada garantili taş tamiri.</p>
+                <a href="#video-presentation" class="btn-cinema">İnceleyin ↓</a>
+            </div>
+
+            <div class="cinema-text" id="cinema-text-2" data-pos="left">
+                <p class="cinema-tag">— KASKOLU ARAÇLARA ÖZEL —</p>
+                <h2>SÖZLEŞMELİ SİGORTA İLE<br><em>ÜCRETSİZ CAM MONTAJI</em></h2>
+                <p class="cinema-sub">25+ Anlaşmalı sigorta şirketi ile hasarsızlık indiriminiz korunarak orijinal standartta cam değişimi.</p>
+                <a href="hakkimizda.html" class="btn-cinema">Kurumsal Detaylar ↓</a>
+            </div>
+
+            <div class="cinema-text" id="cinema-text-3" data-pos="right">
+                <p class="cinema-tag">— MOBİL SERVİS 7/24 —</p>
+                <h2>ADRESİNİZDE YERİNDE<br><em>CAM MONTAJI & VALE</em></h2>
+                <p class="cinema-sub">Ev ya da iş yerinizde, zaman kaybetmeden uzman ekibimizle adresinizde hızlı cam değişimi.</p>
+                <a href="bize-ulasin.html" class="btn-cinema">Randevu Alın ↓</a>
+            </div>
 
             <div class="cinema-scroll-hint" id="cinema-scroll-hint">
                 <div class="cinema-mouse"><div class="cinema-mouse-dot"></div></div>
@@ -59,150 +146,281 @@
         </div>
     </section>
 
-    <!-- ==================== SLIDER (HERO) ==================== -->
-    <section id="slider" class="slider-section">
-        <div class="slider-inner">
-            <p class="section-tag">Cam TAMİRİNİN MERKEZİ</p>
-            <h1 class="slider-title">CAMDAKİ ŞEFFAF ÇÖZÜM <em>RONA AUTO GLASS</em></h1>
-            <p class="slider-sub">Güvenli Yolculuklar İçin Hızlı ve Kaliteli Çözümler!</p>
-            <div class="slider-features">
-                <div class="feature"><span class="feature-icon">✓</span><span>Hızlı Çözüm</span></div>
-                <div class="feature"><span class="feature-icon">✓</span><span>En Kaliteli Camlar</span></div>
-                <div class="feature"><span class="feature-icon">✓</span><span>Sözleşmeli Değişim</span></div>
-                <div class="feature"><span class="feature-icon">✓</span><span>Profesyonel Ekip</span></div>
-            </div>
-            <a href="#collection" class="btn-primary" style="margin-top:36px;">Hizmetleri Keşfedin</a>
-        </div>
-    </section>
+    <!-- ==================== HERO SECTION WITH MAIN VIDEO ==================== -->
+    <section class="hero-video-section" id="video-presentation">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">CAM TAMİRİNİN MERKEZİ</div>
+                    <h2 class="hero-title">Güvenli Yolculuklar İçin<br><em>Hızlı & Kaliteli Çözümler</em></h2>
+                    <p class="hero-subtitle">Ankara Etimesgut Şaşmaz servis noktamızda kaskolu araçlara ücretsiz cam değişimi, 15 dakikada taş tamiri ve mobil montaj hizmeti vermekteyiz.</p>
 
-    <!-- ==================== BLACK TRANSITION (KEŞFET) ==================== -->
-    <section id="discover" class="discover-section">
-        <div class="discover-inner">
-            <p class="section-tag">— PROFESYONEL EKİP —</p>
-            <h2 class="discover-title">Keşfet</h2>
-            <a href="#collection" class="btn-cinema">Hizmetler ↓</a>
-        </div>
-    </section>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span class="feature-text">Hızlı Çözüm (15 Dk)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🚗</span>
+                            <span class="feature-text">En Kaliteli Orijinal Camlar</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🤝</span>
+                            <span class="feature-text">Sözleşmeli Sigortalı Değişim</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">👥</span>
+                            <span class="feature-text">Uzman & Profesyonel Ekip</span>
+                        </div>
+                    </div>
 
-    <!-- ==================== COLLECTION / SERVICES ==================== -->
-    <section id="collection" class="collection-section">
-        <div class="section-header">
-            <p class="section-tag">HİZMETLER</p>
-            <h2 class="section-title">Cam Hizmetlerimiz</h2>
-            <p class="section-desc">Oto cam değişimi, tamiri ve tuning hizmetlerimiz ile aracınızın güvenliğini sağlayın.</p>
-        </div>
+                    <div class="hero-actions">
+                        <a href="bize-ulasin.html" class="btn-primary">Hemen Fiyat / Randevu Al</a>
+                        <a href="hizmetlerimiz.html" class="btn-secondary">Hizmetlerimiz</a>
+                    </div>
+                </div>
 
-        <div class="product-grid" id="product-grid"></div>
-    </section>
-
-    <!-- ==================== BRAND STORY ==================== -->
-    <section id="story" class="story-section">
-        <div class="story-container">
-            <div class="story-image">
-                <img src="images/craftsmanship.png" alt="Rona Auto Glass Atölye">
-            </div>
-            <div class="story-content">
-                <p class="section-tag">HİKAYEMİZ</p>
-                <h2 class="section-title">Güvenli Yolculuklar İçin Şeffaf Çözüm</h2>
-                <p class="story-text">Rona Auto Glass olarak Ankara Etimesgut'ta hizmet veren ekibimiz, oto cam değişimi ve tamiri alanında yıllara dayanan deneyime sahiptir. Alanında uzman ekibimiz, yüksek kaliteli malzemeler ve modern ekipmanlar kullanarak güvenilir ve uzun ömürlü çözümler sunar. İster küçük bir çatlak, ister daha büyük bir hasar olsun, her duruma özel tamir yöntemlerimizle aracınızın camını ilk günkü gibi sağlam ve güvenli hale getiriyoruz.</p>
-                <a href="#collection" class="btn-primary" style="margin-top:20px;display:inline-block;">Hizmetlerimizi İnceleyin</a>
+                <div class="hero-video-wrapper">
+                    <video autoplay muted loop playsinline poster="images/IMG_8634.png">
+                        <source src="video/15-dakika-degisim.mp4" type="video/mp4">
+                    </video>
+                    <div class="hero-rating-badge">
+                        <span class="rating-title">RONA AUTO GLASS İLE YOLDA GÜVENDESİNİZ</span>
+                        <span class="stars">★★★★★</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== INSURANCE PARTNERS ==================== -->
-    <section id="insurance" class="insurance-section">
-        <div class="section-header">
-            <p class="section-tag">ANLAŞMALI SIGORTA ŞİRKETLERİ</p>
-            <h2 class="section-title">Sözleşmeli Değişim</h2>
-            <p class="section-desc">Aşağıdaki sigorta şirketleriyle anlaşmalı değişim imkanımız bulunmaktadır.</p>
+    <!-- ==================== PRESENTATION VIDEO SECTION ==================== -->
+    <section class="presentation-section">
+        <div class="container">
+            <div class="presentation-grid">
+                <div class="presentation-video-box">
+                    <video controls autoplay muted loop playsinline poster="images/IMG_8611.jpeg">
+                        <source src="video/Edit.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="presentation-content">
+                    <p class="section-tag">TAMİR & MONTAJ SÜRECİMİZ</p>
+                    <h2>Hizmetlerimizi Keşfedin:<br><em style="color:var(--gold);">Cam Tamiri Sürecimiz</em></h2>
+                    <p>Aracınızın camında oluşan en küçük bir çatlak bile zamanla büyüyerek hem güvenliğinizi tehlikeye atabilir hem de daha maliyetli sorunlara yol açabilir. Bu nedenle, cam hasarlarını hızlı ve profesyonel bir şekilde onarmak oldukça önemlidir.</p>
+                    <p>Videomuzda, cam tamiri sürecinin tüm aşamalarını detaylı bir şekilde görebilirsiniz. Alanında uzman ekibimiz, yüksek kaliteli malzemeler ve modern ekipmanlar kullanarak, güvenilir ve uzun ömürlü çözümler sunar.</p>
+                    <a href="bize-ulasin.html" class="btn-primary">Bizimle İletişime Geçin →</a>
+                </div>
+            </div>
         </div>
-        <div class="logo-grid" id="insurance-grid"></div>
     </section>
 
-    <!-- ==================== CAR BRANDS ==================== -->
-    <section id="brands" class="brands-section">
-        <div class="section-header">
-            <p class="section-tag">DESTEKLENEN MARKALAR</p>
-            <h2 class="section-title">Her Marka Araç İçin</h2>
+    <!-- ==================== HIGHLIGHTS ==================== -->
+    <section class="highlights-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">NEDEN RONA AUTO GLASS?</p>
+                <h2 class="section-title">Ayrıcalıklı Oto Cam Standartları</h2>
+                <p class="section-desc">Müşteri memnuniyetini ve sürüş güvenliğini odağına alan profesyonel servis çözümleri.</p>
+            </div>
+
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">🛡️</div>
+                    <h3>Kaskonuz Bozulmaz</h3>
+                    <p>Anlaşmalı sigorta şirketlerimiz bünyesinde araç kaskonuz bozulmadan ve hasarsızlığınız etkilenmeden ücretsiz cam değişimi sunuyoruz.</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🚚</div>
+                    <h3>Yerinde Mobil Montaj</h3>
+                    <p>7/24 mobil servis ekibimiz ile adresinizde, iş yerinizde veya bulunduğunuz noktada hızlı ve garantili cam montajı gerçekleştiriyoruz.</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🏷️</div>
+                    <h3>%30'a Varan İskonto</h3>
+                    <p>Kaskosuz araç sahiplerine özel marka ve modele göre %10 ile %30 arasında özel indirim ve uygun fiyat garantisi sağlıyoruz.</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">⏱️</div>
+                    <h3>15 Dakikada Tamir</h3>
+                    <p>Camdaki küçük çatlak ve taş vuruklarını ilerlemeden 15 dakika içerisinde yüksek kaliteli reçine teknolojimizle tamir ediyoruz.</p>
+                </div>
+            </div>
         </div>
-        <div class="logo-grid" id="brands-grid"></div>
+    </section>
+
+    <!-- ==================== REAL WORKSHOP GALLERY ==================== -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">ATÖLYEMİZ & UYGULAMALARIMIZ</p>
+                <h2 class="section-title">Gerçek Atölye Ve Montaj Görsellerimiz</h2>
+                <p class="section-desc">Ankara Etimesgut Şaşmaz servis noktamızda gerçekleştirdiğimiz profesyonel cam montajı ve tamir çalışmalarımız.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/IMG_8585.jpeg" alt="Rona Auto Glass Montaj" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Profesyonel Cam Değişimi</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8587.jpeg" alt="Rona Auto Glass Atölye" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Orijinal Cam Stokları</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8590.jpeg" alt="Rona Auto Glass İşçilik" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Hassas İşçilik & Montaj</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8594.jpeg" alt="Rona Auto Glass Servis" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Servis Noktamız</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8601.jpeg" alt="Rona Auto Glass Ön Cam" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Ön Cam Değişimi</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8611.jpeg" alt="Rona Auto Glass Tamir" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">15 Dakikada Taş Tamiri</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8623.jpeg" alt="Rona Auto Glass Araç" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">Lüks Araç Cam Değişimi</span></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/IMG_8634.png" alt="Rona Auto Glass Mobil Servis" loading="lazy">
+                    <div class="gallery-overlay"><span class="gallery-title">7/24 Mobil Servis Aracı</span></div>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:36px;">
+                <a href="hizmetlerimiz.html" class="btn-secondary">Tüm Galeri & Uygulamaları Gör →</a>
+            </div>
+        </div>
     </section>
 
     <!-- ==================== REFERENCES ==================== -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="section-header">
-            <p class="section-tag">REFERANSLARIMIZ</p>
-            <h2 class="section-title">Bize Güvenenler</h2>
-        </div>
-        <div class="ref-grid">
-            <div class="ref-card">
-                <img src="https://ronaglass.com.tr/img/kontrat1.png" alt="T.C Yargıtay" class="ref-img">
-                <div>
-                    <strong>T.C Yargıtay Başkanlığı</strong>
-                    <span class="ref-badge">Sözleşme Yenilemesi</span>
-                </div>
+    <section class="references-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">KURUMSAL GÜVEN</p>
+                <h2 class="section-title">Resmi Referanslarımız</h2>
+                <p class="section-desc">Sözleşmeli olarak cam değişim ve bakım hizmeti verdiğimiz kurumsal referanslarımız.</p>
             </div>
-            <div class="ref-card">
-                <img src="https://ronaglass.com.tr/img/turoto.jpg" alt="Tur Oto" class="ref-img">
-                <div>
-                    <strong>Tur Oto</strong>
-                    <span class="ref-badge">Sözleşme Yenilemesi</span>
+
+            <div class="ref-grid">
+                <div class="ref-card">
+                    <img src="images/kontrat1.png" alt="T.C Yargıtay Başkanlığı" class="ref-img">
+                    <div class="ref-info">
+                        <strong>T.C Yargıtay Başkanlığı</strong>
+                        <span class="ref-badge">Sözleşme Yenilemesi</span>
+                    </div>
                 </div>
-            </div>
-            <div class="ref-card">
-                <img src="https://ronaglass.com.tr/img/birmot.jpg" alt="Otokoç Birmot" class="ref-img">
-                <div>
-                    <strong>Otokoç Birmot Otomotiv</strong>
-                    <span class="ref-badge">Sözleşme Yenilemesi</span>
+                <div class="ref-card">
+                    <img src="images/turoto.jpg" alt="Tur Oto" class="ref-img">
+                    <div class="ref-info">
+                        <strong>Tur Oto</strong>
+                        <span class="ref-badge">Sözleşme Yenilemesi</span>
+                    </div>
                 </div>
-            </div>
-            <div class="ref-card">
-                <img src="https://ronaglass.com.tr/img/kontrat2.png" alt="Intercity" class="ref-img">
-                <div>
-                    <strong>Intercity Ankara Bölge Müdürlüğü</strong>
-                    <span class="ref-badge">Sözleşme Yenilemesi</span>
+                <div class="ref-card">
+                    <img src="images/birmot.jpg" alt="Otokoç Birmot Otomotiv" class="ref-img">
+                    <div class="ref-info">
+                        <strong>Otokoç Birmot Otomotiv</strong>
+                        <span class="ref-badge">Sözleşme Yenilemesi</span>
+                    </div>
                 </div>
-            </div>
-            <div class="ref-card">
-                <img src="https://ronaglass.com.tr/img/kontrat4.png" alt="Memur-Sen" class="ref-img">
-                <div>
-                    <strong>Memur-Sen</strong>
-                    <span class="ref-badge">Sözleşme Yenilemesi</span>
+                <div class="ref-card">
+                    <img src="images/kontrat2.png" alt="Intercity Ankara Bölge" class="ref-img">
+                    <div class="ref-info">
+                        <strong>Intercity Ankara Bölge</strong>
+                        <span class="ref-badge">Sözleşme Yenilemesi</span>
+                    </div>
+                </div>
+                <div class="ref-card">
+                    <img src="images/kontrat4.png" alt="Memur-Sen" class="ref-img">
+                    <div class="ref-info">
+                        <strong>Memur-Sen Konfederasyonu</strong>
+                        <span class="ref-badge">Sözleşme Yenilemesi</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== CONTACT ==================== -->
-    <section id="contact" class="contact-section">
-        <div class="section-header"><p class="section-tag">İLETİŞİM</p><h2 class="section-title">Bize Ulaşın</h2></div>
-        <div class="contact-grid">
-            <form class="contact-form" id="contact-form">
-                <div class="form-group"><input type="text" placeholder="Adınız Soyadınız" required></div>
-                <div class="form-group"><input type="email" placeholder="E-posta Adresiniz" required></div>
-                <div class="form-group"><input type="tel" placeholder="Telefon Numaranız" required></div>
-                <div class="form-group"><textarea placeholder="Mesajınız / Aracınızın Modeli ve Cam Türü" rows="5" required></textarea></div>
-                <button type="submit" class="btn-primary">Gönder</button>
-            </form>
-            <div class="contact-info">
-                <div class="contact-card"><h4>Servis Noktamız</h4><p>2474 Cad 4/1 Şaşmaz<br>Etimesgut / Ankara</p></div>
-                <div class="contact-card"><h4>İletişim</h4><p>info@ronaglass.com.tr<br>0534 694 37 89</p></div>
-                <div class="contact-card"><h4>Çalışma Saatleri</h4><p>Pzt-Cmt: 08:30-19:00<br>Pazar: 10:00-17:00</p></div>
+    <!-- ==================== PARTNERS PREVIEW ==================== -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-tag">ANLAŞMALI SİGORTA ŞİRKETLERİ</p>
+                <h2 class="section-title">Kaskonuz Bozulmadan Ücretsiz Değişim</h2>
+                <p class="section-desc">Aşağıdaki sigorta şirketleri üzerinden kaskonuz bozulmadan cam değişimi yaptırabilirsiniz.</p>
             </div>
+            <div class="logo-grid" id="insurance-grid"></div>
+
+            <div class="section-header" style="margin-top:60px;margin-bottom:30px;">
+                <p class="section-tag">HER MARKA & MODEL</p>
+                <h2 class="section-title">Hizmet Verdiğimiz Araç Markaları</h2>
+            </div>
+            <div class="logo-grid" id="brands-grid"></div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FLOATING CTA -->
+    <div class="floating-cta">
+        <a href="https://wa.me/905346943789?text=Merhaba,%20oto%20cam%20fiyat%C4%B1%20almak%20istiyorum." target="_blank" class="cta-btn whatsapp" aria-label="WhatsApp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>WhatsApp</span>
+        </a>
+        <a href="tel:+905346943789" class="cta-btn phone" aria-label="Telefon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Hemen Ara</span>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand"><a href="index.html#home" class="logo-text" style="font-size:20px;letter-spacing:6px;font-weight:200;margin-bottom:10px;display:inline-block;">RONA AUTO GLASS</a><p>Camda Şeffaf Çözüm.</p></div>
-            <div class="footer-links"><h4>Sayfalar</h4><a href="#home">Ana Sayfa</a><a href="#collection">Hizmetler</a><a href="#story">Hikayemiz</a></div>
-            <div class="footer-links"><h4>İletişim</h4><a href="tel:+905346943789">0534 694 37 89</a><a href="mailto:info@ronaglass.com.tr">E-posta</a></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-brand">
+                        <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+                        <div class="logo-text-wrapper">
+                            <span class="logo-main">RONA</span>
+                            <span class="logo-sub">AUTO GLASS</span>
+                        </div>
+                    </a>
+                    <p>Ankara Etimesgut Şaşmaz'da kaskolu araçlara ücretsiz cam değişimi, 15 dakikada taş tamiri ve 7/24 mobil montaj hizmeti.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Sayfalar</h4>
+                    <a href="index.html">Ana Sayfa</a>
+                    <a href="hakkimizda.html">Hakkımızda</a>
+                    <a href="hizmetlerimiz.html">Hizmetlerimiz</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="sss.html">S.S.S</a>
+                    <a href="bize-ulasin.html">Bize Ulaşın</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Hizmetler</h4>
+                    <a href="hizmetlerimiz.html">Binek Araç Camı</a>
+                    <a href="hizmetlerimiz.html">Kaskolu Ücretsiz Değişim</a>
+                    <a href="hizmetlerimiz.html">15 Dk Çatlak Tamiri</a>
+                    <a href="hizmetlerimiz.html">Ticari & Tır Camı</a>
+                    <a href="hizmetlerimiz.html">Traktör & Kabin Camı</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Servis İletişim</h4>
+                    <p>📍 2474 Cad 4/1 Şaşmaz, Etimesgut/Ankara</p>
+                    <p>📞 <a href="tel:+905346943789" style="color:#fff;text-decoration:none;">0534 694 37 89</a></p>
+                    <p>✉️ <a href="mailto:info@ronaglass.com.tr" style="color:var(--dim);text-decoration:none;">info@ronaglass.com.tr</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p></div>
     </footer>
 
-    <script src="script.js?v=7"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js?v=13"></script>
 </body>
 </html>

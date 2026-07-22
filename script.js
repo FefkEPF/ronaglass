@@ -1,92 +1,107 @@
 /* =============================================
-   RONA AUTO GLASS - CINEMATIC SCROLL
-   Loader, navbar, mobile menu, smooth scroll
-   + image-sequence cinematic scroll only.
+   RONA AUTO GLASS - MULTI-PAGE ENGINE
+   Lenis smooth scroll, Loader, Active Nav Highlighting,
+   Canvas Image Sequence, FAQ Search & Accordions.
 ============================================= */
+
+// ============ LENIS SMOOTH SCROLL ============
+var lenis = null;
+if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+        duration: 1.2,
+        easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true,
+        wheelMultiplier: 1.1,
+        touchMultiplier: 1.5,
+        infinite: false
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+}
 
 // ============ LOADER ============
 function hideLoader() {
     var loader = document.getElementById('loader');
     if (!loader) return;
-    console.log('[Loader] Hiding loader');
-    loader.style.display = 'none';
     loader.classList.add('hidden');
+    setTimeout(function() {
+        loader.style.display = 'none';
+    }, 800);
 }
 
 function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
-    console.log('[Loader] Starting loader, loader found:', !!loader, 'progress found:', !!progress);
     if (!loader || !progress) return;
     var p = 0;
     var iv = setInterval(function() {
         p += Math.random() * 20 + 6;
-        if (p >= 100) { p = 100; clearInterval(iv); console.log('[Loader] Progress reached 100%'); }
+        if (p >= 100) { p = 100; clearInterval(iv); }
         progress.style.width = p + '%';
         if (p >= 100) {
             setTimeout(hideLoader, 250);
         }
-    }, 70);
+    }, 60);
     setTimeout(function() {
-        console.log('[Loader] 4s fallback timeout reached, current progress:', p);
         hideLoader();
-    }, 4000);
+    }, 3500);
 }
 
-console.log('[Loader] DOM readyState:', document.readyState);
 if (document.readyState === 'loading') {
-    console.log('[Loader] Waiting for DOMContentLoaded');
     window.addEventListener('DOMContentLoaded', startLoader);
 } else {
-    console.log('[Loader] DOM already loaded, starting immediately');
     startLoader();
 }
 
-// ============ NAVBAR ============
+// ============ NAVBAR SCROLL & ACTIVE LINK HIGHLIGHTER ============
 var navbar = document.getElementById('navbar');
 
-window.addEventListener('scroll', function() {
-    if (!navbar) return;
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-    var coll = document.getElementById('collection');
-    if (coll) {
-        navbar.classList.toggle('force-show', window.scrollY >= coll.offsetTop - 80);
+function updateNavbar() {
+    var sy = lenis ? lenis.scroll : (window.pageYOffset || document.documentElement.scrollTop);
+    if (navbar) {
+        navbar.classList.toggle('scrolled', sy > 40);
     }
+}
 
-    var secs = document.querySelectorAll('section');
-    var links = document.querySelectorAll('.nav-link');
-    var cur = '';
-    secs.forEach(function(s) { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+if (lenis) {
+    lenis.on('scroll', updateNavbar);
+} else {
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+}
 
-    if (cur !== '') {
-        links.forEach(function(l) {
-            var href = l.getAttribute('href');
-            if (href && href.includes('#' + cur)) {
-                document.querySelectorAll('.nav-link, .mobile-link').forEach(x => x.classList.remove('active'));
-                l.classList.add('active');
-            }
-        });
-    }
+// Highlight active page link based on URL filename
+document.addEventListener('DOMContentLoaded', function() {
+    var path = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-link, .mobile-link').forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href === path || (path === '' && href === 'index.html')) {
+            link.classList.add('active');
+        } else if (!href.includes(path) && !link.getAttribute('href').startsWith('#')) {
+            link.classList.remove('active');
+        }
+    });
 });
 
-// ============ HAMBURGER ============
+// ============ HAMBURGER & MOBILE MENU ============
 var ham = document.getElementById('hamburger'), mob = document.getElementById('mobile-menu');
 if (ham && mob) {
+    ham.addEventListener('click', function() {
+        ham.classList.toggle('active');
+        mob.classList.toggle('open');
+    });
     document.querySelectorAll('.mobile-link').forEach(function(l) {
-        l.addEventListener('click', function() { ham.classList.remove('active'); mob.classList.remove('open'); });
+        l.addEventListener('click', function() {
+            ham.classList.remove('active');
+            mob.classList.remove('open');
+        });
     });
 }
 
-// ============ SMOOTH SCROLL ============
-document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-        e.preventDefault();
-        var t = document.querySelector(this.getAttribute('href'));
-        if (t) t.scrollIntoView({ behavior: 'smooth' });
-    });
-});
-
-// ============ LOGO GRIDS (insurance / brands) ============
+// ============ LOGO GRIDS (INSURANCE / BRANDS) ============
 var insuranceLogos = [
     'AksSigorta.jpg','AnaSigorta.jpg','BereketSigorta.jpg','Do%C4%9FaSigorta.png',
     'EthicaSigorta.jpg','EurekoSigorta.png','KuruSigorta.jpg','MagdeburgerSigorta.jpg',
@@ -117,26 +132,63 @@ document.addEventListener('DOMContentLoaded', function() {
     renderLogoGrid('brands-grid', carLogos, 'https://ronaglass.com.tr/img/car-logos/');
 });
 
+// ============ FAQ ACCORDION & SEARCH FILTER ============
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var item = this.parentElement;
+        var isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('active'); });
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+var faqSearchInput = document.getElementById('faq-search-input');
+if (faqSearchInput) {
+    faqSearchInput.addEventListener('input', function(e) {
+        var query = e.target.value.toLowerCase().trim();
+        document.querySelectorAll('.faq-item').forEach(function(item) {
+            var text = item.textContent.toLowerCase();
+            if (text.includes(query)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+}
+
 // ============ CONTACT FORM ============
 var contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var b = e.target.querySelector('.btn-primary');
-        if (b) { b.textContent = '✓ Gönderildi!'; b.style.background = '#27ae60'; }
-        setTimeout(function() { if (b) { b.textContent = 'Gönder'; b.style.background = ''; } e.target.reset(); }, 2200);
+        if (b) {
+            b.textContent = '✓ Talebiniz Alındı! Sizi Arayacağız';
+            b.style.background = '#27ae60';
+        }
+        setTimeout(function() {
+            if (b) {
+                b.textContent = 'Talebi Gönder';
+                b.style.background = '';
+            }
+            e.target.reset();
+        }, 3000);
     });
 }
 
-// ============ IMAGE SEQUENCE CINEMATIC SCROLL ============
+// ============ IMAGE SEQUENCE CINEMATIC CANVAS (HOME PAGE ONLY) ============
 (function() {
-    console.log('[Cinema] Initializing cinematic scroll');
     var canvas = document.getElementById('cinema-canvas');
     var section = document.querySelector('.cinema-section');
     var fill = document.getElementById('cinema-progress-fill');
     var hint = document.getElementById('cinema-scroll-hint');
-    var collection = document.getElementById('collection');
-    console.log('[Cinema] Elements found - canvas:', !!canvas, 'section:', !!section, 'collection:', !!collection);
+    var txt1 = document.getElementById('cinema-text-1');
+    var txt2 = document.getElementById('cinema-text-2');
+    var txt3 = document.getElementById('cinema-text-3');
+
     if (!canvas || !section) return;
 
     var ctx = canvas.getContext('2d');
@@ -166,200 +218,76 @@ if (contactForm) {
             img.src = 'images/frame_' + paddedIndex + '.jpg';
             img.onload = function() {
                 loaded++;
-                if (lastDrawnIndex < 0) {
-                    drawImageSafe(index - 1);
+                if (lastDrawnIndex < 0 && index === 1) {
+                    drawImageSafe(0);
                 }
             };
-            img.onerror = function() {
-                loaded++;
-            };
+            img.onerror = function() { loaded++; };
             images[index - 1] = img;
         })(i);
     }
 
-    if (loaded === 0) {
-        ctx.fillStyle = '#111';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#c8a45c';
-        ctx.font = '24px Outfit, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
-    }
-
-    var sTop = 0, sH = 0, vH = 0, scrollable = 0;
+    var sTop = 0, sH = 0, vH = 0, scrollable = 1;
     var targetProgress = 0, currentProgress = 0;
-    var lastScrollY = window.pageYOffset;
-    var velocity = 0;
-    var isTouch = false;
-    var touchStartY = 0;
-    var touchDelta = 0;
 
     function onResize() {
         sTop = section.offsetTop;
         sH = section.offsetHeight;
         vH = window.innerHeight;
         scrollable = Math.max(1, sH - vH);
-        console.log('[Cinema] onResize - sTop:', sTop, 'sH:', sH, 'vH:', vH, 'scrollable:', scrollable);
     }
     window.addEventListener('resize', onResize);
     onResize();
 
-    function setProgressFromValue(value) {
-        targetProgress = Math.max(0, Math.min(1, value / scrollable));
-        currentProgress = targetProgress;
-        if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
-    }
+    function updateFrame() {
+        var scrollY = lenis ? lenis.scroll : (window.pageYOffset || document.documentElement.scrollTop);
 
-    function setScrollFromProgress(progress) {
-        var newScroll = sTop + progress * scrollable;
-        window.scrollTo({ top: newScroll, behavior: 'instant' });
-    }
+        var scrolled = scrollY - sTop;
+        targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
 
-    function lerp(start, end, factor) {
-        return start + (end - start) * factor;
-    }
-
-    function update() {
-        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-        velocity = lerp(velocity, Math.abs(scrollY - lastScrollY), 0.1);
-        lastScrollY = scrollY;
-
-        if (scrollY > sTop + sH) {
-             requestAnimationFrame(update);
-             return;
-        }
-
-        if (!isTouch) {
-            var scrolled = scrollY - sTop;
-            targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
-
-            currentProgress = lerp(currentProgress, targetProgress, 0.08);
-            if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+        // Smooth momentum interpolation
+        currentProgress += (targetProgress - currentProgress) * 0.12;
+        if (Math.abs(targetProgress - currentProgress) < 0.0002) {
+            currentProgress = targetProgress;
         }
 
         var exactFrame = currentProgress * (framesCount - 1);
-        var frameIdx = Math.floor(exactFrame);
-        var nextFrameIdx = Math.min(framesCount - 1, Math.ceil(exactFrame));
-        var alpha = exactFrame - frameIdx;
-
-        var blurAmount = Math.min(8, velocity * 0.05);
-        if (blurAmount > 0.5) {
-            canvas.style.filter = 'blur(' + blurAmount + 'px)';
-        } else {
-            canvas.style.filter = 'none';
-        }
-
-        var fadeToBlack = 0;
-        if (targetProgress > 0.80) {
-            fadeToBlack = Math.min(1, (targetProgress - 0.80) / 0.20);
-        }
+        var frameIdx = Math.min(framesCount - 1, Math.max(0, Math.round(exactFrame)));
 
         if (images[frameIdx] && images[frameIdx].complete) {
             ctx.globalAlpha = 1;
             ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
             lastDrawnIndex = frameIdx;
-
-            if (alpha > 0.01 && images[nextFrameIdx] && images[nextFrameIdx].complete) {
-                ctx.globalAlpha = alpha;
-                ctx.drawImage(images[nextFrameIdx], 0, 0, canvas.width, canvas.height);
-            }
         } else if (lastDrawnIndex >= 0) {
             drawImageSafe(lastDrawnIndex);
-        } else if (loaded === 0) {
-            ctx.fillStyle = '#111';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#c8a45c';
-            ctx.font = '24px Outfit, sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Yükleniyor...', canvas.width / 2, canvas.height / 2);
         }
 
-        if (fadeToBlack > 0) {
+        // Dynamic text overlay toggles
+        if (txt1) txt1.classList.toggle('active', currentProgress >= 0.02 && currentProgress < 0.32);
+        if (txt2) txt2.classList.toggle('active', currentProgress >= 0.36 && currentProgress < 0.65);
+        if (txt3) txt3.classList.toggle('active', currentProgress >= 0.68 && currentProgress < 0.94);
+
+        // Smooth overlay fade to black near end of sequence
+        if (currentProgress > 0.88) {
+            var fadeToBlack = Math.min(1, (currentProgress - 0.88) / 0.12);
             ctx.globalAlpha = fadeToBlack;
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = '#050505';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
-        if (fadeToBlack >= 0.999) lastDrawnIndex = -1;
 
-        if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
+        if (fill) {
+            fill.style.transform = 'scaleX(' + currentProgress + ')';
+        }
 
-        if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
+        if (hint) {
+            hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
+        }
 
-        requestAnimationFrame(update);
+        requestAnimationFrame(updateFrame);
     }
 
     setTimeout(function() {
-        console.log('[Cinema] Starting RAF loop');
         onResize();
-        requestAnimationFrame(update);
-    }, 120);
-
-    window.addEventListener('touchstart', function(e) {
-        console.log('[Cinema] touchstart, isTouch:', isTouch);
-        isTouch = true;
-        touchStartY = e.touches[0].clientY;
-        touchDelta = 0;
-        if (section) {
-            var rect = section.getBoundingClientRect();
-            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
-            console.log('[Cinema] touchstart inSection:', inSection, 'rect.top:', rect.top, 'rect.bottom:', rect.bottom);
-            if (inSection) {
-                e.preventDefault();
-            }
-        }
-    }, {passive: false});
-
-    window.addEventListener('touchmove', function(e) {
-        if (isTouch && section) {
-            var rect = section.getBoundingClientRect();
-            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
-            if (inSection) {
-                e.preventDefault();
-                var currentY = e.touches[0].clientY;
-                var delta = touchStartY - currentY;
-                touchDelta = delta;
-                var newProgress = currentProgress + delta / scrollable;
-                setProgressFromValue(newProgress * scrollable);
-                setScrollFromProgress(currentProgress);
-                touchStartY = currentY;
-            }
-        }
-    }, {passive: false});
-
-    window.addEventListener('touchend', function() {
-        console.log('[Cinema] touchend');
-        setTimeout(function() { isTouch = false; touchDelta = 0; }, 300);
-    }, {passive: true});
-
-    window.addEventListener('wheel', function(e) {
-        console.log('[Cinema] wheel, isTouch:', isTouch, 'deltaY:', e.deltaY);
-        if (!isTouch && section) {
-            var rect = section.getBoundingClientRect();
-            var inSection = rect.top <= 0 && rect.bottom >= window.innerHeight;
-            console.log('[Cinema] wheel inSection:', inSection, 'rect.top:', rect.top, 'rect.bottom:', rect.bottom);
-            if (inSection) {
-                e.preventDefault();
-                var delta = e.deltaY || 0;
-                var newProgress = currentProgress + delta / scrollable;
-                targetProgress = Math.max(0, Math.min(1, newProgress));
-                currentProgress = targetProgress;
-                if (fill) fill.style.transform = 'scaleX(' + currentProgress + ')';
-                if (hint) hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
-                setScrollFromProgress(currentProgress);
-            }
-        }
-    }, {passive: false});
-
-    window.addEventListener('scroll', function() {
-        var sy = window.pageYOffset || document.documentElement.scrollTop;
-
-        var cTop = collection ? collection.offsetTop : 0;
-        var delta = sy - lastSY;
-        if (delta < 0 && sy < cTop + 50 && sy > cTop - window.innerHeight) {
-            var cinBot = section.offsetTop + section.offsetHeight - window.innerHeight;
-            window.scrollTo({ top: cinBot, behavior: 'smooth' });
-        }
-        lastSY = sy;
-    }, {passive: true});
+        requestAnimationFrame(updateFrame);
+    }, 50);
 })();

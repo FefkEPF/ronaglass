@@ -952,17 +952,18 @@ body {
     font-size: 11px;
     letter-spacing: 5px;
     color: var(--gold);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     text-transform: uppercase;
     font-weight: 700;
 }
 
 .section-title {
     font-size: clamp(26px, 3.5vw, 42px);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     font-weight: 300;
     letter-spacing: -0.5px;
     color: var(--text);
+    line-height: 1.25;
 }
 
 .section-desc {
@@ -1029,13 +1030,14 @@ body {
     font-size: 18px;
     font-weight: 500;
     color: var(--text);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    line-height: 1.35;
 }
 
 .highlight-card p {
     color: var(--dim);
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
     font-weight: 300;
 }
 
@@ -1098,15 +1100,16 @@ body {
 .service-card h3 {
     font-size: 22px;
     font-weight: 400;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     color: var(--text);
+    line-height: 1.3;
 }
 
 .service-card p {
     color: var(--dim);
     font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 24px;
+    line-height: 1.7;
+    margin-bottom: 20px;
     font-weight: 300;
     flex: 1;
 }
@@ -1261,7 +1264,7 @@ body {
     font-size: 20px;
     font-weight: 400;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     line-height: 1.4;
 }
 
@@ -1270,7 +1273,7 @@ body {
     font-size: 14px;
     line-height: 1.7;
     font-weight: 300;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     flex: 1;
 }
 

@@ -369,3 +369,66 @@ if (contactForm) {
         observer.observe(el);
     });
 })();
+
+// ============ APPOINTMENT MODAL ============
+(function() {
+    var modal = document.getElementById('appointment-modal');
+    if (!modal) return;
+
+    var openBtns = document.querySelectorAll('.open-modal');
+    var closeBtn = document.getElementById('modal-close');
+    var form = document.getElementById('modal-appointment-form');
+
+    function openModal() {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    openBtns.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+            closeModal();
+        }
+    });
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var btn = form.querySelector('.modal-submit');
+            if (btn) {
+                var originalText = btn.textContent;
+                btn.textContent = '✓ Talebiniz Alındı! Sizi Arayacağız';
+                btn.style.background = '#27ae60';
+                btn.disabled = true;
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                    form.reset();
+                    closeModal();
+                }, 2500);
+            }
+        });
+    }
+})();

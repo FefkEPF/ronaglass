@@ -22,37 +22,40 @@
     <link rel="stylesheet" href="style.css?v=13">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- Schema.org JSON-LD FAQPage -->
+    <!-- Schema.org JSON-LD LocalBusiness -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@type": "AutoRepair",
+      "name": "Rona Auto Glass",
+      "image": "https://ronaglass.com.tr/images/logo.png",
+      "@id": "https://ronaglass.com.tr/#organization",
+      "url": "https://ronaglass.com.tr/sss.html",
+      "telephone": "+905346943789",
+      "email": "info@ronaglass.com.tr",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2474 Cad 4/1 Şaşmaz",
+        "addressLocality": "Etimesgut",
+        "addressRegion": "Ankara",
+        "postalCode": "06790",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.9390286,
+        "longitude": 32.7079112
+      },
+      "openingHoursSpecification": [
         {
-          "@type": "Question",
-          "name": "Kaskolu cam değişimi yaptırdığımda kaskom bozulur mu?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hayır. Anlaşmalı sigorta şirketlerimiz kapsamındaki cam değişimlerinde kasko poliçenizdeki yılda 1 defalık muafiyetsiz cam hakkı kullanılır, böylece hasarsızlık indiriminiz bozulmaz."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Taş vuruğu ve çatlak cam tamiri ne kadar sürer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Özel vakumlu reçine dolgu cihazlarımız sayesinde taş vurukları ortalama 15 dakika içerisinde tamir edilerek ilk günkü mukavemetine kavuşturulur."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Mobil servis ile adreste cam değişimi ekstra ücrete tabi midir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ankara içi belirli bölgelerde kaskolu veya orijinal cam değişimlerinde mobil servisimiz müşteri memnuniyeti kapsamında ücretsiz olarak sunulmaktadır."
-          }
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:30",
+          "closes": "19:00"
         }
-      ]
+      ],
+      "priceRange": "$$",
+      "areaServed": ["Ankara", "Etimesgut", "Şaşmaz", "Batıkent", "Ümitköy", "Çayyolu", "Sincan", "Yenimahalle"]
     }
     </script>
 </head>
@@ -60,7 +63,7 @@
     <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-inner">
-            <img src="images/logo.png" alt="Rona Auto Glass" class="loader-logo">
+            <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="loader-logo">
             <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
             <p class="loader-text">S.S.S Yükleniyor</p>
         </div>
@@ -69,7 +72,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <a href="index.html" class="logo-brand">
-            <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+            <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
             <div class="logo-text-wrapper">
                 <span class="logo-main">RONA</span>
                 <span class="logo-sub">AUTO GLASS</span>
@@ -183,7 +186,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="logo-brand">
-                        <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+                        <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
                         <div class="logo-text-wrapper">
                             <span class="logo-main">RONA</span>
                             <span class="logo-sub">AUTO GLASS</span>
@@ -223,5 +226,56 @@
 
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js?v=13"></script>
+
+    <!-- APPOINTMENT MODAL -->
+    <div class="modal-overlay" id="appointment-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Hızlı Teklif / Randevu</h2>
+                <button class="modal-close" id="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <form class="modal-form" id="modal-appointment-form">
+                <div class="form-group">
+                    <label for="modal-name">Ad Soyad</label>
+                    <input type="text" id="modal-name" placeholder="Adınız Soyadınız" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Telefon</label>
+                    <input type="tel" id="modal-phone" placeholder="05XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-vehicle">Araç Marka / Model</label>
+                    <input type="text" id="modal-vehicle" placeholder="Örn: 2020 Volkswagen Passat">
+                </div>
+                <div class="form-group">
+                    <label for="modal-service">Hizmet Türü</label>
+                    <select id="modal-service">
+                        <option value="">Seçiniz</option>
+                        <option value="kasko">Kaskolu Cam Değişimi (Ücretsiz)</option>
+                        <option value="tamir">15 Dk Taş Tamiri / Çatlak Onarımı</option>
+                        <option value="binek">Binek Araç Cam Değişimi</option>
+                        <option value="mobil">7/24 Mobil Servis Talebi</option>
+                        <option value="ticari">Ticari / Tır / Otobüs Camı</option>
+                        <option value="traktor">Traktör & Kabin Camı</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kasko Durumu</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-var" name="kasko" value="var" checked>
+                            <label for="kasko-var">Kaskom Var</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-yok" name="kasko" value="yok">
+                            <label for="kasko-yok">Kaskom Yok</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary modal-submit">Talebi Gönder →</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
+

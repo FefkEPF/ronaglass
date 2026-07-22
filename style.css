@@ -2081,3 +2081,185 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ==================== APPOINTMENT MODAL ==================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 8, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: var(--bg2);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--r-lg);
+    padding: 36px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 40px rgba(212, 175, 55, 0.12);
+    transform: translateY(30px);
+    transition: transform 0.35s var(--ease-out-expo);
+}
+
+.modal-overlay.open .modal {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.3px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--dim);
+    font-size: 28px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all var(--t);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--gold);
+    background: var(--bg-card);
+}
+
+.modal-form .form-group {
+    margin-bottom: 18px;
+}
+
+.modal-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: all var(--t);
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.modal-form select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a1a1a6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+.modal-form select option {
+    background: var(--bg2);
+    color: var(--text);
+}
+
+.radio-group {
+    display: flex;
+    gap: 12px;
+}
+
+.radio-option {
+    flex: 1;
+    position: relative;
+}
+
+.radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-option label {
+    display: block;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--t);
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: var(--text);
+}
+
+.radio-option input[type="radio"]:checked + label {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+    color: var(--gold);
+}
+
+.radio-option label:hover {
+    border-color: var(--border-gold);
+}
+
+.modal-submit {
+    width: 100%;
+    margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+    .modal {
+        padding: 24px;
+    }
+    .radio-group {
+        flex-direction: column;
+    }
+}

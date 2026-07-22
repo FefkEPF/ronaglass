@@ -63,7 +63,7 @@
     <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-inner">
-            <img src="images/logo.png" alt="Rona Auto Glass" class="loader-logo">
+            <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="loader-logo">
             <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
             <p class="loader-text">Camda Şeffaf Çözüm Yükleniyor</p>
         </div>
@@ -72,7 +72,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <a href="index.html" class="logo-brand">
-            <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+            <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
             <div class="logo-text-wrapper">
                 <span class="logo-main">RONA</span>
                 <span class="logo-sub">AUTO GLASS</span>
@@ -175,7 +175,7 @@
                     </div>
 
                     <div class="hero-actions">
-                        <a href="bize-ulasin.html" class="btn-primary">Hemen Fiyat / Randevu Al</a>
+                        <a href="#" class="btn-primary open-modal" data-modal="appointment-modal">Hemen Fiyat / Randevu Al</a>
                         <a href="hizmetlerimiz.html" class="btn-secondary">Hizmetlerimiz</a>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                     <h2>Hizmetlerimizi Keşfedin:<br><em class="text-gold">Cam Tamiri Sürecimiz</em></h2>
                     <p>Aracınızın camında oluşan en küçük bir çatlak bile zamanla büyüyerek hem güvenliğinizi tehlikeye atabilir hem de daha maliyetli sorunlara yol açabilir. Bu nedenle, cam hasarlarını hızlı ve profesyonel bir şekilde onarmak oldukça önemlidir.</p>
                     <p>Videomuzda, cam tamiri sürecinin tüm aşamalarını detaylı bir şekilde görebilirsiniz. Alanında uzman ekibimiz, yüksek kaliteli malzemeler ve modern ekipmanlar kullanarak, güvenilir ve uzun ömürlü çözümler sunar.</p>
-                    <a href="bize-ulasin.html" class="btn-primary">Bizimle İletişime Geçin →</a>
+                    <a href="#" class="btn-primary open-modal" data-modal="appointment-modal">Bizimle İletişime Geçin →</a>
                 </div>
             </div>
         </div>
@@ -308,19 +308,19 @@
 
             <div class="ref-grid">
                 <div class="ref-card">
-                    <img src="images/kontrat1.png" alt="T.C Yargıtay Başkanlığı" class="ref-img">
+                    <img loading="lazy" src="images/kontrat1.png" alt="T.C Yargıtay Başkanlığı" class="ref-img">
                 </div>
                 <div class="ref-card">
-                    <img src="images/turoto.jpg" alt="Tur Oto" class="ref-img">
+                    <img loading="lazy" src="images/turoto.jpg" alt="Tur Oto" class="ref-img">
                 </div>
                 <div class="ref-card">
-                    <img src="images/birmot.jpg" alt="Otokoç Birmot Otomotiv" class="ref-img">
+                    <img loading="lazy" src="images/birmot.jpg" alt="Otokoç Birmot Otomotiv" class="ref-img">
                 </div>
                 <div class="ref-card">
-                    <img src="images/kontrat2.png" alt="Intercity Ankara Bölge" class="ref-img">
+                    <img loading="lazy" src="images/kontrat2.png" alt="Intercity Ankara Bölge" class="ref-img">
                 </div>
                 <div class="ref-card">
-                    <img src="images/kontrat4.png" alt="Memur-Sen" class="ref-img">
+                    <img loading="lazy" src="images/kontrat4.png" alt="Memur-Sen" class="ref-img">
                 </div>
             </div>
         </div>
@@ -362,7 +362,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="logo-brand">
-                        <img src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+                        <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
                         <div class="logo-text-wrapper">
                             <span class="logo-main">RONA</span>
                             <span class="logo-sub">AUTO GLASS</span>
@@ -402,5 +402,56 @@
 
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js?v=13"></script>
+
+    <!-- APPOINTMENT MODAL -->
+    <div class="modal-overlay" id="appointment-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Hızlı Teklif / Randevu</h2>
+                <button class="modal-close" id="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <form class="modal-form" id="modal-appointment-form">
+                <div class="form-group">
+                    <label for="modal-name">Ad Soyad</label>
+                    <input type="text" id="modal-name" placeholder="Adınız Soyadınız" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Telefon</label>
+                    <input type="tel" id="modal-phone" placeholder="05XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-vehicle">Araç Marka / Model</label>
+                    <input type="text" id="modal-vehicle" placeholder="Örn: 2020 Volkswagen Passat">
+                </div>
+                <div class="form-group">
+                    <label for="modal-service">Hizmet Türü</label>
+                    <select id="modal-service">
+                        <option value="">Seçiniz</option>
+                        <option value="kasko">Kaskolu Cam Değişimi (Ücretsiz)</option>
+                        <option value="tamir">15 Dk Taş Tamiri / Çatlak Onarımı</option>
+                        <option value="binek">Binek Araç Cam Değişimi</option>
+                        <option value="mobil">7/24 Mobil Servis Talebi</option>
+                        <option value="ticari">Ticari / Tır / Otobüs Camı</option>
+                        <option value="traktor">Traktör & Kabin Camı</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kasko Durumu</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-var" name="kasko" value="var" checked>
+                            <label for="kasko-var">Kaskom Var</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-yok" name="kasko" value="yok">
+                            <label for="kasko-yok">Kaskom Yok</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary modal-submit">Talebi Gönder →</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
+

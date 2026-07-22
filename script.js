@@ -119,11 +119,29 @@ var carLogos = [
     'tesla_360.png','mg_360.png','gmc_360.png'
 ];
 
+function cleanLogoTitle(filename) {
+    try {
+        var name = decodeURIComponent(filename);
+        name = name.replace(/\.(png|jpg|jpeg|webp)$/i, '');
+        name = name.replace(/-(rona|Photoroom)[0-9]*/gi, '');
+        name = name.replace(/_360/gi, '');
+        name = name.replace(/Sigorta/gi, ' Sigorta');
+        name = name.replace(/([a-z])([A-Z])/g, '$1 $2');
+        return name.trim();
+    } catch(e) {
+        return filename.split('.')[0];
+    }
+}
+
 function renderLogoGrid(id, items, base) {
     var el = document.getElementById(id);
     if (!el) return;
     el.innerHTML = items.map(function(name) {
-        return '<div class="logo-item"><img src="' + base + name + '" alt="" loading="lazy"></div>';
+        var title = cleanLogoTitle(name);
+        return '<div class="logo-item" title="' + title + '">' +
+            '<img src="' + base + name + '" alt="' + title + '" loading="lazy" ' +
+            'onerror="this.style.display=\'none\';this.parentNode.classList.add(\'has-fallback\');if(!this.parentNode.querySelector(\'.logo-fallback\')){this.parentNode.insertAdjacentHTML(\'beforeend\', \'<span class=\"logo-fallback\">\'+\'' + title + '\'+\'</span>\');}">' +
+            '</div>';
     }).join('');
 }
 
@@ -131,6 +149,26 @@ document.addEventListener('DOMContentLoaded', function() {
     renderLogoGrid('insurance-grid', insuranceLogos, 'https://ronaglass.com.tr/img/sigorta/');
     renderLogoGrid('brands-grid', carLogos, 'https://ronaglass.com.tr/img/car-logos/');
 });
+
+
+// ============ GALLERY SHOW MORE ============
+var galleryBtn = document.querySelector('.gallery-show-more');
+if (galleryBtn) {
+    var galleryGrid = galleryBtn.previousElementSibling;
+    if (galleryGrid && galleryGrid.classList.contains('gallery-grid')) {
+        var galleryItems = galleryGrid.querySelectorAll('.gallery-item');
+        var visibleCount = 8;
+        for (var i = visibleCount; i < galleryItems.length; i++) {
+            galleryItems[i].style.display = 'none';
+        }
+        galleryBtn.addEventListener('click', function() {
+            for (var j = visibleCount; j < galleryItems.length; j++) {
+                galleryItems[j].style.display = '';
+            }
+            galleryBtn.style.display = 'none';
+        });
+    }
+}
 
 // ============ FAQ ACCORDION & SEARCH FILTER ============
 document.querySelectorAll('.faq-question').forEach(function(btn) {

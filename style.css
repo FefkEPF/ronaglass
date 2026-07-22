@@ -819,6 +819,7 @@ body {
     border: 1px solid var(--border-gold);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
     background: #000;
+    aspect-ratio: 16 / 9;
 }
 
 .hero-video-wrapper video {
@@ -878,6 +879,7 @@ body {
     border: 1px solid var(--border);
     background: #000;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    aspect-ratio: 16 / 9;
 }
 
 .presentation-video-box video {
@@ -1368,6 +1370,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 16px;
+    min-height: 180px;
 }
 
 .logo-item {
@@ -1445,6 +1448,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    min-height: 180px;
 }
 
 .ref-card {

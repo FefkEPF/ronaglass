@@ -1376,6 +1376,14 @@ body {
     border-color: rgba(212, 175, 55, 0.2);
 }
 
+.logo-item.has-fallback img {
+    display: none;
+}
+
+.logo-item.has-fallback .logo-fallback {
+    display: flex;
+}
+
 .logo-item:hover {
     border-color: var(--gold);
     transform: translateY(-3px);
@@ -1396,13 +1404,19 @@ body {
 }
 
 .logo-fallback {
-    font-size: 11px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
     font-weight: 600;
     color: var(--gold-light);
     letter-spacing: 0.5px;
     text-transform: uppercase;
     line-height: 1.2;
     word-break: break-word;
+    padding: 8px 4px;
+    min-height: 100%;
 }
 
 
@@ -1935,6 +1949,28 @@ body {
     .section-header { margin-bottom: 36px; }
     .highlights-section, .services-section, .gallery-section, .references-section, .contact-section, .faq-section, .story-section, .story-section-alt { padding: 60px 0; }
     .hero-video-section, .presentation-section { padding: 60px 0; }
+    
+    /* Mobile typography */
+    .section-title { font-size: 24px; }
+    .page-hero-title { font-size: 28px; }
+    .page-hero-sub { font-size: 14px; }
+    .hero-title { font-size: 26px; }
+    .hero-subtitle { font-size: 14px; }
+    .presentation-content h2 { font-size: 22px; }
+    
+    /* Mobile container padding */
+    .container { padding: 0 20px; }
+    
+    /* Mobile logo grid */
+    .logo-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .logo-item { height: 55px; padding: 8px; }
+    .logo-item img { max-height: 30px; }
+    
+    /* Mobile cinema adjustments */
+    .cinema-text h1 { font-size: 28px; }
+    .cinema-text h2 { font-size: 22px; }
+    .cinema-sub { font-size: 13px; }
+    .cinema-scroll-hint span { display: none; }
 }
 
 @media(max-width: 480px) {
@@ -1946,4 +1982,27 @@ body {
     .section-header { margin-bottom: 28px; }
     .highlights-section, .services-section, .gallery-section, .references-section, .contact-section, .faq-section, .story-section, .story-section-alt { padding: 48px 0; }
     .hero-video-section, .presentation-section { padding: 48px 0; }
+    
+    /* Extra small mobile */
+    .logo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .logo-item { height: 45px; padding: 6px; }
+    .logo-item img { max-height: 24px; }
+    .logo-fallback { font-size: 9px; }
+    
+    .section-title { font-size: 22px; }
+    .page-hero-title { font-size: 24px; }
+    .hero-title { font-size: 22px; }
+    .cinema-text h1 { font-size: 22px; }
+    .cinema-text h2 { font-size: 18px; }
+    
+    .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 11px; }
+    .floating-cta { bottom: 12px; right: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

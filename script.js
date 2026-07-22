@@ -142,7 +142,9 @@ function renderLogoGrid(id, items, base) {
         var title = cleanLogoTitle(name);
         return '<div class="logo-item" title="' + title + '">' +
             '<img src="' + base + name + '" alt="' + title + '" loading="lazy" ' +
-            'onerror="this.style.display=\'none\';this.parentNode.classList.add(\'has-fallback\');if(!this.parentNode.querySelector(\'.logo-fallback\')){this.parentNode.insertAdjacentHTML(\'beforeend\', \'<span class=\"logo-fallback\">\'+\'' + title + '\'+\'</span>\');}">' +
+            'data-title="' + title + '" ' +
+            'onerror="this.style.display=\'none\';this.parentNode.classList.add(\'has-fallback\');">' +
+            '<span class="logo-fallback">' + title + '</span>' +
             '</div>';
     }).join('');
 }

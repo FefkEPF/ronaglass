@@ -276,7 +276,8 @@ if (contactForm) {
             fallback.className = 'cinema-fallback';
             fallback.innerHTML = '<div class="cinema-fallback-inner"><img src="images/logo.png" alt="Rona Auto Glass"><span>RONA AUTO GLASS</span></div>';
             canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
-            canvas.style.opacity = '0.3';
+            canvas.style.opacity = '0';
+            fallback.style.opacity = '1';
         }
     }, 3000);
 

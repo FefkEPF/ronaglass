@@ -491,18 +491,20 @@ body {
     transition: filter 0.6s ease;
 }
 
-.cinema-sticky canvas + .cinema-fallback {
-    display: none;
+.cinema-fallback {
     position: absolute;
     inset: 0;
     z-index: 0;
     background: #000;
-    opacity: 0.5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cinema-fallback-inner {
-    position: absolute;
-    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -688,7 +690,7 @@ body {
     animation: mDot 2s infinite;
 }
 
-.ccinema-hand {
+.cinema-hand {
     display: none;
     width: 26px;
     height: 26px;
@@ -1437,15 +1439,12 @@ body {
 }
 
 .ref-img {
-    max-width: 100%;
-    max-height: 140px;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 110px;
     object-fit: contain;
+    background: var(--bg-card);
     border-radius: 8px;
     transition: transform var(--t);
-    min-height: 100px;
-    background: var(--bg-card);
 }
 
 .ref-card:hover .ref-img {
@@ -1921,7 +1920,7 @@ body {
         transform: translateX(-50%) translateY(0);
     }
     .cinema-mouse { display: none; }
-    .ccinema-hand { display: block; }
+    .cinema-hand { display: block; }
 }
 
 @media(max-width: 768px) {

@@ -12,10 +12,10 @@ if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
         duration: isMobile ? 1.2 : 1.5,
         easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smoothWheel: true,
+        smoothWheel: !isMobile,
         wheelMultiplier: isMobile ? 0.7 : 1.0,
         touchMultiplier: isMobile ? 0.8 : 1.0,
-        syncTouch: true,
+        syncTouch: isMobile,
         syncTouchLerp: 0.05,
         infinite: false
     });
@@ -41,16 +41,6 @@ function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
     if (!loader || !progress) return;
-    
-    // Add rotating ring element
-    var inner = loader.querySelector('.loader-inner');
-    if (inner && !inner.querySelector('.loader-ring')) {
-        var ring = document.createElement('div');
-        ring.className = 'loader-ring';
-        ring.style.cssText = 'position:absolute;top:50%;left:50%;margin-top:-40px;margin-left:-40px;';
-        inner.style.position = 'relative';
-        inner.insertBefore(ring, inner.firstChild);
-    }
     
     var p = 0;
     var iv = setInterval(function () {

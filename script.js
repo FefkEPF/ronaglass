@@ -311,6 +311,19 @@ if (contactForm) {
 
     if (!canvas || !section) return;
 
+    // Mobile detection
+    var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // On mobile, show static fallback immediately
+    if (isMobile) {
+        var fallback = document.createElement('div');
+        fallback.className = 'cinema-fallback';
+        fallback.innerHTML = '<div class="cinema-fallback-inner"><img src="images/logo.png" alt="Rona Auto Glass"><span>RONA AUTO GLASS</span></div>';
+        canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
+        canvas.style.display = 'none';
+        return;
+    }
+
     var ctx = canvas.getContext('2d');
     canvas.width = 1920;
     canvas.height = 1080;
@@ -375,7 +388,7 @@ if (contactForm) {
     onResize();
 
     function updateFrame() {
-        var scrollY = lenis ? lenis.scroll : (window.pageYOffset || document.documentElement.scrollTop);
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
         var scrolled = scrollY - sTop;
         targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));

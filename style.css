@@ -834,12 +834,22 @@ body {
     aspect-ratio: 16 / 9;
 }
 
+.hero-video-wrapper.vertical-video {
+    aspect-ratio: 9 / 16;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
 .hero-video-wrapper video {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
     object-fit: cover;
     border-radius: var(--r-lg);
+}
+
+.hero-video-wrapper.vertical-video video {
+    object-fit: contain;
 }
 
 .hero-rating-badge {

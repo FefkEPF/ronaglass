@@ -91,7 +91,171 @@
     </script>
 </head>
 
-<body>
+<body style="background:#050505;margin:0;">
+    <!-- INLINE CRITICAL CSS (prevents white flash) -->
+    <style>
+        body {
+            background: #050505 !important;
+        }
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+        }
+
+        .loader-inner {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+            padding: 24px;
+        }
+
+        .loader-logo {
+            max-height: 64px;
+            width: auto;
+            filter: drop-shadow(0 0 22px rgba(212, 175, 55, 0.45));
+        }
+
+        .loader-bar {
+            width: 90%;
+            max-width: 240px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        .loader-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #aa8c2c, #d4af37, #f3e5ab);
+        }
+
+        .loader-text {
+            color: #d4af37;
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 14px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10000;
+            background: rgba(10, 10, 15, 0.9);
+        }
+
+        .logo-brand {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+        }
+
+        .logo-main {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-link {
+            color: #a1a1a6;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-phone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 40px;
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #fff;
+        }
+
+        @media(max-width:1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .navbar {
+                padding: 14px 24px;
+            }
+        }
+
+        @media(max-width:480px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+
     <!-- LOADER -->
     <div class="loader" id="loader">
         <div class="loader-inner">

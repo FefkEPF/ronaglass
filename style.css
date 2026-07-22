@@ -2961,19 +2961,41 @@ body.menu-open {
         backface-visibility: visible !important;
     }
 
-    /* Optimize cinema section for mobile */
+    /* Optimize cinema section for mobile - FIXED SCROLL */
     .cinema-section {
-        height: auto;
-        min-height: 100vh;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
     }
 
     .cinema-sticky {
-        position: relative;
+        position: relative !important;
         height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        top: 0 !important;
+        overflow: hidden;
     }
 
     .cinema-text {
         padding: 20px;
+    }
+
+    /* Disable Lenis smooth scroll on mobile for better native feel */
+    .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body {
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
     }
 
     /* Better mobile hero video */

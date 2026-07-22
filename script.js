@@ -59,21 +59,8 @@ if (document.readyState === 'loading') {
     startLoader();
 }
 
-// ============ NAVBAR SCROLL & ACTIVE LINK HIGHLIGHTER ============
-var navbar = document.getElementById('navbar');
-
-function updateNavbar() {
-    var sy = lenis ? lenis.scroll : (window.pageYOffset || document.documentElement.scrollTop);
-    if (navbar) {
-        navbar.classList.toggle('scrolled', sy > 40);
-    }
-}
-
-if (lenis) {
-    lenis.on('scroll', updateNavbar);
-} else {
-    window.addEventListener('scroll', updateNavbar, { passive: true });
-}
+// ============ NAVBAR ACTIVE LINK HIGHLIGHTER ============
+// Header height stays constant; no scroll-based resize behavior.
 
 // Highlight active page link based on URL filename
 document.addEventListener('DOMContentLoaded', function() {

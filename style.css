@@ -281,18 +281,10 @@ body {
     align-items: center;
     justify-content: space-between;
     z-index: 10000;
-    transition: padding var(--t), background var(--t), box-shadow var(--t), backdrop-filter var(--t);
     background: var(--glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-}
-
-.navbar.scrolled {
-    padding: 10px 48px;
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.9);
 }
 
 .logo-brand {
@@ -930,13 +922,16 @@ body {
     font-weight: 300;
 }
 
-/* ==================== UTILITY CLASSES ==================== */
-.text-gold { color: var(--gold); }
-.text-left { text-align: left; }
-.footer-phone-link { color: #fff; text-decoration: none; }
-.footer-email-link { color: var(--dim); text-decoration: none; }
-.footer-phone-link:hover, .footer-email-link:hover {
-    color: var(--text);
+/* ==================== RESPONSIVE TEXT UTILITIES ==================== */
+.desktop-text { display: block; }
+
+@media (max-width: 768px) {
+    .desktop-text { display: none; }
+    .mobile-text { display: block; }
+}
+
+@media (min-width: 769px) {
+    .mobile-text { display: none; }
 }
 
 /* ==================== SECTION HEADERS ==================== */

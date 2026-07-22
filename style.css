@@ -1067,10 +1067,43 @@ body {
     border-color: var(--border-gold);
 }
 
+.service-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--r);
+    margin-bottom: 20px;
+    color: var(--gold);
+    transition: all var(--t);
+}
+
+.service-card:hover .service-icon {
+    background: var(--gold);
+    color: var(--bg);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+    transform: translateY(-2px);
+}
+
+.service-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    transition: stroke var(--t);
+}
+
+.service-card:hover .service-icon svg {
+    stroke: var(--bg);
+}
+
 .service-card:hover {
     border-color: var(--gold);
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.08);
+    background: var(--bg-card-hover);
 }
 
 .service-badge {
@@ -1520,12 +1553,47 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+    transition: all 0.3s ease;
+}
+
+.faq-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--r);
+    color: var(--gold);
+    transition: all var(--t);
+}
+
+.faq-item.active .faq-item-icon {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+}
+
+.faq-item-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.faq-item-text {
+    flex: 1;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    line-height: 1.5;
 }
 
 .faq-icon {
     font-size: 18px;
     color: var(--gold);
     transition: transform 0.3s ease;
+    min-width: 24px;
+    text-align: center;
 }
 
 .faq-item.active .faq-icon {
@@ -1981,6 +2049,43 @@ body {
     .floating-cta {
         bottom: 16px;
         right: 16px;
+    }
+    .service-card {
+        padding: 28px 24px;
+    }
+    .service-icon {
+        width: 42px;
+        height: 42px;
+        margin-bottom: 16px;
+    }
+    .service-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    .service-card h3 {
+        font-size: 18px;
+    }
+    .service-card p {
+        font-size: 13px;
+    }
+    .faq-question {
+        padding: 18px 20px;
+        font-size: 14px;
+    }
+    .faq-item-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+    .faq-item-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    .faq-item-text {
+        font-size: 14px;
+    }
+    .faq-answer p {
+        font-size: 13px;
     }
 }
 

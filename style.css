@@ -41,6 +41,17 @@ img {
     height: auto;
 }
 
+video, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Prevent any child from breaking viewport */
+section, .container, .hero-grid, .presentation-grid, .story-container, .highlights-grid, .gallery-grid, .ref-grid, .blog-grid, .contact-grid, .footer-grid, .services-grid {
+    min-width: 0;
+}
+
 html {
     scroll-behavior: auto !important;
 }
@@ -1909,6 +1920,67 @@ body {
 .map-container iframe {
     display: block;
     border-radius: var(--r-lg);
+}
+
+/* ==================== FLOATING ACTION BUTTONS ==================== */
+.floating-cta {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 40px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: all var(--t);
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    color: #fff;
+}
+
+.cta-btn.whatsapp {
+    background: #25d366;
+}
+
+.cta-btn.phone {
+    background: var(--gold);
+    color: var(--bg);
+}
+
+@media (max-width: 768px) {
+    .cta-btn span {
+        display: none;
+    }
+    .cta-btn {
+        padding: 14px;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        justify-content: center;
+    }
+    .floating-cta {
+        bottom: 16px;
+        right: 16px;
+    }
 }
 
 /* ==================== RESPONSIVE ==================== */

@@ -8,11 +8,13 @@
 var lenis = null;
 if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.5,
         easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
         smoothWheel: true,
-        wheelMultiplier: 1.1,
-        touchMultiplier: 1.5,
+        wheelMultiplier: 1.2,
+        touchMultiplier: 2.0,
+        syncTouch: true,
+        syncTouchLerp: 0.05,
         infinite: false
     });
 
@@ -272,7 +274,9 @@ if (contactForm) {
         if (loaded === 0) {
             var fallback = document.createElement('div');
             fallback.className = 'cinema-fallback';
+            fallback.innerHTML = '<div class="cinema-fallback-inner"><img src="images/logo.png" alt="Rona Auto Glass"><span>RONA AUTO GLASS</span></div>';
             canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
+            canvas.style.opacity = '0.3';
         }
     }, 3000);
 
@@ -295,8 +299,8 @@ if (contactForm) {
         targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
 
         // Smooth momentum interpolation
-        currentProgress += (targetProgress - currentProgress) * 0.12;
-        if (Math.abs(targetProgress - currentProgress) < 0.0002) {
+        currentProgress += (targetProgress - currentProgress) * 0.08;
+        if (Math.abs(targetProgress - currentProgress) < 0.0001) {
             currentProgress = targetProgress;
         }
 
@@ -339,4 +343,26 @@ if (contactForm) {
         onResize();
         requestAnimationFrame(updateFrame);
     }, 50);
+})();
+
+// ============ SCROLL REVEAL ANIMATIONS ============
+(function() {
+    var observerOptions = {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    };
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                // Keep observing so elements animate each time they enter
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
+        observer.observe(el);
+    });
 })();

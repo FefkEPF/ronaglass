@@ -855,6 +855,7 @@ body {
 @media (max-width: 1024px) {
     .cinema-section {
         height: auto !important;
+        position: relative !important;
     }
 
     .cinema-sticky {
@@ -862,6 +863,20 @@ body {
         height: auto !important;
         min-height: 100vh;
         overflow: visible !important;
+    }
+
+    .cinema-sticky canvas {
+        display: none !important;
+    }
+
+    .cinema-fallback {
+        position: relative !important;
+        opacity: 1 !important;
+        background: #000 !important;
+        min-height: 100vh;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
 

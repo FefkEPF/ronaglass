@@ -7,12 +7,14 @@
 // ============ LENIS SMOOTH SCROLL ============
 var lenis = null;
 if (typeof Lenis !== 'undefined') {
+    // Mobile-friendly settings: lower multipliers for smoother scroll
+    var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     lenis = new Lenis({
-        duration: 1.5,
+        duration: isMobile ? 1.2 : 1.5,
         easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
         smoothWheel: true,
-        wheelMultiplier: 1.2,
-        touchMultiplier: 2.0,
+        wheelMultiplier: isMobile ? 0.7 : 1.0,
+        touchMultiplier: isMobile ? 0.8 : 1.0,
         syncTouch: true,
         syncTouchLerp: 0.05,
         infinite: false
@@ -25,7 +27,7 @@ if (typeof Lenis !== 'undefined') {
     requestAnimationFrame(raf);
 }
 
-// ============ LOADER ============
+// ============ LOADER WITH RING ============
 function hideLoader() {
     var loader = document.getElementById('loader');
     if (!loader) return;
@@ -39,6 +41,17 @@ function startLoader() {
     var loader = document.getElementById('loader');
     var progress = document.getElementById('loader-progress');
     if (!loader || !progress) return;
+    
+    // Add rotating ring element
+    var inner = loader.querySelector('.loader-inner');
+    if (inner && !inner.querySelector('.loader-ring')) {
+        var ring = document.createElement('div');
+        ring.className = 'loader-ring';
+        ring.style.cssText = 'position:absolute;top:50%;left:50%;margin-top:-40px;margin-left:-40px;';
+        inner.style.position = 'relative';
+        inner.insertBefore(ring, inner.firstChild);
+    }
+    
     var p = 0;
     var iv = setInterval(function () {
         p += Math.random() * 20 + 6;
@@ -59,10 +72,7 @@ if (document.readyState === 'loading') {
     startLoader();
 }
 
-// ============ NAVBAR ACTIVE LINK HIGHLIGHTER ============
-// Header height stays constant; no scroll-based resize behavior.
-
-// Highlight active page link based on URL filename
+// ============ NAVBAR ACTIVE LINK HIGHLIGHTER & SCROLL EFFECT ============
 document.addEventListener('DOMContentLoaded', function () {
     var path = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-link, .mobile-link').forEach(function (link) {
@@ -73,6 +83,23 @@ document.addEventListener('DOMContentLoaded', function () {
             link.classList.remove('active');
         }
     });
+    
+    // Navbar background change on scroll
+    var navbar = document.getElementById('navbar');
+    if (navbar) {
+        var lastScrollY = window.scrollY;
+        function handleNavScroll() {
+            var currentScroll = window.scrollY;
+            if (currentScroll > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            lastScrollY = currentScroll;
+        }
+        window.addEventListener('scroll', handleNavScroll, { passive: true });
+        handleNavScroll();
+    }
 });
 
 // ============ HAMBURGER & MOBILE MENU ============
@@ -425,9 +452,98 @@ if (contactForm) {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function (el) {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-scale-light, .reveal-rotate').forEach(function (el) {
         observer.observe(el);
     });
+})();
+
+// ============ 3D TILT HOVER EFFECT FOR CARDS ============
+(function () {
+    var cards = document.querySelectorAll('.highlight-card, .service-card, .blog-card, .ref-card, .stat-item');
+    
+    cards.forEach(function (card) {
+        card.classList.add('tilt-card');
+        
+        card.addEventListener('mousemove', function (e) {
+            var rect = card.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            var y = e.clientY - rect.top;
+            var centerX = rect.width / 2;
+            var centerY = rect.height / 2;
+            var rotateX = (y - centerY) / centerY * -8;
+            var rotateY = (x - centerX) / centerX * 8;
+            
+            card.style.setProperty('--tilt-x', rotateX + 'deg');
+            card.style.setProperty('--tilt-y', rotateY + 'deg');
+            
+            // Update mouse position for radial gradient
+            var percentX = (x / rect.width) * 100;
+            var percentY = (y / rect.height) * 100;
+            card.style.setProperty('--mouse-x', percentX + '%');
+            card.style.setProperty('--mouse-y', percentY + '%');
+        });
+        
+        card.addEventListener('mouseleave', function () {
+            card.style.setProperty('--tilt-x', '0deg');
+            card.style.setProperty('--tilt-y', '0deg');
+        });
+    });
+})();
+
+// ============ PAGE TRANSITION OVERLAY ============
+(function () {
+    var overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
+    document.body.appendChild(overlay);
+    
+    document.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var href = this.getAttribute('href');
+            if (!href || href === '#' || href.startsWith('javascript:') || href.startsWith('tel:') || href.startsWith('mailto:') || href.startsWith('wa.me') || href.startsWith('https://wa.me')) {
+                return;
+            }
+            if (this.getAttribute('target') === '_blank') return;
+            if (this.classList.contains('open-modal') || this.classList.contains('cta-btn')) return;
+            
+            var isSamePage = window.location.pathname.split('/').pop() === href || 
+                           (href === 'index.html' && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')));
+            
+            if (!isSamePage && href.endsWith('.html')) {
+                e.preventDefault();
+                overlay.classList.add('active');
+                var target = href;
+                setTimeout(function () {
+                    window.location.href = target;
+                }, 400);
+            }
+        });
+    });
+})();
+
+// ============ FLOATING CTA ENHANCEMENTS ============
+(function () {
+    var cta = document.querySelector('.floating-cta');
+    if (!cta) return;
+    
+    var lastScrollY = window.scrollY;
+    var ticking = false;
+    
+    window.addEventListener('scroll', function () {
+        lastScrollY = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(function () {
+                if (lastScrollY > 300) {
+                    cta.style.transform = 'translateY(0)';
+                    cta.style.opacity = '1';
+                } else {
+                    cta.style.transform = 'translateY(20px)';
+                    cta.style.opacity = '0.7';
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 })();
 
 // ============ APPOINTMENT MODAL ============

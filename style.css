@@ -854,16 +854,14 @@ body {
 
 @media (max-width: 1024px) {
     .cinema-section {
-        height: auto !important;
+        height: 300vh !important;
         position: relative !important;
-        min-height: 100vh;
     }
 
     .cinema-sticky {
-        position: relative !important;
-        height: auto !important;
-        min-height: 100vh;
-        overflow: visible !important;
+        position: sticky !important;
+        height: 100vh !important;
+        overflow: hidden !important;
         top: 0 !important;
         pointer-events: auto !important;
     }
@@ -873,31 +871,23 @@ body {
     }
 
     .cinema-fallback {
-        position: relative !important;
-        opacity: 1 !important;
-        background: #000 !important;
-        min-height: 100vh;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        inset: auto !important;
-        pointer-events: auto !important;
-    }
-    
-    .cinema-progress-bar {
-        display: none !important;
-    }
-    
-    .cinema-scroll-hint {
-        display: none !important;
-    }
-    
-    .cinema-text {
         display: none !important;
     }
     
     .cinema-overlay {
-        display: none !important;
+        display: block !important;
+    }
+    
+    .cinema-text {
+        display: block !important;
+    }
+    
+    .cinema-progress-bar {
+        display: block !important;
+    }
+    
+    .cinema-scroll-hint {
+        display: block !important;
     }
 }
 

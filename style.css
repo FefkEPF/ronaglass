@@ -1890,6 +1890,16 @@ body {
 }
 
 /* ==================== BUTTONS ==================== */
+button,
+a,
+.btn-primary,
+.btn-secondary,
+.cta-btn,
+.hamburger,
+.nav-phone-btn {
+    touch-action: manipulation;
+}
+
 .btn-primary {
     padding: 14px 32px;
     background: var(--gold);

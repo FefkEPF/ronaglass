@@ -136,14 +136,6 @@ if (ham && mob) {
 }
 
 // ============ MOBILE TOUCH / GESTURE IMPROVEMENTS ============
-// Prevent double-tap zoom on buttons (iOS)
-document.addEventListener('touchend', function (e) {
-    var target = e.target;
-    if (target && (target.tagName === 'BUTTON' || target.tagName === 'A' || target.closest('.btn-primary, .btn-secondary, .cta-btn, .hamburger, .nav-phone-btn'))) {
-        e.preventDefault();
-        target.click();
-    }
-}, { passive: false });
 
 // ============ IOS SAFARI VIEWPORT FIX ============
 // Fix 100vh issue on iOS Safari (bottom bar overlaps)

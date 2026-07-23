@@ -311,82 +311,142 @@ if (contactForm) {
 
     if (!canvas || !section) return;
 
-    // Mobile detection - keep scroll structure but disable canvas
+    // Mobile detection - enable canvas with performance optimizations
     var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // On mobile, disable canvas but keep scroll structure
+    // On mobile, use canvas with lower resolution for performance
     if (isMobile) {
-        canvas.style.display = 'none';
-        
         // Set section height manually for mobile
         section.style.height = '300vh';
         
-        // Use CSS-based mobile scroll animation instead
-        var mobileScrollActive = true;
-        var mobileScrollProgress = 0;
+        // Use lower resolution canvas for mobile performance
+        canvas.width = 960;  // Half of desktop resolution
+        canvas.height = 540;
         
-        function updateMobileScroll() {
-            if (!mobileScrollActive) return;
-            
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#050505';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        var framesCount = 130;
+        var images = [];
+        var loaded = 0;
+        var lastDrawnIndex = -1;
+        
+        function drawImageSafe(index) {
+            if (index >= 0 && index < framesCount && images[index] && images[index].complete) {
+                ctx.globalAlpha = 1;
+                ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height);
+                lastDrawnIndex = index;
+            }
+        }
+        
+        for (var i = 1; i <= framesCount; i++) {
+            (function (index) {
+                var img = new Image();
+                var paddedIndex = index < 10 ? '00' + index : index < 100 ? '0' + index : '' + index;
+                img.src = 'images/frame_' + paddedIndex + '.jpg';
+                img.onload = function () {
+                    loaded++;
+                    if (lastDrawnIndex < 0 && index === 1) {
+                        drawImageSafe(0);
+                    }
+                    if (fallbackTimeout) {
+                        clearTimeout(fallbackTimeout);
+                        fallbackTimeout = null;
+                    }
+                };
+                img.onerror = function () { loaded++; };
+                images[index - 1] = img;
+            })(i);
+        }
+        
+        var fallbackTimeout = setTimeout(function () {
+            if (loaded === 0) {
+                var fallback = document.createElement('div');
+                fallback.className = 'cinema-fallback';
+                fallback.innerHTML = '<div class="cinema-fallback-inner">' +
+                    '<img src="images/logo.png" alt="Rona Auto Glass">' +
+                    '<div class="cinema-fallback-content">' +
+                    '<p class="cinema-tag">— ANKARA ETİMESGUT ŞAŞMAZ —</p>' +
+                    '<h1>CAMDAKİ ŞEFFAF ÇÖZÜM<br><em>RONA AUTO GLASS</em></h1>' +
+                    '<p class="cinema-sub">Kasko bozmadan cam değişimi. 15 dk\'da tamir.</p>' +
+                    '<a href="#video-presentation" class="btn-cinema">İnceleyin ↓</a>' +
+                    '</div>' +
+                    '</div>';
+                canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
+                canvas.style.opacity = '0';
+                fallback.style.opacity = '1';
+                
+                if (txt1) txt1.style.display = 'none';
+                if (txt2) txt2.style.display = 'none';
+                if (txt3) txt3.style.display = 'none';
+                if (hint) hint.style.display = 'none';
+            }
+        }, 3000);
+        
+        var sTop = 0, sH = 0, vH = 0, scrollable = 1;
+        var targetProgress = 0, currentProgress = 0;
+        
+        function onResize() {
+            sTop = section.offsetTop;
+            sH = section.offsetHeight;
+            vH = window.innerHeight;
+            scrollable = Math.max(1, sH - vH);
+        }
+        window.addEventListener('resize', onResize);
+        onResize();
+        
+        function updateFrame() {
             var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            var sTop = section.offsetTop;
-            var sH = section.offsetHeight;
-            var vH = window.innerHeight;
-            var scrollable = Math.max(1, sH - vH);
             
             var scrolled = scrollY - sTop;
-            mobileScrollProgress = Math.max(0, Math.min(1, scrolled / scrollable));
+            targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
             
-            // Mobile text overlays based on scroll
-            if (txt1) {
-                txt1.style.display = 'block';
-                if (mobileScrollProgress >= 0.05 && mobileScrollProgress < 0.32) {
-                    txt1.classList.add('active');
-                } else {
-                    txt1.classList.remove('active');
-                }
+            // Faster interpolation for mobile
+            currentProgress += (targetProgress - currentProgress) * 0.12;
+            if (Math.abs(targetProgress - currentProgress) < 0.0001) {
+                currentProgress = targetProgress;
             }
-            if (txt2) {
-                txt2.style.display = 'block';
-                if (mobileScrollProgress >= 0.36 && mobileScrollProgress < 0.65) {
-                    txt2.classList.add('active');
-                } else {
-                    txt2.classList.remove('active');
-                }
+            
+            var exactFrame = currentProgress * (framesCount - 1);
+            var frameIdx = Math.min(framesCount - 1, Math.max(0, Math.round(exactFrame)));
+            
+            if (images[frameIdx] && images[frameIdx].complete) {
+                ctx.globalAlpha = 1;
+                ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
+                lastDrawnIndex = frameIdx;
+            } else if (lastDrawnIndex >= 0) {
+                drawImageSafe(lastDrawnIndex);
             }
-            if (txt3) {
-                txt3.style.display = 'block';
-                if (mobileScrollProgress >= 0.68 && mobileScrollProgress < 0.94) {
-                    txt3.classList.add('active');
-                } else {
-                    txt3.classList.remove('active');
-                }
+            
+            // Dynamic text overlay toggles
+            if (txt1) txt1.classList.toggle('active', currentProgress >= 0.05 && currentProgress < 0.32);
+            if (txt2) txt2.classList.toggle('active', currentProgress >= 0.36 && currentProgress < 0.65);
+            if (txt3) txt3.classList.toggle('active', currentProgress >= 0.68 && currentProgress < 0.94);
+            
+            // Smooth overlay fade to black near end of sequence
+            if (currentProgress > 0.88) {
+                var fadeToBlack = Math.min(1, (currentProgress - 0.88) / 0.12);
+                ctx.globalAlpha = fadeToBlack;
+                ctx.fillStyle = '#050505';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
             
             if (fill) {
-                fill.style.transform = 'scaleX(' + mobileScrollProgress + ')';
+                fill.style.transform = 'scaleX(' + currentProgress + ')';
             }
             
             if (hint) {
-                hint.style.display = 'block';
-                hint.style.opacity = mobileScrollProgress > 0.02 ? '0' : '1';
+                hint.style.opacity = currentProgress > 0.02 ? '0' : '1';
             }
             
-            requestAnimationFrame(updateMobileScroll);
+            requestAnimationFrame(updateFrame);
         }
-        
-        // Initialize with first text active
-        if (txt1) {
-            txt1.style.display = 'block';
-            txt1.classList.add('active');
-        }
-        if (txt2) txt2.style.display = 'block';
-        if (txt3) txt3.style.display = 'block';
-        if (hint) hint.style.display = 'block';
         
         setTimeout(function () {
-            updateMobileScroll();
-        }, 100);
+            onResize();
+            requestAnimationFrame(updateFrame);
+        }, 50);
         
         return;
     }

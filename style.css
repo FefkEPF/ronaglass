@@ -865,6 +865,7 @@ body {
         min-height: 100vh;
         overflow: visible !important;
         top: 0 !important;
+        pointer-events: auto !important;
     }
 
     .cinema-sticky canvas {
@@ -880,6 +881,7 @@ body {
         align-items: center !important;
         justify-content: center !important;
         inset: auto !important;
+        pointer-events: auto !important;
     }
     
     .cinema-progress-bar {
@@ -969,6 +971,7 @@ body {
     gap: 24px;
     padding: 20px;
     text-align: center;
+    pointer-events: auto;
 }
 
 .cinema-fallback-inner img {
@@ -982,6 +985,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    pointer-events: auto;
 }
 
 .cinema-fallback-content .cinema-tag {

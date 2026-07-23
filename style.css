@@ -854,7 +854,7 @@ body {
 
 @media (max-width: 1024px) {
     .cinema-section {
-        height: 300vh !important;
+        height: 350vh !important;
         position: relative !important;
     }
 

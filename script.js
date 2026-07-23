@@ -316,11 +316,13 @@ if (contactForm) {
     
     // On mobile, use canvas with same resolution as desktop for identical experience
     if (isMobile) {
-        // Set section height immediately for mobile
+        // Force section height for mobile
         section.style.height = '350vh';
-        
-        // Force CSS height to apply
         section.style.setProperty('height', '350vh', 'important');
+        
+        // Also set min-height to ensure it works
+        section.style.minHeight = '350vh';
+        section.style.setProperty('min-height', '350vh', 'important');
         
         // Use same resolution canvas as desktop for identical experience
         canvas.width = 1920;  // Same as desktop
@@ -399,89 +401,14 @@ if (contactForm) {
         window.addEventListener('resize', onResize);
         onResize();
         
-        // Mobile touch scroll optimization
-        var touchStartY = 0;
-        var touchStartScroll = 0;
-        var isTouching = false;
-        var lastTouchY = 0;
-        var touchVelocity = 0;
-        var touchTimestamp = 0;
-        var touchMomentum = 0;
-        var momentumDecay = 0.95;
-        var isMomentumScrolling = false;
-        
-        // Touch event handlers for mobile
-        section.addEventListener('touchstart', function(e) {
-            touchStartY = e.touches[0].clientY;
-            touchStartScroll = window.pageYOffset || document.documentElement.scrollTop;
-            isTouching = true;
-            lastTouchY = touchStartY;
-            touchVelocity = 0;
-            touchTimestamp = Date.now();
-            touchMomentum = 0;
-            isMomentumScrolling = false;
-        }, { passive: true });
-        
-        section.addEventListener('touchmove', function(e) {
-            if (!isTouching) return;
-            
-            var currentTouchY = e.touches[0].clientY;
-            var currentTimestamp = Date.now();
-            var timeDelta = currentTimestamp - touchTimestamp;
-            
-            if (timeDelta > 0) {
-                touchVelocity = (currentTouchY - lastTouchY) / timeDelta;
-                lastTouchY = currentTouchY;
-                touchTimestamp = currentTimestamp;
-            }
-        }, { passive: true });
-        
-        section.addEventListener('touchend', function(e) {
-            isTouching = false;
-            
-            // Calculate momentum based on touch velocity
-            if (Math.abs(touchVelocity) > 0.1) {
-                touchMomentum = touchVelocity * 15; // Scale for momentum
-                isMomentumScrolling = true;
-                
-                // Apply momentum scroll
-                function applyMomentum() {
-                    if (!isMomentumScrolling || Math.abs(touchMomentum) < 0.1) {
-                        isMomentumScrolling = false;
-                        return;
-                    }
-                    
-                    var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                    var newScroll = currentScroll - touchMomentum;
-                    
-                    // Clamp scroll within bounds
-                    var maxScroll = sTop + scrollable;
-                    newScroll = Math.max(sTop, Math.min(maxScroll, newScroll));
-                    
-                    window.scrollTo(0, newScroll);
-                    
-                    touchMomentum *= momentumDecay;
-                    
-                    requestAnimationFrame(applyMomentum);
-                }
-                
-                requestAnimationFrame(applyMomentum);
-            }
-        }, { passive: true });
-        
         function updateFrame() {
             var scrollY = window.pageYOffset || document.documentElement.scrollTop;
             
             var scrolled = scrollY - sTop;
             targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
             
-            // Faster interpolation for mobile touch response
-            if (isTouching || isMomentumScrolling) {
-                currentProgress += (targetProgress - currentProgress) * 0.15;
-            } else {
-                currentProgress += (targetProgress - currentProgress) * 0.08;
-            }
-            
+            // Same interpolation as desktop for consistent behavior
+            currentProgress += (targetProgress - currentProgress) * 0.08;
             if (Math.abs(targetProgress - currentProgress) < 0.0001) {
                 currentProgress = targetProgress;
             }
@@ -528,11 +455,20 @@ if (contactForm) {
                 txt1.style.display = 'block';
                 txt1.classList.add('active');
             }
-            if (txt2) txt2.style.display = 'block';
-            if (txt3) txt3.style.display = 'block';
-            if (hint) hint.style.display = 'block';
+            if (txt2) {
+                txt2.style.display = 'block';
+                txt2.classList.remove('active');
+            }
+            if (txt3) {
+                txt3.style.display = 'block';
+                txt3.classList.remove('active');
+            }
+            if (hint) {
+                hint.style.display = 'block';
+                hint.style.opacity = '1';
+            }
             requestAnimationFrame(updateFrame);
-        }, 100);
+        }, 200);
         
         return;
     }
@@ -664,9 +600,24 @@ if (contactForm) {
     setTimeout(function () {
         onResize();
         // Initialize with first text active
-        if (txt1) txt1.classList.add('active');
+        if (txt1) {
+            txt1.style.display = 'block';
+            txt1.classList.add('active');
+        }
+        if (txt2) {
+            txt2.style.display = 'block';
+            txt2.classList.remove('active');
+        }
+        if (txt3) {
+            txt3.style.display = 'block';
+            txt3.classList.remove('active');
+        }
+        if (hint) {
+            hint.style.display = 'block';
+            hint.style.opacity = '1';
+        }
         requestAnimationFrame(updateFrame);
-    }, 50);
+    }, 100);
 })();
 
 // ============ SCROLL REVEAL ANIMATIONS ============

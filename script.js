@@ -311,17 +311,20 @@ if (contactForm) {
 
     if (!canvas || !section) return;
 
-    // Mobile detection - enable canvas with performance optimizations
+    // Mobile detection - enable canvas with same resolution as desktop
     var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // On mobile, use canvas with lower resolution for performance
+    // On mobile, use canvas with same resolution as desktop for identical experience
     if (isMobile) {
-        // Set section height manually for mobile
-        section.style.height = '300vh';
+        // Set section height immediately for mobile
+        section.style.height = '350vh';
         
-        // Use lower resolution canvas for mobile performance
-        canvas.width = 960;  // Half of desktop resolution
-        canvas.height = 540;
+        // Force CSS height to apply
+        section.style.setProperty('height', '350vh', 'important');
+        
+        // Use same resolution canvas as desktop for identical experience
+        canvas.width = 1920;  // Same as desktop
+        canvas.height = 1080;
         
         var ctx = canvas.getContext('2d');
         ctx.fillStyle = '#050505';
@@ -402,8 +405,8 @@ if (contactForm) {
             var scrolled = scrollY - sTop;
             targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
             
-            // Faster interpolation for mobile
-            currentProgress += (targetProgress - currentProgress) * 0.12;
+            // Same interpolation as desktop for identical experience
+            currentProgress += (targetProgress - currentProgress) * 0.08;
             if (Math.abs(targetProgress - currentProgress) < 0.0001) {
                 currentProgress = targetProgress;
             }
@@ -445,8 +448,16 @@ if (contactForm) {
         
         setTimeout(function () {
             onResize();
+            // Initialize with first text active immediately
+            if (txt1) {
+                txt1.style.display = 'block';
+                txt1.classList.add('active');
+            }
+            if (txt2) txt2.style.display = 'block';
+            if (txt3) txt3.style.display = 'block';
+            if (hint) hint.style.display = 'block';
             requestAnimationFrame(updateFrame);
-        }, 50);
+        }, 100);
         
         return;
     }
@@ -577,6 +588,8 @@ if (contactForm) {
 
     setTimeout(function () {
         onResize();
+        // Initialize with first text active
+        if (txt1) txt1.classList.add('active');
         requestAnimationFrame(updateFrame);
     }, 50);
 })();

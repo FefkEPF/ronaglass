@@ -311,30 +311,82 @@ if (contactForm) {
 
     if (!canvas || !section) return;
 
-    // Mobile detection
+    // Mobile detection - keep scroll structure but disable canvas
     var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // On mobile, show static fallback immediately with all text content
+    // On mobile, disable canvas but keep scroll structure
     if (isMobile) {
-        var fallback = document.createElement('div');
-        fallback.className = 'cinema-fallback';
-        fallback.innerHTML = '<div class="cinema-fallback-inner">' +
-            '<img src="images/logo.png" alt="Rona Auto Glass">' +
-            '<div class="cinema-fallback-content">' +
-            '<p class="cinema-tag">— ANKARA ETİMESGUT ŞAŞMAZ —</p>' +
-            '<h1>CAMDAKİ ŞEFFAF ÇÖZÜM<br><em>RONA AUTO GLASS</em></h1>' +
-            '<p class="cinema-sub">Kasko bozmadan cam değişimi. 15 dk\'da tamir.</p>' +
-            '<a href="#video-presentation" class="btn-cinema">İnceleyin ↓</a>' +
-            '</div>' +
-            '</div>';
-        canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
         canvas.style.display = 'none';
         
-        // Hide cinema text overlays on mobile since they're now in fallback
-        if (txt1) txt1.style.display = 'none';
-        if (txt2) txt2.style.display = 'none';
-        if (txt3) txt3.style.display = 'none';
-        if (hint) hint.style.display = 'none';
+        // Set section height manually for mobile
+        section.style.height = '300vh';
+        
+        // Use CSS-based mobile scroll animation instead
+        var mobileScrollActive = true;
+        var mobileScrollProgress = 0;
+        
+        function updateMobileScroll() {
+            if (!mobileScrollActive) return;
+            
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            var sTop = section.offsetTop;
+            var sH = section.offsetHeight;
+            var vH = window.innerHeight;
+            var scrollable = Math.max(1, sH - vH);
+            
+            var scrolled = scrollY - sTop;
+            mobileScrollProgress = Math.max(0, Math.min(1, scrolled / scrollable));
+            
+            // Mobile text overlays based on scroll
+            if (txt1) {
+                txt1.style.display = 'block';
+                if (mobileScrollProgress >= 0.05 && mobileScrollProgress < 0.32) {
+                    txt1.classList.add('active');
+                } else {
+                    txt1.classList.remove('active');
+                }
+            }
+            if (txt2) {
+                txt2.style.display = 'block';
+                if (mobileScrollProgress >= 0.36 && mobileScrollProgress < 0.65) {
+                    txt2.classList.add('active');
+                } else {
+                    txt2.classList.remove('active');
+                }
+            }
+            if (txt3) {
+                txt3.style.display = 'block';
+                if (mobileScrollProgress >= 0.68 && mobileScrollProgress < 0.94) {
+                    txt3.classList.add('active');
+                } else {
+                    txt3.classList.remove('active');
+                }
+            }
+            
+            if (fill) {
+                fill.style.transform = 'scaleX(' + mobileScrollProgress + ')';
+            }
+            
+            if (hint) {
+                hint.style.display = 'block';
+                hint.style.opacity = mobileScrollProgress > 0.02 ? '0' : '1';
+            }
+            
+            requestAnimationFrame(updateMobileScroll);
+        }
+        
+        // Initialize with first text active
+        if (txt1) {
+            txt1.style.display = 'block';
+            txt1.classList.add('active');
+        }
+        if (txt2) txt2.style.display = 'block';
+        if (txt3) txt3.style.display = 'block';
+        if (hint) hint.style.display = 'block';
+        
+        setTimeout(function () {
+            updateMobileScroll();
+        }, 100);
         
         return;
     }

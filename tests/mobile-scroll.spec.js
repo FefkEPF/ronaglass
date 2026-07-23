@@ -19,9 +19,9 @@ test.describe('Mobil Scroll Page Testleri', () => {
       console.log('Loader timeout, continuing test');
     }
     
-    // Canvas'ın gizli olduğunu kontrol et
+    // Canvas'ın görünüyor olduğunu kontrol et
     const canvas = page.locator('#cinema-canvas');
-    await expect(canvas).not.toBeVisible();
+    await expect(canvas).toBeVisible();
 
     // Cinema section sticky yapısını kontrol et
     const cinemaSection = page.locator('.cinema-section');

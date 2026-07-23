@@ -314,13 +314,28 @@ if (contactForm) {
     // Mobile detection
     var isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // On mobile, show static fallback immediately
+    // On mobile, show static fallback immediately with all text content
     if (isMobile) {
         var fallback = document.createElement('div');
         fallback.className = 'cinema-fallback';
-        fallback.innerHTML = '<div class="cinema-fallback-inner"><img src="images/logo.png" alt="Rona Auto Glass"><span>RONA AUTO GLASS</span></div>';
+        fallback.innerHTML = '<div class="cinema-fallback-inner">' +
+            '<img src="images/logo.png" alt="Rona Auto Glass">' +
+            '<div class="cinema-fallback-content">' +
+            '<p class="cinema-tag">— ANKARA ETİMESGUT ŞAŞMAZ —</p>' +
+            '<h1>CAMDAKİ ŞEFFAF ÇÖZÜM<br><em>RONA AUTO GLASS</em></h1>' +
+            '<p class="cinema-sub">Kasko bozmadan cam değişimi. 15 dk\'da tamir.</p>' +
+            '<a href="#video-presentation" class="btn-cinema">İnceleyin ↓</a>' +
+            '</div>' +
+            '</div>';
         canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
         canvas.style.display = 'none';
+        
+        // Hide cinema text overlays on mobile since they're now in fallback
+        if (txt1) txt1.style.display = 'none';
+        if (txt2) txt2.style.display = 'none';
+        if (txt3) txt3.style.display = 'none';
+        if (hint) hint.style.display = 'none';
+        
         return;
     }
 
@@ -368,10 +383,24 @@ if (contactForm) {
         if (loaded === 0) {
             var fallback = document.createElement('div');
             fallback.className = 'cinema-fallback';
-            fallback.innerHTML = '<div class="cinema-fallback-inner"><img src="images/logo.png" alt="Rona Auto Glass"><span>RONA AUTO GLASS</span></div>';
+            fallback.innerHTML = '<div class="cinema-fallback-inner">' +
+                '<img src="images/logo.png" alt="Rona Auto Glass">' +
+                '<div class="cinema-fallback-content">' +
+                '<p class="cinema-tag">— ANKARA ETİMESGUT ŞAŞMAZ —</p>' +
+                '<h1>CAMDAKİ ŞEFFAF ÇÖZÜM<br><em>RONA AUTO GLASS</em></h1>' +
+                '<p class="cinema-sub">Kasko bozmadan cam değişimi. 15 dk\'da tamir.</p>' +
+                '<a href="#video-presentation" class="btn-cinema">İnceleyin ↓</a>' +
+                '</div>' +
+                '</div>';
             canvas.parentNode.insertBefore(fallback, canvas.nextSibling);
             canvas.style.opacity = '0';
             fallback.style.opacity = '1';
+            
+            // Hide cinema text overlays
+            if (txt1) txt1.style.display = 'none';
+            if (txt2) txt2.style.display = 'none';
+            if (txt3) txt3.style.display = 'none';
+            if (hint) hint.style.display = 'none';
         }
     }, 3000);
 

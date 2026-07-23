@@ -399,14 +399,89 @@ if (contactForm) {
         window.addEventListener('resize', onResize);
         onResize();
         
+        // Mobile touch scroll optimization
+        var touchStartY = 0;
+        var touchStartScroll = 0;
+        var isTouching = false;
+        var lastTouchY = 0;
+        var touchVelocity = 0;
+        var touchTimestamp = 0;
+        var touchMomentum = 0;
+        var momentumDecay = 0.95;
+        var isMomentumScrolling = false;
+        
+        // Touch event handlers for mobile
+        section.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+            touchStartScroll = window.pageYOffset || document.documentElement.scrollTop;
+            isTouching = true;
+            lastTouchY = touchStartY;
+            touchVelocity = 0;
+            touchTimestamp = Date.now();
+            touchMomentum = 0;
+            isMomentumScrolling = false;
+        }, { passive: true });
+        
+        section.addEventListener('touchmove', function(e) {
+            if (!isTouching) return;
+            
+            var currentTouchY = e.touches[0].clientY;
+            var currentTimestamp = Date.now();
+            var timeDelta = currentTimestamp - touchTimestamp;
+            
+            if (timeDelta > 0) {
+                touchVelocity = (currentTouchY - lastTouchY) / timeDelta;
+                lastTouchY = currentTouchY;
+                touchTimestamp = currentTimestamp;
+            }
+        }, { passive: true });
+        
+        section.addEventListener('touchend', function(e) {
+            isTouching = false;
+            
+            // Calculate momentum based on touch velocity
+            if (Math.abs(touchVelocity) > 0.1) {
+                touchMomentum = touchVelocity * 15; // Scale for momentum
+                isMomentumScrolling = true;
+                
+                // Apply momentum scroll
+                function applyMomentum() {
+                    if (!isMomentumScrolling || Math.abs(touchMomentum) < 0.1) {
+                        isMomentumScrolling = false;
+                        return;
+                    }
+                    
+                    var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                    var newScroll = currentScroll - touchMomentum;
+                    
+                    // Clamp scroll within bounds
+                    var maxScroll = sTop + scrollable;
+                    newScroll = Math.max(sTop, Math.min(maxScroll, newScroll));
+                    
+                    window.scrollTo(0, newScroll);
+                    
+                    touchMomentum *= momentumDecay;
+                    
+                    requestAnimationFrame(applyMomentum);
+                }
+                
+                requestAnimationFrame(applyMomentum);
+            }
+        }, { passive: true });
+        
         function updateFrame() {
             var scrollY = window.pageYOffset || document.documentElement.scrollTop;
             
             var scrolled = scrollY - sTop;
             targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
             
-            // Same interpolation as desktop for identical experience
-            currentProgress += (targetProgress - currentProgress) * 0.08;
+            // Faster interpolation for mobile touch response
+            if (isTouching || isMomentumScrolling) {
+                currentProgress += (targetProgress - currentProgress) * 0.15;
+            } else {
+                currentProgress += (targetProgress - currentProgress) * 0.08;
+            }
+            
             if (Math.abs(targetProgress - currentProgress) < 0.0001) {
                 currentProgress = targetProgress;
             }

@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=yes">
+    <style>
+        .modal { max-height: calc(var(--vh, 1vh) * 90); }
+    </style>
+    <meta name="description" content="Rona Auto Glass Blog - Oto cam bakımı, 15 dakikada taş tamiri püf noktaları, kaskolu ücretsiz cam değişimi ve sürüş güvenliği rehberi.">
+    <meta name="keywords" content="oto cam blog, taş tamiri nasıl yapılır, kaskodan cam değişimi detayları, rona auto glass rehber">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.position" content="39.9390286;32.7079112">
+    <meta name="geo.region" content="TR-06">
+    <meta name="geo.placename" content="Ankara, Etimesgut, Şaşmaz">
+    <link rel="canonical" href="https://ronaglass.com.tr/blog.html">
+    <meta property="og:title" content="Rona Auto Glass | Blog & Oto Cam Rehberi">
+    <meta property="og:description" content="Sürüş güvenliği, cam bakımı, taş tamiri ve kasko süreçleri hakkında faydalı bilgiler ve uzman tavsiyeleri.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ronaglass.com.tr/blog.html">
+    <meta property="og:image" content="https://ronaglass.com.tr/images/logo.png">
+
+    <title>Rona Auto Glass | Blog & Oto Cam Rehberi</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="preload" as="style" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="style.css?v=14" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <noscript>
+        <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+        <link rel="stylesheet" href="style.css?v=14">
+    </noscript>
+
+    <!-- Schema.org JSON-LD LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Rona Auto Glass",
+      "image": "https://ronaglass.com.tr/images/logo.png",
+      "@id": "https://ronaglass.com.tr/#organization",
+      "url": "https://ronaglass.com.tr/blog.html",
+      "telephone": "<%= settings.phone_number ? settings.phone_number.replace(/\s+/g, '') : ('+' + (settings.whatsapp_number || '905346943789')) %>",
+      "email": "<%= settings.email_address || 'info@ronaglass.com.tr' %>",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2474 Cad 4/1 Şaşmaz",
+        "addressLocality": "Etimesgut",
+        "addressRegion": "Ankara",
+        "postalCode": "06790",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.9390286,
+        "longitude": 32.7079112
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:30",
+          "closes": "19:00"
+        }
+      ],
+      "priceRange": "$$",
+      "areaServed": ["Ankara", "Etimesgut", "Şaşmaz", "Batıkent", "Ümitköy", "Çayyolu", "Sincan", "Yenimahalle"]
+    }
+    </script>
+</head>
+<body>
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <img src="images/logo.png" alt="Rona Auto Glass" class="loader-logo" width="120" height="120">
+            <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
+            <p class="loader-text">Blog & Rehber Yükleniyor</p>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="logo-brand">
+            <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+            <div class="logo-text-wrapper">
+                <span class="logo-main">RONA</span>
+                <span class="logo-sub">AUTO GLASS</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html" class="nav-link">Hakkımızda</a></li>
+            <li><a href="hizmetlerimiz.html" class="nav-link">Hizmetlerimiz</a></li>
+            <li><a href="blog.html" class="nav-link active">Blog</a></li>
+            <li><a href="sss.html" class="nav-link">S.S.S</a></li>
+            <li><a href="bize-ulasin.html" class="nav-link">Bize Ulaşın</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="tel:<%= settings.phone_number ? settings.phone_number.replace(/\s+/g, '') : ('+' + (settings.whatsapp_number || '905346943789')) %>" class="nav-phone-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span><%= settings.phone_number || '0534 694 37 89' %></span>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html" class="mobile-link">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html" class="mobile-link">Hakkımızda</a></li>
+            <li><a href="hizmetlerimiz.html" class="mobile-link">Hizmetlerimiz</a></li>
+            <li><a href="blog.html" class="mobile-link active">Blog</a></li>
+            <li><a href="sss.html" class="mobile-link">S.S.S</a></li>
+            <li><a href="bize-ulasin.html" class="mobile-link">Bize Ulaşın</a></li>
+        </ul>
+        <div class="mobile-contact-info">
+            <a href="tel:<%= settings.phone_number ? settings.phone_number.replace(/\s+/g, '') : ('+' + (settings.whatsapp_number || '905346943789')) %>" class="btn-primary mobile-menu-cta">Hemen Ara: <%= settings.phone_number || '0534 694 37 89' %></a>
+        </div>
+    </div>
+
+    <!-- PAGE HERO -->
+    <header class="page-hero">
+        <div class="container">
+            <p class="section-tag">BİLGİ & UZMANLIK</p>
+            <h1 class="page-hero-title">Oto Cam Blog & Rehber</h1>
+            <p class="page-hero-sub">Cam bakımı, kasko hakları, 15 dakikada taş tamiri tekniği ve güvenli sürüş için uzman tavsiyeleri.</p>
+        </div>
+    </header>
+
+    <!-- ARTICLES GRID -->
+    <section class="articles-section">
+        <div class="container">
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img loading="lazy" src="images/IMG_8611.jpeg" alt="15 Dakikada Çatlak Cam Tamiri">
+                        <div class="blog-image-placeholder"></div>
+                        <span class="blog-tag">CAM TAMİRİ</span>
+                    </div>
+                    <div class="blog-body">
+                        <h3><span class="desktop-text">15 Dakikada Çatlak Cam Tamiri Nasıl Yapılır?</span><span class="mobile-text">15 Dakikada Cam Tamiri</span></h3>
+                        <p>Ön camınızdaki taş vuruklarını değiştirmeden 15 dakikada özel reçine vakumlama teknolojimiz ile orijinal yapısını bozmadan ilk günkü sağlamlığına kavuşturuyoruz.</p>
+                        <a href="bize-ulasin.html" class="blog-read-more">Randevu Al →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img loading="lazy" src="images/IMG_8590.jpeg" alt="Kaskolu Cam Değişimi Rehberi">
+                        <div class="blog-image-placeholder"></div>
+                        <span class="blog-tag">KASKO REHBERİ</span>
+                    </div>
+                    <div class="blog-body">
+                        <h3><span class="desktop-text">Kaskonuz Bozulmadan Ücretsiz Cam Değişimi Hakları</span><span class="mobile-text">Kasko Cam Değişimi</span></h3>
+                        <p>Araç kaskonuz kapsamındaki yılda 1 defa ücretsiz ve hasarsızlık indirimi bozulmadan cam değişim hakkınız hakkında bilmeniz gereken tüm detaylar.</p>
+                        <a href="bize-ulasin.html" class="blog-read-more">Kasko İncele →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img loading="lazy" src="images/IMG_8601.jpeg" alt="Silecek Bakımı Ve Ön Cam Koruma">
+                        <div class="blog-image-placeholder"></div>
+                        <span class="blog-tag">BAKIM İPUÇLARI</span>
+                    </div>
+                    <div class="blog-body">
+                        <h3><span class="desktop-text">Silecek Bakımı Ve Ön Cam Çizilmelerini Önleme Yolları</span><span class="mobile-text">Cam Bakımı</span></h3>
+                        <p>Silecek süpürgelerinin zamanında değiştirilmesi ön cam çizilmelerini engeller. Şeffaf görüş ve uzun cam ömrü için bakım tavsiyeleri.</p>
+                        <a href="bize-ulasin.html" class="blog-read-more">Detaylı Oku →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img loading="lazy" src="images/IMG_8634.png" alt="7/24 Mobil Servis Aracı">
+                        <div class="blog-image-placeholder"></div>
+                        <span class="blog-tag">MOBİL SERVİS</span>
+                    </div>
+                    <div class="blog-body">
+                        <h3><span class="desktop-text">Yerinde Mobil Servis: Evinizde veya İş Yerinizde Cam Montajı</span><span class="mobile-text">Mobil Servis</span></h3>
+                        <p>Zaman kaybetmeden bulunduğunuz konuma mobil servis aracımızla gelip aynı gün içerisinde cam değişimi gerçekleştiriyoruz.</p>
+                        <a href="bize-ulasin.html" class="blog-read-more">Mobil Servis Çağır →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+        <!-- FLOATING CTA -->
+    <div class="floating-cta">
+        <a href="https://wa.me/<%= settings.whatsapp_number || '905346943789' %>?text=Merhaba,%20oto%20cam%20fiyat%C4%B1%20almak%20istiyorum."
+            target="_blank" class="cta-btn whatsapp" aria-label="WhatsApp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+            </svg>
+            <span>WhatsApp</span>
+        </a>
+        <a href="tel:<%= (settings.phone_number || '0534 694 37 89').replace(/\s+/g, '') %>" class="cta-btn phone" aria-label="Telefon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>Bizi Arayın</span>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-brand">
+                        <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+                        <div class="logo-text-wrapper">
+                            <span class="logo-main">RONA</span>
+                            <span class="logo-sub">AUTO GLASS</span>
+                        </div>
+                    </a>
+                    <p>Ankara Etimesgut Şaşmaz'da kaskolu araçlara ücretsiz cam değişimi, 15 dakikada taş tamiri ve 7/24 mobil montaj hizmeti.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Sayfalar</h4>
+                    <a href="index.html">Ana Sayfa</a>
+                    <a href="hakkimizda.html">Hakkımızda</a>
+                    <a href="hizmetlerimiz.html">Hizmetlerimiz</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="sss.html">S.S.S</a>
+                    <a href="bize-ulasin.html">Bize Ulaşın</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Hizmetler</h4>
+                    <a href="hizmetlerimiz.html">Binek Araç Camı</a>
+                    <a href="hizmetlerimiz.html">Kaskolu Ücretsiz Değişim</a>
+                    <a href="hizmetlerimiz.html">15 Dk Çatlak Tamiri</a>
+                    <a href="hizmetlerimiz.html">Ticari & Tır Camı</a>
+                    <a href="hizmetlerimiz.html">Traktör & Kabin Camı</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Servis İletişim</h4>
+                    <p><svg class="icon-svg-gold" viewBox="0 0 24 24" width="16" height="16" fill="var(--gold)" style="vertical-align:-2px;margin-right:6px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> <%= settings.address || '2474 Cad 4/1 Şaşmaz, Etimesgut/Ankara' %></p>
+                    <p><a href="tel:<%= settings.phone_number ? settings.phone_number.replace(/\s+/g, '') : ('+' + (settings.whatsapp_number || '905346943789')) %>" class="footer-phone-link"><%= settings.phone_number || '0534 694 37 89' %></a></p>
+                    <p><svg class="icon-svg-gold" viewBox="0 0 24 24" width="16" height="16" fill="var(--gold)" style="vertical-align:-2px;margin-right:6px;"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> <a href="mailto:<%= settings.email_address || 'info@ronaglass.com.tr' %>" class="footer-email-link"><%= settings.email_address || 'info@ronaglass.com.tr' %></a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js?v=14"></script>
+
+    <!-- APPOINTMENT MODAL -->
+    <div class="modal-overlay" id="appointment-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Hızlı Teklif / Randevu</h2>
+                <button class="modal-close" id="modal-close" aria-label="Kapat">&times;</button>
+            </div>
+            <form class="modal-form" id="modal-appointment-form">
+                <div class="form-group">
+                    <label for="modal-name">Ad Soyad</label>
+                    <input type="text" id="modal-name" placeholder="Adınız Soyadınız" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Telefon</label>
+                    <input type="tel" id="modal-phone" placeholder="05XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-vehicle">Araç Marka / Model</label>
+                    <input type="text" id="modal-vehicle" placeholder="Örn: 2020 Volkswagen Passat">
+                </div>
+                <div class="form-group">
+                    <label for="modal-service">Hizmet Türü</label>
+                    <select id="modal-service">
+                        <option value="">Seçiniz</option>
+                        <option value="kasko">Kaskolu Cam Değişimi (Ücretsiz)</option>
+                        <option value="tamir">15 Dk Taş Tamiri / Çatlak Onarımı</option>
+                        <option value="binek">Binek Araç Cam Değişimi</option>
+                        <option value="mobil">7/24 Mobil Servis Talebi</option>
+                        <option value="ticari">Ticari / Tır / Otobüs Camı</option>
+                        <option value="traktor">Traktör & Kabin Camı</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kasko Durumu</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-var" name="kasko" value="var" checked>
+                            <label for="kasko-var">Kaskom Var</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="kasko-yok" name="kasko" value="yok">
+                            <label for="kasko-yok">Kaskom Yok</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary modal-submit">Talebi Gönder →</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

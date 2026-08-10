@@ -5201,6 +5201,65 @@ body.menu-open .floating-cta,
         justify-content: center !important;
         box-sizing: border-box !important;
     }
+/* GLOBAL MOBILE HEADER DUAL CTA BUTTONS */
+.mobile-header-ctas {
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 18px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.nav-cta-btn.whatsapp {
+    background: #25D366;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.nav-cta-btn.whatsapp:hover, .nav-cta-btn.whatsapp:active {
+    background: #20bd5a;
+    transform: translateY(-1px);
+}
+
+.nav-cta-btn.phone {
+    background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+    color: #07070a;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.nav-cta-btn.phone:hover, .nav-cta-btn.phone:active {
+    background: linear-gradient(135deg, #e5be3f 0%, #b88714 100%);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .desktop-only-btn {
+        display: none !important;
+    }
+    .mobile-header-ctas.mobile-only-btn {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-cta-btn {
+        height: 32px;
+        padding: 0 10px;
+        font-size: 11px;
+    }
 }
 
 

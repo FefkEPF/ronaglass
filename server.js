@@ -48,6 +48,13 @@ function requireAuth(req, res, next) {
 }
 
 // Global settings middleware
+const defaultSettings = {
+  phone_number: '0534 694 37 89',
+  whatsapp_number: '905346943789',
+  address: 'Şaşmaz / Etimesgut / Ankara',
+  company_name: 'Rona Auto Glass'
+};
+
 app.use(async (req, res, next) => {
   // Skip static assets and admin login
   if (req.path.match(/\.(js|css|png|jpg|jpeg|mp4|webm|svg)$/) || req.path === '/admin/login') {
@@ -55,14 +62,14 @@ app.use(async (req, res, next) => {
   }
   try {
     const [rows] = await pool.query('SELECT * FROM settings');
-    const settings = {};
+    const settings = { ...defaultSettings };
     rows.forEach(row => {
       settings[row.key] = row.value;
     });
     res.locals.settings = settings;
   } catch (err) {
-    console.error(err);
-    res.locals.settings = {};
+    // Silently fall back to defaults when DB is offline
+    res.locals.settings = defaultSettings;
   }
   next();
 });
@@ -125,6 +132,14 @@ app.get(['/:page', '/:page.html'], (req, res, next) => {
 });
 
 module.exports = app;
+
+process.on('unhandledRejection', (reason) => {
+  console.warn('Unhandled Rejection:', reason && reason.message ? reason.message : reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.warn('Uncaught Exception:', err && err.message ? err.message : err);
+});
 
 if (require.main === module) {
   app.listen(PORT, () => {

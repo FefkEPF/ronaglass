@@ -125,3 +125,9 @@ app.get(['/:page', '/:page.html'], (req, res, next) => {
 });
 
 module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server listening on http://localhost:${PORT}`);
+  });
+}

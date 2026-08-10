@@ -771,3 +771,77 @@ if (contactForm) {
         }
     });
 })();
+
+// ============ REFERENCE IMAGE LIGHTBOX MODAL ============
+(function () {
+    function initRefLightbox() {
+        var refCards = document.querySelectorAll('.ref-card');
+        if (!refCards.length) return;
+
+        var lightbox = document.getElementById('ref-lightbox');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
+            lightbox.id = 'ref-lightbox';
+            lightbox.className = 'ref-lightbox';
+            lightbox.innerHTML = 
+                '<div class="ref-lightbox-content">' +
+                    '<button class="ref-lightbox-close" id="ref-lightbox-close" aria-label="Kapat">&times;</button>' +
+                    '<img class="ref-lightbox-img" id="ref-lightbox-img" src="" alt="Referans Belgesi">' +
+                    '<div class="ref-lightbox-caption" id="ref-lightbox-caption"></div>' +
+                '</div>';
+            document.body.appendChild(lightbox);
+        }
+
+        var lightboxImg = document.getElementById('ref-lightbox-img');
+        var lightboxCaption = document.getElementById('ref-lightbox-caption');
+
+        refCards.forEach(function (card) {
+            var imgBox = card.querySelector('.ref-img-box');
+            if (imgBox && !imgBox.querySelector('.ref-img-zoom-hint')) {
+                var hint = document.createElement('div');
+                hint.className = 'ref-img-zoom-hint';
+                hint.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Büyüt';
+                imgBox.appendChild(hint);
+            }
+
+            card.addEventListener('click', function (e) {
+                var img = card.querySelector('.ref-img');
+                var title = card.querySelector('.ref-title');
+                var badge = card.querySelector('.ref-badge');
+
+                if (img && img.src) {
+                    lightboxImg.src = img.src;
+                    var captionText = (title ? title.textContent : '') + (badge ? ' - ' + badge.textContent : '');
+                    lightboxCaption.textContent = captionText;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        function closeLightbox() {
+            if (lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('#ref-lightbox-close') || e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initRefLightbox);
+    } else {
+        initRefLightbox();
+    }
+})();

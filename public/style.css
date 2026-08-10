@@ -738,7 +738,21 @@ body {
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 14px;
+}
+
+.nav-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.desktop-only-btn {
+    display: inline-flex !important;
+}
+
+.mobile-only-btn {
+    display: none !important;
 }
 
 .nav-phone-btn {
@@ -762,6 +776,47 @@ body {
     color: var(--bg);
     border-color: var(--gold);
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.nav-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid var(--border-gold);
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all var(--t);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-icon-btn svg {
+    display: block;
+    transition: transform var(--t-fast);
+}
+
+.nav-phone-icon-btn:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+}
+
+.nav-whatsapp-icon-btn {
+    border-color: rgba(37, 211, 102, 0.4);
+    background: rgba(37, 211, 102, 0.12);
+    color: #25D366;
+}
+
+.nav-whatsapp-icon-btn:hover {
+    background: #25D366;
+    color: #ffffff;
+    border-color: #25D366;
+    box-shadow: 0 0 16px rgba(37, 211, 102, 0.4);
 }
 
 .hamburger {
@@ -2122,15 +2177,15 @@ a,
 
 .ref-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
 }
 
 .ref-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--glass-border);
     border-radius: var(--r-lg);
-    padding: 24px 20px;
+    padding: 24px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -2140,6 +2195,7 @@ a,
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
+    cursor: pointer;
 }
 
 .ref-card::before {
@@ -2167,36 +2223,62 @@ a,
 
 .ref-img-box {
     width: 100%;
-    aspect-ratio: 1 / 1;
-    background: #ffffff;
-    border-radius: var(--r);
-    padding: 12px;
+    aspect-ratio: 1080 / 1650;
+    background: rgba(10, 10, 15, 0.9);
+    border-radius: var(--r-lg);
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    margin-bottom: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    border: 1px solid var(--border-gold);
+    cursor: pointer;
 }
 
 .ref-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 6px;
-    transition: transform var(--t-slow);
+    object-fit: cover;
+    object-position: top center;
+    border-radius: var(--r-lg);
+    transition: transform var(--t-slow), filter var(--t);
+}
+
+.ref-img-zoom-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(5, 5, 8, 0.85);
+    border: 1px solid var(--border-gold);
+    color: var(--gold-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+    transition: all var(--t);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.ref-card:hover .ref-img-zoom-hint {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
 }
 
 .ref-card:hover .ref-img {
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
 
-
 .ref-title {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--text);
     margin-bottom: 8px;
@@ -2205,12 +2287,12 @@ a,
 
 .ref-badge {
     display: inline-block;
-    padding: 5px 12px;
+    padding: 6px 16px;
     background: rgba(212, 175, 55, 0.1);
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 20px;
     color: var(--gold-light);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.4px;
 }
@@ -2219,10 +2301,85 @@ a,
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #111111;
-    font-size: 12px;
+    color: var(--gold);
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
+}
+
+/* ==================== REFERENCE LIGHTBOX MODAL ==================== */
+.ref-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(3, 3, 6, 0.96);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.ref-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ref-lightbox-content {
+    position: relative;
+    max-width: 92vw;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ref-lightbox-img {
+    max-width: 100%;
+    max-height: 82vh;
+    aspect-ratio: 1080 / 1650;
+    object-fit: contain;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--border-gold);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+.ref-lightbox-caption {
+    margin-top: 14px;
+    color: var(--gold-light);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.ref-lightbox-close {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(10, 10, 15, 0.9);
+    border: 1px solid var(--border-gold);
+    color: var(--gold);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t);
+    z-index: 10;
+}
+
+.ref-lightbox-close:hover {
+    background: var(--gold);
+    color: var(--bg);
+    transform: scale(1.1);
 }
 
 
@@ -2923,39 +3080,49 @@ a,
         gap: 10px;
     }
 
+    .desktop-only-btn {
+        display: none !important;
+    }
+
+    .mobile-only-btn {
+        display: inline-flex !important;
+    }
+
     .ref-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
 
     .ref-card {
-        padding: 12px 10px;
-        border-radius: var(--r);
+        padding: 18px 14px;
+        border-radius: var(--r-lg);
     }
 
     .ref-img-box {
         width: 100%;
-        aspect-ratio: 1 / 1;
-        margin-bottom: 8px;
-        padding: 6px;
-        border-radius: 8px;
+        aspect-ratio: 1080 / 1650;
+        margin-bottom: 14px;
+        padding: 0;
+        border-radius: var(--r-lg);
     }
 
     .ref-img {
         width: 100%;
         height: 100%;
         max-height: none !important;
-        object-fit: contain;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: var(--r-lg);
     }
 
     .ref-title {
-        font-size: 13px;
-        margin-bottom: 4px;
+        font-size: 16px;
+        margin-bottom: 6px;
     }
 
     .ref-badge {
-        font-size: 9.5px;
-        padding: 3px 6px;
+        font-size: 11px;
+        padding: 5px 12px;
     }
 
     .footer-grid {
@@ -3204,25 +3371,26 @@ a,
     }
 
     .ref-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .ref-card {
-        padding: 10px 8px;
+        padding: 16px 12px;
     }
 
     .ref-img-box {
-        padding: 6px;
+        padding: 0;
+        aspect-ratio: 1080 / 1650;
     }
 
     .ref-title {
-        font-size: 12px;
+        font-size: 15px;
     }
 
     .ref-badge {
-        font-size: 9px;
-        padding: 2px 5px;
+        font-size: 10.5px;
+        padding: 4px 10px;
     }
 
     .highlights-grid {
@@ -4419,14 +4587,417 @@ body.menu-open .floating-cta,
 }
 
 /* Ensure clean transparent background for floating CTA container */
-.floating-cta {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+
+/* ==================== INSTAGRAM FOLLOW SECTION ==================== */
+.instagram-section {
+    padding: 100px 0;
+    background: radial-gradient(circle at 85% 20%, rgba(225, 48, 108, 0.06) 0%, rgba(5, 5, 5, 1) 60%);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 48px;
+    align-items: center;
+}
+
+/* Left Content */
+.instagram-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.ig-tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(225, 48, 108, 0.1);
+    border: 1px solid rgba(225, 48, 108, 0.3);
+    color: #e1306c;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+}
+
+.ig-main-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+
+.ig-title-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+
+.ig-description {
+    color: var(--dim);
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    max-width: 480px;
+}
+
+.ig-handle-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+}
+
+.ig-icon-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(225, 48, 108, 0.35);
+}
+
+.ig-handle-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ig-handle-lbl {
+    font-size: 12px;
+    color: var(--dim);
+}
+
+.ig-handle-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.ig-sub-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dim);
+    font-size: 13px;
+    margin-bottom: 28px;
+}
+
+.btn-ig-follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(220, 39, 67, 0.4);
+    transition: all var(--t);
+}
+
+.btn-ig-follow:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(220, 39, 67, 0.55);
+}
+
+/* Right Mockup Wrapper */
+.instagram-mockup-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Profile Card Mockup */
+.ig-profile-card {
+    background: #ffffff;
+    color: #111111;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.ig-profile-top {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.ig-avatar-ring {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    flex-shrink: 0;
+}
+
+.ig-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #000000;
+    border: 2px solid #ffffff;
+}
+
+.ig-profile-details {
+    flex: 1;
+}
+
+.ig-profile-user-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.ig-username {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+}
+
+.ig-verified-badge {
+    width: 18px;
+    height: 18px;
+    background: #0095f6;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.ig-more-dots {
+    margin-left: auto;
+    color: #737373;
+    font-size: 14px;
+}
+
+.ig-category {
+    font-size: 12px;
+    color: #737373;
+    margin-bottom: 8px;
+}
+
+.ig-stats-row {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #262626;
+    margin-bottom: 10px;
+}
+
+.ig-bio-text {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #262626;
+}
+
+.ig-bio-text p {
+    margin-bottom: 2px;
+}
+
+.ig-bio-link {
+    color: #00376b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.ig-action-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.ig-btn-follow {
+    background: #0095f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.ig-btn-follow:hover {
+    background: #1877f2;
+}
+
+.ig-btn-msg {
+    background: #efefef;
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.ig-btn-msg:hover {
+    background: #dbdbdb;
+}
+
+/* Reels Grid */
+.ig-reels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.ig-reel-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+}
+
+.ig-reel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ig-reel-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ig-mini-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #000;
+}
+
+.ig-mini-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.ig-mini-link {
+    background: #0095f6;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.ig-reel-media {
+    position: relative;
+    aspect-ratio: 9 / 14;
+    background: #000000;
+    overflow: hidden;
+}
+
+.ig-reel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ig-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.25);
+    transition: opacity 0.3s ease;
+}
+
+.ig-reel-card:hover .ig-play-overlay {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ig-reel-text-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 10px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.ig-reel-footer {
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+    color: #0095f6;
+    font-weight: 600;
+    text-decoration: none;
+    background: #ffffff;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+    .instagram-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ig-reels-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ig-profile-top {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .ig-profile-user-row {
+        justify-content: center;
+    }
+    
+    .ig-stats-row {
+        justify-content: center;
+    }
 }
 
 

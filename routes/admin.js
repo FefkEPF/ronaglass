@@ -81,43 +81,64 @@ const CONTENT_CATALOG = [
 // Dashboard
 router.get('/', async (req, res) => {
   let leads = [];
+  let dbOnline = true;
   try {
     const pool = req.app.locals.pool;
     [leads] = await pool.query('SELECT * FROM leads ORDER BY created_at DESC LIMIT 200');
   } catch (err) {
-    // DB yoksa boş listeyle devam et
+    dbOnline = false; // DB yoksa boş listeyle devam et
   }
-  res.render('admin_dashboard', { leads, catalog: CONTENT_CATALOG });
+  res.render('admin_dashboard', {
+    leads,
+    catalog: CONTENT_CATALOG,
+    dbOnline,
+    saveError: req.query.dberr === '1',
+  });
 });
 
 // Delete a lead
 router.post('/leads/delete', async (req, res) => {
   const { id } = req.body;
-  if (id) {
-    const pool = req.app.locals.pool;
-    await pool.query('DELETE FROM leads WHERE id = ?', [id]);
+  try {
+    if (id) {
+      const pool = req.app.locals.pool;
+      await pool.query('DELETE FROM leads WHERE id = ?', [id]);
+    }
+    res.redirect('/admin#talepler');
+  } catch (err) {
+    console.error('Talep silinemedi:', err.message);
+    res.redirect('/admin?dberr=1#talepler');
   }
-  res.redirect('/admin#talepler');
 });
 
 // Update a setting (key/value)
 router.post('/settings', async (req, res) => {
   const { key, value, tab } = req.body;
-  if (key) {
-    const pool = req.app.locals.pool;
-    await pool.query('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)', [key, value]);
+  try {
+    if (key) {
+      const pool = req.app.locals.pool;
+      await pool.query('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)', [key, value]);
+    }
+    res.redirect('/admin' + (tab ? '#' + tab : ''));
+  } catch (err) {
+    console.error('Ayar kaydedilemedi:', err.message);
+    res.redirect('/admin?dberr=1' + (tab ? '#' + tab : ''));
   }
-  res.redirect('/admin' + (tab ? '#' + tab : ''));
 });
 
 // Delete a setting
 router.post('/settings/delete', async (req, res) => {
   const { key, tab } = req.body;
-  if (key) {
-    const pool = req.app.locals.pool;
-    await pool.query('DELETE FROM settings WHERE `key` = ?', [key]);
+  try {
+    if (key) {
+      const pool = req.app.locals.pool;
+      await pool.query('DELETE FROM settings WHERE `key` = ?', [key]);
+    }
+    res.redirect('/admin' + (tab ? '#' + tab : ''));
+  } catch (err) {
+    console.error('Ayar silinemedi:', err.message);
+    res.redirect('/admin?dberr=1' + (tab ? '#' + tab : ''));
   }
-  res.redirect('/admin' + (tab ? '#' + tab : ''));
 });
 
 // Logout

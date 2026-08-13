@@ -240,6 +240,15 @@
         </div>
 
         <div class="content">
+            <% if (typeof saveError !== 'undefined' && saveError) { %>
+                <div style="background:rgba(224,82,82,.1);border:1px solid rgba(224,82,82,.35);color:var(--red);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:14px;">
+                    ⚠ İşlem kaydedilemedi: veritabanına ulaşılamıyor. Bağlantı ayarlarını (.env) kontrol edin.
+                </div>
+            <% } else if (typeof dbOnline !== 'undefined' && !dbOnline) { %>
+                <div style="background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.3);color:var(--gold);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:14px;">
+                    ⚠ Veritabanı bağlantısı yok — site varsayılan metinlerle çalışıyor, form talepleri WhatsApp'a yönleniyor. İçerik düzenlemeleri veritabanı bağlanınca kaydedilebilir.
+                </div>
+            <% } %>
             <%
               const today = new Date().toDateString();
               const todayCount = (leads || []).filter(l => new Date(l.created_at).toDateString() === today).length;

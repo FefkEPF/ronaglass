@@ -279,23 +279,67 @@ if (faqSearchInput) {
     });
 }
 
+// ============ LEAD GÖNDERİMİ ============
+// Talebi sunucuya kaydeder; sunucu/DB ulaşılamazsa WhatsApp'a yönlendirir.
+function sendLead(data, btn, btnDefaultText, afterSuccess) {
+    var originalBg = btn ? btn.style.background : '';
+    fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(function (r) {
+        if (!r.ok) throw new Error('http ' + r.status);
+        return r.json();
+    }).then(function () {
+        if (btn) {
+            btn.textContent = '✓ Talebiniz Alındı! Sizi Arayacağız';
+            btn.style.background = '#27ae60';
+        }
+        setTimeout(function () {
+            if (btn) { btn.textContent = btnDefaultText; btn.style.background = originalBg; btn.disabled = false; }
+            if (afterSuccess) afterSuccess();
+        }, 2500);
+    }).catch(function () {
+        // Yedek: talebi WhatsApp mesajı olarak ilet
+        var waLink = document.querySelector('a[href*="wa.me/"]');
+        var waNum = '905346943789';
+        if (waLink) {
+            var m = waLink.href.match(/wa\.me\/(\d+)/);
+            if (m) waNum = m[1];
+        }
+        var text = 'Merhaba, web sitesinden talep gönderiyorum.\n' +
+            'Ad: ' + (data.name || '') + '\n' +
+            'Telefon: ' + (data.phone || '') +
+            (data.vehicle ? '\nAraç: ' + data.vehicle : '') +
+            (data.service ? '\nHizmet: ' + data.service : '') +
+            (data.kasko ? '\nKasko: ' + data.kasko : '') +
+            (data.message ? '\nNot: ' + data.message : '');
+        window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(text), '_blank');
+        if (btn) {
+            btn.textContent = 'WhatsApp üzerinden iletiliyor...';
+            setTimeout(function () { btn.textContent = btnDefaultText; btn.style.background = originalBg; btn.disabled = false; }, 2500);
+        }
+        if (afterSuccess) setTimeout(afterSuccess, 2500);
+    });
+}
+
 // ============ CONTACT FORM ============
 var contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        var b = e.target.querySelector('.btn-primary');
-        if (b) {
-            b.textContent = '✓ Talebiniz Alındı! Sizi Arayacağız';
-            b.style.background = '#27ae60';
-        }
-        setTimeout(function () {
-            if (b) {
-                b.textContent = 'Talebi Gönder';
-                b.style.background = '';
-            }
-            e.target.reset();
-        }, 3000);
+        var form = e.target;
+        var q = function (sel) { var el = form.querySelector(sel); return el ? el.value : ''; };
+        var b = form.querySelector('.btn-primary');
+        if (b) b.disabled = true;
+        sendLead({
+            name: q('input[aria-label="Ad Soyad"]'),
+            phone: q('input[aria-label="Telefon"]'),
+            service: q('select[aria-label="Hizmet Türü"]'),
+            vehicle: q('input[aria-label="Araç Bilgisi"]'),
+            message: q('textarea[aria-label="Mesaj"]'),
+            page: location.pathname
+        }, b, 'Talebi Gönder', function () { form.reset(); });
     });
 }
 
@@ -755,19 +799,21 @@ if (contactForm) {
             e.preventDefault();
             var form = e.target;
             var btn = form.querySelector('.modal-submit');
-            if (btn) {
-                var originalText = btn.textContent;
-                btn.textContent = '✓ Talebiniz Alındı! Sizi Arayacağız';
-                btn.style.background = '#27ae60';
-                btn.disabled = true;
-                setTimeout(function () {
-                    btn.textContent = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                    form.reset();
-                    closeModal();
-                }, 2500);
-            }
+            var originalText = btn ? btn.textContent : '';
+            if (btn) btn.disabled = true;
+            var val = function (id) { var el = form.querySelector('#' + id); return el ? el.value : ''; };
+            var kaskoEl = form.querySelector('input[name="kasko"]:checked');
+            sendLead({
+                name: val('modal-name'),
+                phone: val('modal-phone'),
+                vehicle: val('modal-vehicle'),
+                service: val('modal-service'),
+                kasko: kaskoEl ? kaskoEl.value : '',
+                page: location.pathname
+            }, btn, originalText, function () {
+                form.reset();
+                closeModal();
+            });
         }
     });
 })();

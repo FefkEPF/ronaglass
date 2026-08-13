@@ -1,0 +1,27 @@
+<%- include('partials/head', {"title": "Sunucu Hatası | Rona Auto Glass", "description": "Geçici bir sunucu hatası oluştu. Lütfen daha sonra tekrar deneyin.", "keywords": "rona auto glass", "canonical": "https://ronaglass.com.tr/", "ogTitle": "Sunucu Hatası | Rona Auto Glass", "ogDescription": "Geçici bir sunucu hatası oluştu."}) %>
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <%- include('partials/navbar', { active: '' }) %>
+
+    <!-- PAGE HERO -->
+    <header class="page-hero">
+        <div class="container">
+            <p class="section-tag">HATA 500</p>
+            <h1 class="page-hero-title">Geçici Bir Sorun Oluştu</h1>
+            <p class="page-hero-sub">Teknik bir aksaklık yaşıyoruz. Lütfen birkaç dakika sonra tekrar deneyin veya bizi doğrudan arayın.</p>
+            <div style="margin-top:2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <a href="index.html" class="btn-primary">Ana Sayfaya Dön</a>
+                <a href="tel:<%= (settings.phone_number || '0534 694 37 89').replace(/\s+/g, '') %>" class="btn-primary">Bizi Arayın: <%= settings.phone_number || '0534 694 37 89' %></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FOOTER -->
+    <%- include('partials/footer') %>
+
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js?v=15"></script>
+</body>
+</html>

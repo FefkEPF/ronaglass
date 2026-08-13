@@ -3,8 +3,25 @@ const express = require('express');
 const router = express.Router();
 
 // Dashboard (renders admin_dashboard view, settings already in res.locals)
-router.get('/', (req, res) => {
-  res.render('admin_dashboard');
+router.get('/', async (req, res) => {
+  let leads = [];
+  try {
+    const pool = req.app.locals.pool;
+    [leads] = await pool.query('SELECT * FROM leads ORDER BY created_at DESC LIMIT 200');
+  } catch (err) {
+    // DB yoksa boş listeyle devam et
+  }
+  res.render('admin_dashboard', { leads });
+});
+
+// Delete a lead
+router.post('/leads/delete', async (req, res) => {
+  const { id } = req.body;
+  if (id) {
+    const pool = req.app.locals.pool;
+    await pool.query('DELETE FROM leads WHERE id = ?', [id]);
+  }
+  res.redirect('/admin');
 });
 
 // Update a setting (key/value)

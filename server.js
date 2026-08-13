@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
   },
 }));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Session for admin auth (simple in‑memory store, OK for cPanel shared hosting)
 // JWT based authentication; using cookies to store token
@@ -145,6 +146,35 @@ app.post('/admin/login', loginLimiter, async (req, res) => {
   res.render('admin_login', { error: 'Invalid credentials' });
 });
 
+// Teklif/randevu formu — lead kaydı
+const leadLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.post('/api/lead', leadLimiter, async (req, res) => {
+  const { name, phone, vehicle, service, kasko, message, page } = req.body || {};
+  const clean = v => (typeof v === 'string' ? v.trim().slice(0, 500) : null);
+  const cName = clean(name);
+  const cPhone = clean(phone);
+  if (!cName || !cPhone || !/[0-9+][0-9\s()-]{8,}/.test(cPhone)) {
+    return res.status(400).json({ ok: false, error: 'Ad ve geçerli bir telefon numarası zorunludur.' });
+  }
+  try {
+    await pool.query(
+      'INSERT INTO leads (name, phone, vehicle, service, kasko, message, page) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [cName, cPhone, clean(vehicle), clean(service), clean(kasko), clean(message), clean(page)]
+    );
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error('Lead kaydedilemedi:', err.message);
+    // DB yoksa istemci WhatsApp'a yönlendirme yedeğini kullanır
+    return res.status(503).json({ ok: false, error: 'db_unavailable' });
+  }
+});
+
 // Admin dashboard (protected)
 // Admin routes are now handled in a separate router
 const adminRouter = require('./routes/admin');
@@ -153,17 +183,30 @@ app.use('/admin', requireAuth, adminRouter);
 // Generic route for other pages (e.g. /hizmetlerimiz or /hizmetlerimiz.html -> render hizmetlerimiz.ejs)
 app.get(['/:page', '/:page.html'], (req, res, next) => {
   const page = req.params.page.replace(/\.html$/, '');
-  const knownPages = ['hizmetlerimiz', 'hakkimizda', 'bize-ulasin', 'blog', 'sss'];
+  const knownPages = ['hizmetlerimiz', 'hakkimizda', 'bize-ulasin', 'blog', 'sss', 'kvkk'];
   if (knownPages.includes(page)) {
     return res.render(page, (err, html) => {
       if (err) {
         console.error(`Error rendering page ${page}:`, err);
-        return res.status(500).send('Sunucu Hatası');
+        return res.status(500).render('500');
       }
       res.send(html);
     });
   }
   next();
+});
+
+// 404 — eşleşmeyen tüm istekler
+app.use((req, res) => {
+  res.status(404).render('404');
+});
+
+// 500 — yakalanmamış hatalar
+app.use((err, req, res, next) => {
+  console.error('Sunucu hatası:', err);
+  if (res.headersSent) return next(err);
+  res.locals.settings = res.locals.settings || defaultSettings;
+  res.status(500).render('500');
 });
 
 module.exports = app;

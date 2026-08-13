@@ -1,0 +1,49 @@
+<%- include('partials/head', {"title": "KVKK Aydınlatma Metni | Rona Auto Glass", "description": "Rona Auto Glass kişisel verilerin korunması (KVKK) aydınlatma metni: hangi verileri, hangi amaçla işliyoruz ve haklarınız.", "keywords": "rona auto glass kvkk, kişisel verilerin korunması, aydınlatma metni", "canonical": "https://ronaglass.com.tr/kvkk.html", "ogTitle": "KVKK Aydınlatma Metni | Rona Auto Glass", "ogDescription": "Kişisel verilerin korunması aydınlatma metni."}) %>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <%- include('partials/navbar', { active: '' }) %>
+
+    <!-- PAGE HERO -->
+    <header class="page-hero">
+        <div class="container">
+            <p class="section-tag">GİZLİLİK & GÜVEN</p>
+            <h1 class="page-hero-title">KVKK Aydınlatma Metni</h1>
+            <p class="page-hero-sub">6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında bilgilendirme.</p>
+        </div>
+    </header>
+
+    <section class="articles-section">
+        <div class="container" style="max-width:820px; line-height:1.8;">
+            <h2>Veri Sorumlusu</h2>
+            <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca, veri sorumlusu sıfatıyla <strong><%= settings.company_name || 'Rona Auto Glass' %></strong> (<%= settings.address || 'Şaşmaz / Etimesgut / Ankara' %>) tarafından hazırlanmıştır.</p>
+
+            <h2>İşlenen Kişisel Veriler ve Amaçları</h2>
+            <p>Web sitemizdeki iletişim ve randevu formları aracılığıyla paylaştığınız <strong>ad-soyad, telefon numarası, araç bilgisi ve mesaj içeriği</strong>; talebinizi yanıtlamak, randevu oluşturmak, hizmet teklifi sunmak ve sizinle iletişime geçmek amacıyla işlenir.</p>
+            <p>Telefon veya WhatsApp üzerinden iletişime geçmeniz hâlinde, iletişim bilgileriniz yalnızca talebinizin karşılanması amacıyla kullanılır.</p>
+
+            <h2>İşlemenin Hukuki Sebebi</h2>
+            <p>Kişisel verileriniz, KVKK m.5/2 uyarınca "bir sözleşmenin kurulması veya ifasıyla doğrudan doğruya ilgili olması" ve "ilgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla veri sorumlusunun meşru menfaati" hukuki sebeplerine dayanılarak işlenir.</p>
+
+            <h2>Verilerin Aktarılması</h2>
+            <p>Kişisel verileriniz; yasal yükümlülükler ve yetkili kamu kurumlarının talepleri dışında üçüncü kişilerle paylaşılmaz, yurt dışına aktarılmaz ve pazarlama amaçlı kullanılmaz.</p>
+
+            <h2>Saklama Süresi</h2>
+            <p>Form aracılığıyla iletilen talepler, talebin sonuçlandırılmasını takiben makul bir süre içinde ve en geç yasal saklama sürelerinin sonunda silinir.</p>
+
+            <h2>Haklarınız</h2>
+            <p>KVKK'nın 11. maddesi kapsamında; kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi talep etme, düzeltilmesini veya silinmesini isteme, işlemeye itiraz etme ve zarara uğramanız hâlinde tazminat talep etme haklarına sahipsiniz.</p>
+            <p>Başvurularınızı <a href="tel:<%= (settings.phone_number || '0534 694 37 89').replace(/\s+/g, '') %>"><%= settings.phone_number || '0534 694 37 89' %></a> numaralı telefon veya <a href="mailto:<%= settings.email_address || 'info@ronaglass.com.tr' %>"><%= settings.email_address || 'info@ronaglass.com.tr' %></a> e-posta adresi üzerinden iletebilirsiniz.</p>
+
+            <h2>Çerezler</h2>
+            <p>Web sitemiz, temel site işlevselliği dışında çerez kullanmaz; üçüncü taraf reklam veya takip çerezi bulunmaz. Yönetici girişinde yalnızca oturum doğrulaması için zorunlu bir çerez kullanılır.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <%- include('partials/footer') %>
+
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js?v=15"></script>
+</body>
+</html>

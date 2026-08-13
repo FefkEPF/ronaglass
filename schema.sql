@@ -11,6 +11,18 @@ INSERT IGNORE INTO `settings` (`key`, `value`) VALUES
 ('email_address', 'info@ronaglass.com.tr'),
 ('address', '2474 Cad 4/1 Şaşmaz / Ankara');
 
+CREATE TABLE IF NOT EXISTS `leads` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(50) NOT NULL,
+  `vehicle` VARCHAR(255) DEFAULT NULL,
+  `service` VARCHAR(255) DEFAULT NULL,
+  `kasko` VARCHAR(10) DEFAULT NULL,
+  `message` TEXT,
+  `page` VARCHAR(100) DEFAULT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(255) NOT NULL UNIQUE,

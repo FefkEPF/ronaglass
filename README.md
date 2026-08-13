@@ -50,6 +50,16 @@ tests/               Playwright testleri
 
 Ortak başlık/menü/alt bilgi `views/partials/` altındadır — telefon, menü veya footer değişikliği tek dosyadan yapılır.
 
+## Yayınlama (Plesk)
+
+Canlı site Plesk (Windows/IIS) üzerinde barındırılıyor. Güncelleme adımları:
+
+1. Plesk panelde **Node.js** eklentisinden uygulamayı seçin (Application Startup File: `server.js`).
+2. Depoyu çekin veya dosyaları yükleyin; sunucuda `npm install --production` çalıştırın.
+3. Ortam değişkenlerini Plesk'in Node.js ayarlarından ya da uygulama kökündeki `.env` dosyasından tanımlayın (`NODE_ENV=production` dahil).
+4. `leads` tablosu için bir kez `schema.sql`'i veritabanına uygulayın.
+5. Uygulamayı Plesk'ten yeniden başlatın.
+
 ## Testler
 
 ```bash

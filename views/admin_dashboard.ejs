@@ -3,116 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Rona Auto Glass</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="robots" content="noindex">
+    <title>Yönetim Paneli | Rona Auto Glass</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #fff; }
-        .navbar-custom { background-color: #111; border-bottom: 1px solid #333; }
-        .card { background-color: #111; border: 1px solid #333; }
-        .form-control { background-color: #222; color: #fff; border: 1px solid #444; }
-        .form-control:focus { background-color: #222; color: #fff; border-color: #d4af37; box-shadow: none; }
-        .btn-primary { background-color: #d4af37; border: none; color: #000; }
-        .btn-primary:hover { background-color: #aa8c2c; }
-        .text-gold { color: #d4af37; }
+        :root {
+            --bg: #0a0a0c;
+            --panel: #121216;
+            --panel-2: #17171c;
+            --border: #26262e;
+            --text: #f2f2f4;
+            --muted: #9a9aa5;
+            --gold: #d4af37;
+            --gold-2: #b8952c;
+            --green: #2fbf71;
+            --red: #e05252;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        /* ---------- Yerleşim ---------- */
+        .layout { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 264px; flex-shrink: 0;
+            background: linear-gradient(180deg, #101014 0%, #0b0b0e 100%);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            position: sticky; top: 0; height: 100vh; overflow-y: auto;
+        }
+        .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+        /* ---------- Kenar çubuğu ---------- */
+        .brand {
+            display: flex; align-items: center; gap: 12px;
+            padding: 22px 20px; border-bottom: 1px solid var(--border);
+        }
+        .brand img { height: 40px; }
+        .brand .b-name { font-weight: 800; letter-spacing: 2px; font-size: 15px; }
+        .brand .b-sub { font-size: 10px; letter-spacing: 3px; color: var(--gold); }
+        .nav-group { padding: 14px 12px 4px; }
+        .nav-label {
+            font-size: 10px; letter-spacing: 2px; color: var(--muted);
+            text-transform: uppercase; padding: 8px 10px 6px;
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 8px; cursor: pointer;
+            color: var(--muted); font-size: 14px; font-weight: 500;
+            border: 1px solid transparent; margin-bottom: 2px;
+            transition: all .15s ease;
+        }
+        .nav-item .ico { width: 20px; text-align: center; opacity: .9; }
+        .nav-item:hover { color: var(--text); background: var(--panel-2); }
+        .nav-item.active {
+            color: var(--gold); background: rgba(212, 175, 55, .08);
+            border-color: rgba(212, 175, 55, .25);
+        }
+        .sidebar-foot { margin-top: auto; padding: 14px 12px; border-top: 1px solid var(--border); }
+        .side-btn {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            border-radius: 8px; font-size: 13.5px; color: var(--muted);
+        }
+        .side-btn:hover { color: var(--text); background: var(--panel-2); }
+        .side-btn.exit:hover { color: var(--red); }
+
+        /* ---------- Üst çubuk ---------- */
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 28px; border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 12, .8); backdrop-filter: blur(8px);
+            position: sticky; top: 0; z-index: 5;
+        }
+        .topbar h1 { font-size: 19px; font-weight: 700; letter-spacing: .3px; }
+        .topbar .crumb { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+        .top-actions { display: flex; gap: 10px; }
+
+        /* ---------- İçerik ---------- */
+        .content { padding: 28px; max-width: 1060px; width: 100%; }
+        section.pane { display: none; }
+        section.pane.active { display: block; animation: fade .18s ease; }
+        @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat {
+            background: linear-gradient(160deg, var(--panel) 0%, var(--panel-2) 100%);
+            border: 1px solid var(--border); border-radius: 14px; padding: 20px;
+            position: relative; overflow: hidden;
+        }
+        .stat::after {
+            content: ''; position: absolute; inset: 0 0 auto 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: .6;
+        }
+        .stat .s-label { color: var(--muted); font-size: 12.5px; letter-spacing: 1px; text-transform: uppercase; }
+        .stat .s-value { font-size: 34px; font-weight: 800; margin-top: 6px; color: var(--text); }
+        .stat .s-value small { font-size: 14px; color: var(--muted); font-weight: 500; }
+
+        .card {
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: 14px; padding: 22px; margin-bottom: 20px;
+        }
+        .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .card .c-desc { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+
+        /* ---------- Form ---------- */
+        .field { border-top: 1px solid var(--border); padding: 16px 0; }
+        .field:first-of-type { border-top: none; padding-top: 4px; }
+        .f-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        .f-label { font-weight: 600; font-size: 14px; }
+        .f-key { color: var(--muted); font-size: 11px; font-family: Consolas, monospace; }
+        .f-help { color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+        .f-row { display: flex; gap: 10px; align-items: flex-start; }
+        input[type=text], textarea {
+            width: 100%; background: #0d0d10; color: var(--text);
+            border: 1px solid var(--border); border-radius: 9px;
+            padding: 11px 13px; font: inherit; font-size: 14px;
+            transition: border-color .15s ease;
+            resize: vertical;
+        }
+        input[type=text]:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,.12); }
+        ::placeholder { color: #5b5b66; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
+            color: #14120a; border: none; border-radius: 9px;
+            padding: 11px 18px; font: inherit; font-size: 13.5px; font-weight: 700;
+            cursor: pointer; white-space: nowrap; letter-spacing: .3px;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(212,175,55,.25); }
+        .btn.ghost {
+            background: transparent; color: var(--muted);
+            border: 1px solid var(--border); font-weight: 500;
+        }
+        .btn.ghost:hover { color: var(--text); border-color: var(--muted); box-shadow: none; }
+        .btn.danger { background: transparent; border: 1px solid rgba(224,82,82,.4); color: var(--red); font-weight: 600; }
+        .btn.danger:hover { background: rgba(224,82,82,.1); box-shadow: none; }
+        .reset-note { margin-top: 8px; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+        .badge-custom {
+            font-size: 10.5px; padding: 2px 8px; border-radius: 20px;
+            background: rgba(212,175,55,.12); color: var(--gold);
+            border: 1px solid rgba(212,175,55,.3); letter-spacing: .5px;
+        }
+
+        /* ---------- Tablo ---------- */
+        .tbl-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        th {
+            text-align: left; color: var(--muted); font-size: 11px; letter-spacing: 1.2px;
+            text-transform: uppercase; padding: 10px 12px; border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        td { padding: 12px; border-bottom: 1px solid #1c1c22; vertical-align: top; }
+        tr:hover td { background: rgba(255,255,255,.015); }
+        td.msg { max-width: 260px; color: var(--muted); }
+        .tel { color: var(--gold); font-weight: 600; white-space: nowrap; }
+        .pill {
+            display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600;
+        }
+        .pill.var { background: rgba(47,191,113,.12); color: var(--green); border: 1px solid rgba(47,191,113,.3); }
+        .pill.yok { background: rgba(224,82,82,.1); color: var(--red); border: 1px solid rgba(224,82,82,.3); }
+        .empty {
+            text-align: center; color: var(--muted); padding: 40px 20px; font-size: 14px;
+        }
+        .empty .big { font-size: 30px; margin-bottom: 8px; opacity: .5; }
+
+        @media (max-width: 860px) {
+            .sidebar { position: fixed; z-index: 20; transform: translateX(-100%); transition: transform .2s ease; }
+            .sidebar.open { transform: none; }
+            .burger { display: inline-flex !important; }
+        }
+        .burger {
+            display: none; background: none; border: 1px solid var(--border);
+            color: var(--text); border-radius: 8px; padding: 8px 10px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand text-gold fw-bold" href="/admin">
-                <img src="/images/logo.png" alt="Logo" height="30" class="d-inline-block align-text-top me-2">
-                Rona Admin
-            </a>
-            <div class="d-flex">
-                <a href="/" class="btn btn-outline-light me-2" target="_blank">Siteyi Görüntüle</a>
+<div class="layout">
+    <!-- KENAR ÇUBUĞU -->
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <img src="/images/logo.png" alt="Rona Auto Glass">
+            <div>
+                <div class="b-name">RONA</div>
+                <div class="b-sub">YÖNETİM PANELİ</div>
             </div>
         </div>
-    </nav>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Gelen Talepler</h2>
-        <div class="card p-4 mb-5">
-            <% if (!leads || leads.length === 0) { %>
-                <p class="text-muted mb-0">Henüz form talebi yok. (Veritabanı bağlı değilse talepler WhatsApp'a yönlenir.)</p>
-            <% } else { %>
-                <div class="table-responsive">
-                    <table class="table table-dark table-striped align-middle">
-                        <thead>
-                            <tr>
-                                <th>Tarih</th><th>Ad Soyad</th><th>Telefon</th><th>Araç</th>
-                                <th>Hizmet</th><th>Kasko</th><th>Mesaj</th><th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% leads.forEach(l => { %>
-                                <tr>
-                                    <td class="text-nowrap"><%= new Date(l.created_at).toLocaleString('tr-TR') %></td>
-                                    <td><%= l.name %></td>
-                                    <td><a class="text-gold" href="tel:<%= l.phone %>"><%= l.phone %></a></td>
-                                    <td><%= l.vehicle || '-' %></td>
-                                    <td><%= l.service || '-' %></td>
-                                    <td><%= l.kasko || '-' %></td>
-                                    <td style="max-width:280px"><%= l.message || '-' %></td>
-                                    <td>
-                                        <form action="/admin/leads/delete" method="POST" onsubmit="return confirm('Talep silinsin mi?');">
-                                            <input type="hidden" name="id" value="<%= l.id %>">
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Sil</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            <% } %>
+        <div class="nav-group">
+            <div class="nav-label">Genel</div>
+            <div class="nav-item" data-pane="genel"><span class="ico">◧</span> Genel Bakış</div>
+            <div class="nav-item" data-pane="talepler"><span class="ico">☏</span> Gelen Talepler</div>
         </div>
 
-        <h2 class="mb-4">Site Ayarları</h2>
-        
-        <div class="card p-4 mb-4">
-            <h4>Genel Ayarlar</h4>
-            <p class="text-muted">Buradan sitedeki metinleri güncelleyebilirsiniz (Örn: Hero başlığı).</p>
-            
-            <% Object.keys(settings).forEach(key => { %>
-                <form action="/admin/settings" method="POST" class="mb-3 border-bottom border-secondary pb-3">
-                    <input type="hidden" name="key" value="<%= key %>">
-                    <label class="form-label text-light fw-bold"><%= key.toUpperCase() %></label>
-                    <div class="input-group">
-                        <textarea class="form-control" name="value" rows="2"><%= settings[key] %></textarea>
-                        <button class="btn btn-primary" type="submit">Güncelle</button>
+        <div class="nav-group">
+            <div class="nav-label">İçerik Yönetimi</div>
+            <% catalog.forEach(g => { %>
+                <div class="nav-item" data-pane="<%= g.id %>"><span class="ico"><%= g.icon %></span> <%= g.title %></div>
+            <% }) %>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Sistem</div>
+            <div class="nav-item" data-pane="gelismis"><span class="ico">⚙</span> Gelişmiş</div>
+        </div>
+
+        <div class="sidebar-foot">
+            <a class="side-btn" href="/" target="_blank"><span class="ico">↗</span> Siteyi Görüntüle</a>
+            <a class="side-btn exit" href="/admin/logout"><span class="ico">⏻</span> Çıkış Yap</a>
+        </div>
+    </aside>
+
+    <!-- ANA ALAN -->
+    <div class="main">
+        <div class="topbar">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <button class="burger" id="burger">☰</button>
+                <div>
+                    <h1 id="pane-title">Genel Bakış</h1>
+                    <div class="crumb">Rona Auto Glass yönetim paneli</div>
+                </div>
+            </div>
+            <div class="top-actions">
+                <a class="btn ghost" href="/" target="_blank">Siteyi Görüntüle ↗</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <%
+              const today = new Date().toDateString();
+              const todayCount = (leads || []).filter(l => new Date(l.created_at).toDateString() === today).length;
+              const customized = Object.keys(settings || {});
+            %>
+
+            <!-- GENEL BAKIŞ -->
+            <section class="pane" id="pane-genel" data-title="Genel Bakış">
+                <div class="cards">
+                    <div class="stat"><div class="s-label">Toplam Talep</div><div class="s-value"><%= (leads || []).length %></div></div>
+                    <div class="stat"><div class="s-label">Bugün Gelen</div><div class="s-value"><%= todayCount %></div></div>
+                    <div class="stat"><div class="s-label">Kayıtlı Ayar</div><div class="s-value"><%= customized.length %></div></div>
+                    <div class="stat"><div class="s-label">Yayındaki Sayfa</div><div class="s-value">7<small> sayfa</small></div></div>
+                </div>
+
+                <div class="card">
+                    <h3>Son Talepler</h3>
+                    <p class="c-desc">Web sitesi formlarından gelen son 5 müşteri talebi.</p>
+                    <% if (!leads || leads.length === 0) { %>
+                        <div class="empty"><div class="big">☏</div>Henüz form talebi yok.<br>Veritabanı bağlı değilse talepler WhatsApp'a yönlenir.</div>
+                    <% } else { %>
+                        <div class="tbl-wrap">
+                        <table>
+                            <thead><tr><th>Tarih</th><th>Ad Soyad</th><th>Telefon</th><th>Hizmet</th></tr></thead>
+                            <tbody>
+                                <% leads.slice(0, 5).forEach(l => { %>
+                                    <tr>
+                                        <td><%= new Date(l.created_at).toLocaleString('tr-TR') %></td>
+                                        <td><%= l.name %></td>
+                                        <td><a class="tel" href="tel:<%= l.phone %>"><%= l.phone %></a></td>
+                                        <td><%= l.service || '-' %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <!-- TALEPLER -->
+            <section class="pane" id="pane-talepler" data-title="Gelen Talepler">
+                <div class="card">
+                    <h3>Tüm Talepler</h3>
+                    <p class="c-desc">Formlardan gelen müşteri talepleri (en yeni üstte, son 200 kayıt).</p>
+                    <% if (!leads || leads.length === 0) { %>
+                        <div class="empty"><div class="big">☏</div>Henüz form talebi yok.</div>
+                    <% } else { %>
+                        <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Tarih</th><th>Ad Soyad</th><th>Telefon</th><th>Araç</th><th>Hizmet</th><th>Kasko</th><th>Mesaj</th><th></th></tr>
+                            </thead>
+                            <tbody>
+                                <% leads.forEach(l => { %>
+                                    <tr>
+                                        <td style="white-space:nowrap"><%= new Date(l.created_at).toLocaleString('tr-TR') %></td>
+                                        <td><%= l.name %></td>
+                                        <td><a class="tel" href="tel:<%= l.phone %>"><%= l.phone %></a></td>
+                                        <td><%= l.vehicle || '-' %></td>
+                                        <td><%= l.service || '-' %></td>
+                                        <td><% if (l.kasko === 'var') { %><span class="pill var">Var</span><% } else if (l.kasko === 'yok') { %><span class="pill yok">Yok</span><% } else { %>-<% } %></td>
+                                        <td class="msg"><%= l.message || '-' %></td>
+                                        <td>
+                                            <form action="/admin/leads/delete" method="POST" onsubmit="return confirm('Talep silinsin mi?');">
+                                                <input type="hidden" name="id" value="<%= l.id %>">
+                                                <button class="btn danger" type="submit">Sil</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <!-- İÇERİK GRUPLARI -->
+            <% catalog.forEach(g => { %>
+                <section class="pane" id="pane-<%= g.id %>" data-title="<%= g.title %>">
+                    <div class="card">
+                        <h3><%= g.title %></h3>
+                        <p class="c-desc"><%= g.desc %> Boş bırakılan alanlarda sitedeki varsayılan metin kullanılır.</p>
+                        <% g.fields.forEach(f => { %>
+                            <div class="field">
+                                <div class="f-head">
+                                    <span class="f-label"><%= f.label %>
+                                        <% if (settings[f.key] !== undefined && settings[f.key] !== null && String(settings[f.key]).length && settings[f.key] !== f.def) { %>
+                                            <span class="badge-custom">özelleştirildi</span>
+                                        <% } %>
+                                    </span>
+                                    <span class="f-key"><%= f.key %></span>
+                                </div>
+                                <% if (f.help) { %><div class="f-help"><%= f.help %></div><% } %>
+                                <form action="/admin/settings" method="POST" class="f-row">
+                                    <input type="hidden" name="key" value="<%= f.key %>">
+                                    <input type="hidden" name="tab" value="<%= g.id %>">
+                                    <% if (f.long) { %>
+                                        <textarea name="value" rows="2" placeholder="<%= f.def %>"><%= settings[f.key] || '' %></textarea>
+                                    <% } else { %>
+                                        <input type="text" name="value" placeholder="<%= f.def %>" value="<%= settings[f.key] || '' %>">
+                                    <% } %>
+                                    <button class="btn" type="submit">Kaydet</button>
+                                </form>
+                                <% if (settings[f.key] !== undefined && settings[f.key] !== null && String(settings[f.key]).length && settings[f.key] !== f.def) { %>
+                                    <div class="reset-note">
+                                        <form action="/admin/settings/delete" method="POST" onsubmit="return confirm('Bu alan varsayılan metne dönsün mü?');">
+                                            <input type="hidden" name="key" value="<%= f.key %>">
+                                            <input type="hidden" name="tab" value="<%= g.id %>">
+                                            <button class="btn ghost" type="submit" style="padding:5px 12px;font-size:12px;">Varsayılana dön</button>
+                                        </form>
+                                        <span>Varsayılan: “<%= f.def.length > 90 ? f.def.slice(0, 90) + '…' : f.def %>”</span>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% }) %>
                     </div>
-                </form>
-                <form action="/admin/settings/delete" method="POST" class="mt-2 text-end" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
-                     <input type="hidden" name="key" value="<%= key %>">
-                     <button class="btn btn-sm btn-outline-danger" type="submit">Sil</button>
-                </form>
+                </section>
             <% }) %>
 
-            <% if (Object.keys(settings).length === 0) { %>
-                <p class="text-warning">Henüz ayar bulunmuyor. Yeni bir ayar ekleyebilirsiniz.</p>
-            <% } %>
-
-            <hr class="border-secondary my-4">
-            <h4 class="text-gold">Yeni Ayar Ekle</h4>
-            <form action="/admin/settings" method="POST" class="mt-3">
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="key" placeholder="Ayar Anahtarı (örn: baslik_1)" required>
-                    </div>
-                    <div class="col-md-6">
-                        <textarea class="form-control" name="value" rows="1" placeholder="Ayar Değeri" required></textarea>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary w-100" type="submit">Ekle</button>
-                    </div>
+            <!-- GELİŞMİŞ -->
+            <section class="pane" id="pane-gelismis" data-title="Gelişmiş">
+                <div class="card">
+                    <h3>Tüm Ayarlar (Ham Görünüm)</h3>
+                    <p class="c-desc">Veritabanındaki tüm anahtar/değer kayıtları. Bu bölüm ileri düzey kullanım içindir — içerik düzenlemeleri için soldaki bölümleri tercih edin.</p>
+                    <% if (customized.length === 0) { %>
+                        <div class="empty"><div class="big">⚙</div>Veritabanında kayıtlı ayar yok — site tamamen varsayılan metinlerle çalışıyor.</div>
+                    <% } %>
+                    <% customized.forEach(key => { %>
+                        <div class="field">
+                            <div class="f-head"><span class="f-key" style="font-size:13px;color:var(--gold)"><%= key %></span></div>
+                            <form action="/admin/settings" method="POST" class="f-row">
+                                <input type="hidden" name="key" value="<%= key %>">
+                                <input type="hidden" name="tab" value="gelismis">
+                                <textarea name="value" rows="1"><%= settings[key] %></textarea>
+                                <button class="btn" type="submit">Kaydet</button>
+                            </form>
+                            <div class="reset-note">
+                                <form action="/admin/settings/delete" method="POST" onsubmit="return confirm('Bu ayar silinsin mi?');">
+                                    <input type="hidden" name="key" value="<%= key %>">
+                                    <input type="hidden" name="tab" value="gelismis">
+                                    <button class="btn danger" type="submit" style="padding:5px 12px;font-size:12px;">Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% }) %>
                 </div>
-            </form>
-        </div>
 
-        <div class="card p-4">
-            <h4>Medya & Logolar</h4>
-            <p class="text-muted">Logo veya ikon güncellemeleri için dosyaları /public/images klasörüne yükleyebilir veya FTP/CPanel üzerinden değiştirebilirsiniz. Optimizasyon komut dosyaları projede eklidir.</p>
+                <div class="card">
+                    <h3>Yeni Ayar Ekle</h3>
+                    <p class="c-desc">Yeni bir anahtar/değer kaydı oluşturur. Anahtar adını şablonlarda kullanılan adla birebir aynı yazın.</p>
+                    <form action="/admin/settings" method="POST" class="f-row">
+                        <input type="hidden" name="tab" value="gelismis">
+                        <input type="text" name="key" placeholder="ayar_anahtari" required style="max-width:240px;">
+                        <textarea name="value" rows="1" placeholder="Değer" required></textarea>
+                        <button class="btn" type="submit">Ekle</button>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
+</div>
+
+<script>
+(function () {
+    var items = document.querySelectorAll('.nav-item');
+    var panes = document.querySelectorAll('section.pane');
+    var title = document.getElementById('pane-title');
+    var sidebar = document.getElementById('sidebar');
+
+    function show(id) {
+        var target = document.getElementById('pane-' + id) ? id : 'genel';
+        panes.forEach(function (p) { p.classList.toggle('active', p.id === 'pane-' + target); });
+        items.forEach(function (i) { i.classList.toggle('active', i.dataset.pane === target); });
+        var active = document.getElementById('pane-' + target);
+        if (active && title) title.textContent = active.dataset.title || '';
+        sidebar.classList.remove('open');
+    }
+
+    items.forEach(function (i) {
+        i.addEventListener('click', function () {
+            history.replaceState(null, '', '#' + i.dataset.pane);
+            show(i.dataset.pane);
+        });
+    });
+
+    document.getElementById('burger').addEventListener('click', function () {
+        sidebar.classList.toggle('open');
+    });
+
+    show((location.hash || '#genel').slice(1));
+})();
+</script>
 </body>
 </html>

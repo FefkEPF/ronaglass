@@ -9,6 +9,7 @@ const path = require('path');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const bcrypt = require('bcryptjs');
+const compression = require('compression');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
@@ -27,8 +28,20 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Static assets
-app.use(express.static(path.join(__dirname, 'public')));
+// Gzip/deflate sıkıştırma (HTML, CSS, JS yanıtları için)
+app.use(compression());
+
+// Static assets — tarayıcı önbelleği: görseller/videolar 30 gün,
+// CSS/JS 1 gün (style.css?v=N sorgu parametresiyle sürümleniyor)
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders(res, filePath) {
+    if (/\.(png|jpe?g|webp|svg|mp4|webm|ico|woff2?)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000');
+    } else if (/\.(css|js)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+  },
+}));
 app.use(express.urlencoded({ extended: true }));
 
 // Session for admin auth (simple in‑memory store, OK for cPanel shared hosting)

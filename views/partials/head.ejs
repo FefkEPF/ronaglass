@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=yes">
+    <style>
+        .modal {
+            max-height: calc(var(--vh, 1vh) * 90);
+        }
+    </style>
+    <meta name="description"
+        content="<%= description %>">
+    <meta name="keywords"
+        content="<%= keywords %>">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.position" content="39.9390286;32.7079112">
+    <meta name="geo.region" content="TR-06">
+    <meta name="geo.placename" content="Ankara, Etimesgut, Şaşmaz">
+    <link rel="canonical" href="<%= canonical %>">
+    <meta property="og:title" content="<%= ogTitle %>">
+    <meta property="og:description"
+        content="<%= ogDescription %>">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="<%= canonical %>">
+    <meta property="og:image" content="https://ronaglass.com.tr/images/logo.png">
+
+    <title><%= title %></title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="preload" as="style" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" href="style.css?v=14" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <noscript>
+        <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+        <link rel="stylesheet" href="style.css?v=14">
+    </noscript>
+
+    <!-- Schema.org JSON-LD LocalBusiness -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Rona Auto Glass",
+      "image": "https://ronaglass.com.tr/images/logo.png",
+      "@id": "https://ronaglass.com.tr/#organization",
+      "url": "<%= canonical %>",
+      "telephone": "<%= settings.phone_number ? settings.phone_number.replace(/\s+/g, '') : ('+' + (settings.whatsapp_number || '905346943789')) %>",
+      "email": "<%= settings.email_address || 'info@ronaglass.com.tr' %>",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2474 Cad 4/1 Şaşmaz",
+        "addressLocality": "Etimesgut",
+        "addressRegion": "Ankara",
+        "postalCode": "06790",
+        "addressCountry": "TR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.9390286,
+        "longitude": 32.7079112
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:30",
+          "closes": "19:00"
+        }
+      ],
+      "priceRange": "$$",
+      "areaServed": ["Ankara", "Etimesgut", "Şaşmaz", "Batıkent", "Ümitköy", "Çayyolu", "Sincan", "Yenimahalle"]
+    }
+    </script>
+

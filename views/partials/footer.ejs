@@ -1,0 +1,43 @@
+<footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo-brand">
+                        <img loading="lazy" src="images/logo.png" alt="Rona Auto Glass" class="logo-img">
+                        <div class="logo-text-wrapper">
+                            <span class="logo-main">RONA</span>
+                            <span class="logo-sub">AUTO GLASS</span>
+                        </div>
+                    </a>
+                    <p>Ankara Etimesgut Şaşmaz'da kaskolu araçlara ücretsiz cam değişimi, 15 dakikada taş tamiri ve 7/24
+                        mobil montaj hizmeti.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Sayfalar</h4>
+                    <a href="index.html">Ana Sayfa</a>
+                    <a href="hakkimizda.html">Hakkımızda</a>
+                    <a href="hizmetlerimiz.html">Hizmetlerimiz</a>
+                    <a href="blog.html">Blog</a>
+                    <a href="sss.html">S.S.S</a>
+                    <a href="bize-ulasin.html">Bize Ulaşın</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Hizmetler</h4>
+                    <a href="hizmetlerimiz.html">Binek Araç Camı</a>
+                    <a href="hizmetlerimiz.html">Kaskolu Ücretsiz Değişim</a>
+                    <a href="hizmetlerimiz.html">15 Dk Çatlak Tamiri</a>
+                    <a href="hizmetlerimiz.html">Ticari & Tır Camı</a>
+                    <a href="hizmetlerimiz.html">Traktör & Kabin Camı</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Servis İletişim</h4>
+                    <p><svg class="icon-svg-gold" viewBox="0 0 24 24" width="16" height="16" fill="var(--gold)" style="vertical-align:-2px;margin-right:6px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> <%= settings.address || '2474 Cad 4/1 Şaşmaz, Etimesgut/Ankara' %></p>
+                    <p><a href="tel:<%= (settings.phone_number || '0534 694 37 89').replace(/\s+/g, '') %>" class="footer-phone-link"><%= settings.phone_number || '0534 694 37 89' %></a></p>
+                    <p><svg class="icon-svg-gold" viewBox="0 0 24 24" width="16" height="16" fill="var(--gold)" style="vertical-align:-2px;margin-right:6px;"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> <a href="mailto:<%= settings.email_address || 'info@ronaglass.com.tr' %>" class="footer-email-link"><%= settings.email_address || 'info@ronaglass.com.tr' %></a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Rona Auto Glass. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>

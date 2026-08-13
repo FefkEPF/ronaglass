@@ -28,8 +28,13 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npx http-server -p 8000',
+    command: 'node server.js',
     url: 'http://localhost:8000',
     reuseExistingServer: !process.env.CI,
+    env: {
+      PORT: '8000',
+      // Testler DB'siz çalışır (settings varsayılanlara düşer); JWT_SECRET zorunlu.
+      JWT_SECRET: process.env.JWT_SECRET || 'playwright-test-secret',
+    },
   },
 });

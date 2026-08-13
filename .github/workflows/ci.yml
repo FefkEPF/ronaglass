@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Sunucu sözdizimi kontrolü
+        run: node --check server.js && node --check routes/admin.js
+
+      - name: Playwright tarayıcılarını kur
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Testleri çalıştır
+        run: npx playwright test
+        env:
+          JWT_SECRET: ci-test-secret
+
+      - name: Test raporunu yükle (hata durumunda)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

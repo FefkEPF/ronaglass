@@ -48,8 +48,13 @@ test.describe('Desktop vs Mobil Karşılaştırma Testleri', () => {
       return computedStyle.height;
     });
 
-    const viewportHeight = await page.evaluate(() => window.innerHeight);
-    const expectedHeightVh = (350 * viewportHeight / 100).toFixed(1);
+    // style.css: masaüstünde 350vh, <=1024px genişlikte 300vh (mobil media query)
+    const { viewportHeight, viewportWidth } = await page.evaluate(() => ({
+      viewportHeight: window.innerHeight,
+      viewportWidth: window.innerWidth,
+    }));
+    const expectedVh = viewportWidth <= 1024 ? 300 : 350;
+    const expectedHeightVh = (expectedVh * viewportHeight / 100).toFixed(1);
 
     console.log(`Cinema section yüksekliği: ${sectionHeight}, beklenen: ~${expectedHeightVh}px`);
 
@@ -112,18 +117,17 @@ test.describe('Desktop vs Mobil Karşılaştırma Testleri', () => {
 
     console.log(`Başlangıç active durumları: text1=${isActive1_initial}, text2=${isActive2_initial}, text3=${isActive3_initial}`);
 
-    // Scroll yaparak geçişleri test et
+    // Scroll yaparak geçişleri test et — smooth scroll (Lenis) emülasyonda
+    // geç tepki verebildiği için sabit bekleme yerine polling kullan
     await page.evaluate(() => window.scrollBy(0, 400));
-    await page.waitForTimeout(500);
 
-    const isActive1_after = await cinemaText1.evaluate(el => el.classList.contains('active'));
-    const isActive2_after = await cinemaText2.evaluate(el => el.classList.contains('active'));
-    const isActive3_after = await cinemaText3.evaluate(el => el.classList.contains('active'));
-
-    console.log(`Scroll sonrası active durumları: text1=${isActive1_after}, text2=${isActive2_after}, text3=${isActive3_after}`);
-
-    // Scroll sonrası durumlar değişmiş olmalı
-    expect(isActive1_after !== isActive1_initial || isActive2_after !== isActive2_initial).toBe(true);
+    await expect
+      .poll(async () => {
+        const isActive1_after = await cinemaText1.evaluate(el => el.classList.contains('active'));
+        const isActive2_after = await cinemaText2.evaluate(el => el.classList.contains('active'));
+        return isActive1_after !== isActive1_initial || isActive2_after !== isActive2_initial;
+      }, { timeout: 5000 })
+      .toBe(true);
   });
 
   test('canvas image sequence loading karşılaştırması', async ({ page }) => {
@@ -197,13 +201,13 @@ test.describe('Desktop vs Mobil Karşılaştırma Testleri', () => {
     console.log(`Başlangıç scroll hint opacity: ${initialOpacity}`);
     expect(parseFloat(initialOpacity)).toBeGreaterThan(0);
 
-    // Scroll yapınca scroll hint kaybolmalı
+    // Scroll yapınca scroll hint kaybolmalı — opacity animasyonu emülasyonda
+    // gecikebildiği için sabit bekleme yerine polling kullan
     await page.evaluate(() => window.scrollBy(0, 100));
-    await page.waitForTimeout(300);
 
-    const afterScrollOpacity = await scrollHint.evaluate(el => el.style.opacity);
-    console.log(`Scroll sonrası opacity: ${afterScrollOpacity}`);
-    expect(parseFloat(afterScrollOpacity)).toBeLessThan(0.5);
+    await expect
+      .poll(async () => parseFloat(await scrollHint.evaluate(el => el.style.opacity)), { timeout: 5000 })
+      .toBeLessThan(0.5);
   });
 
   test('overlay fade to black behavior karşılaştırması', async ({ page }) => {

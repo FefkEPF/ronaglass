@@ -6,7 +6,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  // CI'da hatalar run sayfasındaki Annotations bölümünde görünsün
+  reporter: process.env.CI ? [['line'], ['github'], ['html', { open: 'never' }]] : 'html',
   use: {
     baseURL: 'http://localhost:8000',
     trace: 'on-first-retry',

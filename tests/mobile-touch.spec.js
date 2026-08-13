@@ -200,22 +200,21 @@ test.describe('Mobil Touch Scroll Testleri', () => {
     }
 
     const progressBar = page.locator('.cinema-progress-fill');
-    
-    // Smooth scroll testi - küçük adımlarla
-    const transforms = [];
-    
+
+    // Smooth scroll testi - küçük adımlarla. Yavaş CI ortamında smooth scroll
+    // interpolasyonu gecikebildiği için sabit bekleme yerine her adımda
+    // transform'un bir öncekinden farklılaşmasını poll ederek bekle.
+    let prev = await progressBar.evaluate(el => el.style.transform);
+
     for (let i = 0; i < 5; i++) {
       await page.evaluate(() => window.scrollBy(0, 50));
-      await page.waitForTimeout(100);
-      
-      const transform = await progressBar.evaluate(el => el.style.transform);
-      transforms.push(transform);
-      console.log(`Step ${i + 1} transform: ${transform}`);
-    }
-    
-    // Her adımda transform değerinin değiştiğini kontrol et
-    for (let i = 1; i < transforms.length; i++) {
-      expect(transforms[i]).not.toBe(transforms[i - 1]);
+
+      await expect
+        .poll(async () => progressBar.evaluate(el => el.style.transform), { timeout: 3000 })
+        .not.toBe(prev);
+
+      prev = await progressBar.evaluate(el => el.style.transform);
+      console.log(`Step ${i + 1} transform: ${prev}`);
     }
   });
 });

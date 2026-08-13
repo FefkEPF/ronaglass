@@ -6,9 +6,22 @@ const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const bcrypt = require('bcryptjs');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET is not set. Refusing to start with an insecure default.');
+  process.exit(1);
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const IS_PROD = process.env.NODE_ENV === 'production';
+
+// Security headers (CSP disabled for now: pages rely on inline scripts and unpkg CDN)
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // View engine
 app.set('view engine', 'ejs');
@@ -39,7 +52,7 @@ function requireAuth(req, res, next) {
   const token = req.cookies && req.cookies.token;
   if (!token) return res.redirect('/admin/login');
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'jwtsecret');
+    const payload = jwt.verify(token, JWT_SECRET);
     req.admin = payload.admin;
     return next();
   } catch (err) {
@@ -80,14 +93,40 @@ app.get(['/', '/index', '/index.html'], (req, res) => {
 });
 
 // Admin login page
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 dakika
+  max: 10, // pencere başına en fazla 10 deneme
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(429).render('admin_login', { error: 'Çok fazla deneme yapıldı. Lütfen 15 dakika sonra tekrar deneyin.' });
+  },
+});
+
 app.get('/admin/login', (req, res) => {
   res.render('admin_login', { error: null });
 });
-app.post('/admin/login', (req, res) => {
+app.post('/admin/login', loginLimiter, async (req, res) => {
   const { username, password } = req.body;
-  if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASSWORD) {
-    const token = jwt.sign({ admin: true }, process.env.JWT_SECRET || 'jwtsecret');
-    res.cookie('token', token, { httpOnly: true, sameSite: 'strict' });
+  let passwordOk = false;
+  if (username && password && username === process.env.ADMIN_USER) {
+    if (process.env.ADMIN_PASSWORD_HASH) {
+      passwordOk = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+    } else if (process.env.ADMIN_PASSWORD) {
+      // Geçiş dönemi: ADMIN_PASSWORD_HASH tanımlanana kadar düz metin karşılaştırma.
+      // `node scripts/hash-password.js <şifre>` ile hash üretip .env'e ekleyin.
+      console.warn('WARN: ADMIN_PASSWORD_HASH tanımlı değil; düz metin şifre karşılaştırması kullanılıyor.');
+      passwordOk = password === process.env.ADMIN_PASSWORD;
+    }
+  }
+  if (passwordOk) {
+    const token = jwt.sign({ admin: true }, JWT_SECRET, { expiresIn: '2h' });
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: IS_PROD,
+      maxAge: 2 * 60 * 60 * 1000,
+    });
     return res.redirect('/admin');
   }
   res.render('admin_login', { error: 'Invalid credentials' });
@@ -97,23 +136,6 @@ app.post('/admin/login', (req, res) => {
 // Admin routes are now handled in a separate router
 const adminRouter = require('./routes/admin');
 app.use('/admin', requireAuth, adminRouter);
-
-// Example endpoint to update a setting (protected)
-app.post('/admin/settings', requireAuth, async (req, res) => {
-  const { key, value } = req.body;
-  if (key) {
-    await pool.query('INSERT INTO settings (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)', [key, value]);
-  }
-  res.redirect('/admin');
-});
-
-app.post('/admin/settings/delete', requireAuth, async (req, res) => {
-  const { key } = req.body;
-  if (key) {
-    await pool.query('DELETE FROM settings WHERE `key` = ?', [key]);
-  }
-  res.redirect('/admin');
-});
 
 // Generic route for other pages (e.g. /hizmetlerimiz or /hizmetlerimiz.html -> render hizmetlerimiz.ejs)
 app.get(['/:page', '/:page.html'], (req, res, next) => {

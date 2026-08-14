@@ -13,8 +13,14 @@ const compression = require('compression');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
-  console.error('FATAL: JWT_SECRET is not set. Refusing to start with an insecure default.');
-  process.exit(1);
+  if (process.env.VERCEL) {
+    // Serverless'ta process.exit tüm siteyi çökertir (FUNCTION_INVOCATION_FAILED).
+    // Site admin'siz çalışmaya devam etsin; admin route'ları 503 döndürür.
+    console.error('UYARI: JWT_SECRET tanımlı değil — admin paneli devre dışı. Vercel dashboard > Settings > Environment Variables bölümünden ekleyin.');
+  } else {
+    console.error('FATAL: JWT_SECRET is not set. Refusing to start with an insecure default.');
+    process.exit(1);
+  }
 }
 
 const app = express();
@@ -104,6 +110,7 @@ app.locals.pool = pool;
 
 // Middleware to protect admin routes
 function requireAuth(req, res, next) {
+  if (!JWT_SECRET) return res.status(503).send('Admin paneli yapılandırılmamış (JWT_SECRET eksik).');
   const token = req.cookies && req.cookies.token;
   if (!token) return res.redirect('/admin/login');
   try {
@@ -162,6 +169,7 @@ app.get('/admin/login', (req, res) => {
   res.render('admin_login', { error: null });
 });
 app.post('/admin/login', loginLimiter, async (req, res) => {
+  if (!JWT_SECRET) return res.status(503).render('admin_login', { error: 'Sunucu yapılandırması eksik (JWT_SECRET).' });
   const { username, password } = req.body;
   let passwordOk = false;
   if (username && password && username === process.env.ADMIN_USER) {

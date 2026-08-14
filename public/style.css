@@ -3364,9 +3364,8 @@ a,
         min-height: 180px;
     }
 
-    .ref-img {
-        max-height: none !important;
-    }
+    /* Not: max-height:none kuralı görselleri kutudan taşırıyordu;
+       referans görselleri her ekranda kutuya sığmalı (contain). */
 }
 
 @media(max-width: 480px) {

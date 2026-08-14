@@ -1,6 +1,15 @@
 <%- include('partials/head', {"title": "KVKK Aydınlatma Metni | Rona Auto Glass", "description": "Rona Auto Glass kişisel verilerin korunması (KVKK) aydınlatma metni: hangi verileri, hangi amaçla işliyoruz ve haklarınız.", "keywords": "rona auto glass kvkk, kişisel verilerin korunması, aydınlatma metni", "canonical": "https://ronaglass.com.tr/kvkk.html", "ogTitle": "KVKK Aydınlatma Metni | Rona Auto Glass", "ogDescription": "Kişisel verilerin korunması aydınlatma metni."}) %>
 </head>
 <body>
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <img src="images/logo.png" alt="Rona Auto Glass" class="loader-logo" width="120" height="120">
+            <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
+            <p class="loader-text">Yükleniyor</p>
+        </div>
+    </div>
+
     <!-- NAVBAR -->
     <%- include('partials/navbar', { active: '' }) %>
 
@@ -39,6 +48,9 @@
             <p>Web sitemiz, temel site işlevselliği dışında çerez kullanmaz; üçüncü taraf reklam veya takip çerezi bulunmaz. Yönetici girişinde yalnızca oturum doğrulaması için zorunlu bir çerez kullanılır.</p>
         </div>
     </section>
+
+    <!-- FLOATING CTA -->
+    <%- include('partials/floating-cta') %>
 
     <!-- FOOTER -->
     <%- include('partials/footer') %>

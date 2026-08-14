@@ -5219,6 +5219,8 @@ body.menu-open .floating-cta,
         justify-content: center !important;
         box-sizing: border-box !important;
     }
+}
+
 /* GLOBAL MOBILE HEADER DUAL CTA BUTTONS */
 .mobile-header-ctas {
     display: none;

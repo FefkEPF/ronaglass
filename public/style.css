@@ -2985,7 +2985,7 @@ a,
 /* ==================== RESPONSIVE ==================== */
 @media(max-width: 1024px) {
     .navbar {
-        padding: 14px 24px;
+        padding: 14px 20px;
     }
 
     .nav-links {
@@ -3404,7 +3404,7 @@ a,
     }
 
     .navbar {
-        padding: 12px 16px;
+        padding: 12px 14px;
     }
 
     .page-hero {
@@ -5284,4 +5284,4 @@ body.menu-open .floating-cta,
 
 
 
-
+

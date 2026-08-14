@@ -69,8 +69,24 @@ npm test
 
 ## Görsel Optimizasyonu
 
-Yeni görsel eklendiğinde çalıştırın (yerinde küçültür, orijinaller git geçmişinde kalır):
+Yeni görsel eklendiğinde sırayla çalıştırın:
 
 ```bash
 node scripts/optimize_all_images.js
+```
+
+```bash
+node scripts/generate-webp.js
+```
+
+İlki görselleri yerinde küçültür, ikincisi yanlarına `.webp` sürüm üretir.
+Sunucu, tarayıcı destekliyorsa WebP'yi otomatik servis eder — HTML'de
+değişiklik gerekmez.
+
+## Tutarlılık Denetimi
+
+Tüm sayfaları ana sayfa referansıyla karşılaştırır (bileşen varlığı + stiller):
+
+```bash
+node scripts/audit-consistency.js
 ```

@@ -42,18 +42,9 @@
     <meta property="og:image" content="https://ronaglass.com.tr/images/logo.png">
 
     <title>Rona Auto Glass | Oto Cam Değişimi & Tamiri - Ankara Şaşmaz</title>
-    <link rel="preload" as="style" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" as="style" href="style.css?v=17" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,200..800;1,200..800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap"
-        rel="stylesheet">
-    <noscript>
-        <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
-        <link rel="stylesheet" href="style.css?v=17">
-    </noscript>
+    <link rel="stylesheet" href="style.css?v=19">
+
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
     <!-- Schema.org JSON-LD LocalBusiness -->
     <script type="application/ld+json">
@@ -494,8 +485,8 @@
                 </div>
 
                 <div class="hero-video-wrapper">
-                    <video autoplay muted loop playsinline preload="metadata" poster="images/IMG_8634.png">
-                        <source src="video/15-dakika-degisim.mp4" type="video/mp4">
+                    <video muted loop playsinline preload="none" poster="images/IMG_8634.png" class="lazy-video">
+                        <source data-src="video/15-dakika-degisim.mp4" type="video/mp4">
                     </video>
                     <div class="hero-rating-badge">
                         <span class="rating-title">RONA AUTO GLASS İLE YOLDA GÜVENDESİNİZ</span>
@@ -510,8 +501,8 @@
         <div class="container">
             <div class="presentation-grid">
                 <div class="presentation-video-box">
-                    <video autoplay muted loop playsinline preload="none" poster="images/IMG_8611.jpeg">
-                        <source src="video/Edit.mp4" type="video/mp4">
+                    <video muted loop playsinline preload="none" poster="images/IMG_8611.jpeg" class="lazy-video">
+                        <source data-src="video/Edit.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="presentation-content">
@@ -875,9 +866,7 @@
 
     <!-- FOOTER -->
     <%- include('partials/footer') %>
-
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js?v=15"></script>
+    <script src="script.js?v=17"></script>
 
     <!-- APPOINTMENT MODAL -->
     <div class="modal-overlay" id="appointment-modal">

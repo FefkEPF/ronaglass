@@ -21,8 +21,27 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const IS_PROD = process.env.NODE_ENV === 'production';
 
-// Security headers (CSP disabled for now: pages rely on inline scripts and unpkg CDN)
-app.use(helmet({ contentSecurityPolicy: false }));
+// Güvenlik başlıkları. Tüm varlıklar artık kendi sunucumuzdan geldiği için
+// CSP açık; sayfalarda gömülü <style>/<script> blokları olduğundan
+// 'unsafe-inline' gerekli. Harici izinler: Google Haritalar gömülü çerçevesi.
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+      fontSrc: ["'self'"],
+      connectSrc: ["'self'"],
+      frameSrc: ['https://www.google.com', 'https://maps.google.com'],
+      objectSrc: ["'none'"],
+      formAction: ["'self'"],
+      frameAncestors: ["'self'"],
+      upgradeInsecureRequests: IS_PROD ? [] : null,
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
 
 // View engine
 app.set('view engine', 'ejs');
@@ -31,11 +50,33 @@ app.set('views', path.join(__dirname, 'views'));
 // Gzip/deflate sıkıştırma (HTML, CSS, JS yanıtları için)
 app.use(compression());
 
+// WebP içerik pazarlığı: tarayıcı destekliyorsa ve yanında .webp varsa
+// onu servis et. HTML/CSS'te değişiklik gerektirmez; desteklemeyen
+// tarayıcılar orijinal JPEG/PNG'yi almaya devam eder.
+const fs = require('fs');
+const webpCache = new Map();
+function hasWebp(absPath) {
+  if (!webpCache.has(absPath)) webpCache.set(absPath, fs.existsSync(absPath));
+  return webpCache.get(absPath);
+}
+app.use((req, res, next) => {
+  if (!/\.(jpe?g|png)$/i.test(req.path)) return next();
+  if (!(req.headers.accept || '').includes('image/webp')) return next();
+  const webpRelative = req.path.replace(/\.(jpe?g|png)$/i, '.webp');
+  if (!hasWebp(path.join(__dirname, 'public', webpRelative))) return next();
+  req.url = webpRelative;
+  res.setHeader('Vary', 'Accept');
+  next();
+});
+
 // Static assets — tarayıcı önbelleği: görseller/videolar 30 gün,
 // CSS/JS 1 gün (style.css?v=N sorgu parametresiyle sürümleniyor)
 app.use(express.static(path.join(__dirname, 'public'), {
   setHeaders(res, filePath) {
-    if (/\.(png|jpe?g|webp|svg|mp4|webm|ico|woff2?)$/i.test(filePath)) {
+    if (/\.woff2?$/i.test(filePath)) {
+      // Fontlar içerik-adresli; bir yıl önbelleklenebilir
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (/\.(png|jpe?g|webp|svg|mp4|webm|ico)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=2592000');
     } else if (/\.(css|js)$/i.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=86400');

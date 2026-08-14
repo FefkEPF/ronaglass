@@ -176,12 +176,12 @@ if ('loading' in HTMLImageElement.prototype) {
 
 // ============ LOGO GRIDS (INSURANCE / BRANDS) ============
 var insuranceLogos = [
-    'AksSigorta.jpg', 'AnaSigorta.jpg', 'BereketSigorta.jpg', 'Do%C4%9FaSigorta.png',
+    'AksSigorta.jpg', 'AnaSigorta.jpg', 'BereketSigorta.jpg', 'DoğaSigorta.png',
     'EthicaSigorta.jpg', 'EurekoSigorta.png', 'KuruSigorta.jpg', 'MagdeburgerSigorta.jpg',
-    'OrientSigorta.png', 'T%C3%BCrknipponSigorta.jpg', 'UnicoSigorta.jpg', 'A1-Photoroom.png',
+    'OrientSigorta.png', 'TürknipponSigorta.jpg', 'UnicoSigorta.jpg', 'A1-Photoroom.png',
     'AL-Photoroom.png', 'AN-Photoroom.png', 'H2-Photoroom.png', 'NE-Photoroom.png',
     'RA-Photoroom.png', 'SO-Photoroom.png', 'TRS-Photoroom.png', 'ZU-Photoroom.png',
-    '%C5%9EekerSigorta.jpg', 'GeneraliSigorta.jpg', 'HepiyiSigorta.jpg', 'AnkaraSigorta.jpg', 'AtlasSigorta.jpg'
+    'ŞekerSigorta.jpg', 'GeneraliSigorta.jpg', 'HepiyiSigorta.jpg', 'AnkaraSigorta.jpg', 'AtlasSigorta.jpg'
 ];
 var carLogos = [
     'audi-rona-1.png', 'bmw-rona-1.png', 'citroen-rona.png', 'chery-rona.png',
@@ -228,8 +228,8 @@ function renderLogoGrid(id, items, base, reverse) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    renderLogoGrid('insurance-grid', insuranceLogos, 'https://ronaglass.com.tr/img/sigorta/', false);
-    renderLogoGrid('brands-grid', carLogos, 'https://ronaglass.com.tr/img/car-logos/', true);
+    renderLogoGrid('insurance-grid', insuranceLogos, 'images/logos/', false);
+    renderLogoGrid('brands-grid', carLogos, 'images/logos/', true);
 });
 
 
@@ -889,5 +889,49 @@ if (contactForm) {
         document.addEventListener('DOMContentLoaded', initRefLightbox);
     } else {
         initRefLightbox();
+    }
+})();
+
+// ============ TEMBEL VİDEO YÜKLEME ============
+// Videolar ekrana girene kadar indirilmez; sayfa açılışında ~4.5 MB tasarruf.
+(function () {
+    function initLazyVideos() {
+        var videos = document.querySelectorAll('video.lazy-video');
+        if (!videos.length) return;
+
+        function load(video) {
+            if (video.dataset.loaded) return;
+            video.dataset.loaded = '1';
+            var source = video.querySelector('source[data-src]');
+            if (source) {
+                source.src = source.dataset.src;
+                source.removeAttribute('data-src');
+                video.load();
+            }
+            var playPromise = video.play();
+            if (playPromise && playPromise.catch) playPromise.catch(function () { /* otomatik oynatma engellenmiş olabilir */ });
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            videos.forEach(load); // eski tarayıcılar: hemen yükle
+            return;
+        }
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    load(entry.target);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '300px' }); // görünmeden biraz önce başlat
+
+        videos.forEach(function (v) { io.observe(v); });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLazyVideos);
+    } else {
+        initLazyVideos();
     }
 })();

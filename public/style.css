@@ -5286,3 +5286,182 @@ body.menu-open .floating-cta,
 
 
 
+
+/* ==================== GOOGLE REVIEWS (MÜŞTERİ YORUMLARI) ==================== */
+.reviews-section {
+    padding: 100px 0;
+    background:
+        radial-gradient(ellipse 55% 40% at 50% 0%, rgba(212, 175, 55, 0.05), transparent),
+        var(--bg, #050508);
+    overflow: hidden;
+}
+
+.g-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 10px 22px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 40px;
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.g-stars { color: #d4af37; font-size: 16px; letter-spacing: 3px; }
+.g-score { color: #fff; font-weight: 800; font-size: 18px; }
+.g-count { color: #a1a1a6; font-size: 13px; }
+
+.rev-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 46px;
+}
+
+.rev-viewport {
+    position: relative;
+    flex: 1;
+    min-height: 380px;
+    perspective: 1200px;
+}
+
+.rev-track { position: absolute; inset: 0; }
+
+.rev-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(420px, 86%);
+    margin-left: min(-210px, -43%);
+    background: linear-gradient(165deg, rgba(18, 18, 24, 0.98) 0%, rgba(10, 10, 14, 0.98) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 18px;
+    padding: 54px 30px 26px;
+    text-align: center;
+    transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.55s ease;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    will-change: transform, opacity;
+}
+
+.rev-card.active {
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.07);
+}
+
+.rev-avatar {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37 0%, #8a6d1f 100%);
+    color: #0a0a0c;
+    font-size: 26px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #0c0c12;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.rev-stars { color: #d4af37; font-size: 15px; letter-spacing: 4px; margin-bottom: 14px; }
+
+.rev-text {
+    color: #c9c9cf;
+    font-size: 14.5px;
+    line-height: 1.75;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.rev-name { margin-top: 16px; color: #fff; font-weight: 700; font-size: 15px; }
+.rev-when { margin-top: 3px; color: #6f6f78; font-size: 12px; }
+
+.rev-arrow {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    background: rgba(212, 175, 55, 0.06);
+    color: #d4af37;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 4px;
+}
+
+.rev-arrow:hover {
+    background: #d4af37;
+    color: #0a0a0c;
+    transform: scale(1.06);
+}
+
+.rev-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.rev-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.25s ease;
+}
+
+.rev-dot.active {
+    background: #d4af37;
+    width: 22px;
+    border-radius: 5px;
+}
+
+.rev-actions { text-align: center; margin-top: 30px; }
+
+.btn-outline-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 30px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 40px;
+    color: #d4af37;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-gold:hover {
+    background: #d4af37;
+    color: #0a0a0c;
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+}
+
+@media(max-width: 768px) {
+    .reviews-section { padding: 70px 0; }
+    .rev-viewport { min-height: 420px; }
+    .rev-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 30; width: 40px; height: 40px; }
+    .rev-prev { left: 2px; }
+    .rev-next { right: 2px; }
+    .rev-carousel { gap: 0; }
+    .rev-card { padding: 50px 22px 22px; }
+    .rev-text { font-size: 13.5px; -webkit-line-clamp: 8; }
+}

@@ -35,6 +35,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr: ["'unsafe-inline'"], // ref kartlarındaki onerror yedekleri için
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", 'data:'],
       fontSrc: ["'self'"],

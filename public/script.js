@@ -935,3 +935,92 @@ if (contactForm) {
         initLazyVideos();
     }
 })();
+
+// ============ GOOGLE YORUMLARI KARUSELİ ============
+// Merkez kart öne çıkar, yanlar soluk (coverflow); ok/nokta/kaydırma/otomatik oynatma.
+(function () {
+    function initReviews() {
+        var track = document.getElementById('rev-track');
+        if (!track) return;
+        var cards = Array.prototype.slice.call(track.children);
+        var n = cards.length;
+        if (!n) return;
+        var idx = 0, timer = null;
+
+        var dotsWrap = document.getElementById('rev-dots');
+        var dots = [];
+        if (dotsWrap) {
+            cards.forEach(function (_, i) {
+                var d = document.createElement('button');
+                d.className = 'rev-dot';
+                d.setAttribute('aria-label', (i + 1) + '. yorum');
+                d.addEventListener('click', function () { go(i); restart(); });
+                dotsWrap.appendChild(d);
+                dots.push(d);
+            });
+        }
+
+        function render() {
+            var narrow = window.innerWidth <= 768;
+            var shift = narrow ? 88 : 62;
+            cards.forEach(function (card, i) {
+                var d = i - idx;
+                if (d > n / 2) d -= n;
+                if (d < -n / 2) d += n;
+                var abs = Math.abs(d);
+                var scale = abs === 0 ? 1 : abs === 1 ? 0.86 : 0.74;
+                card.style.transform = 'translateX(' + (d * shift) + '%) scale(' + scale + ')';
+                card.style.opacity = abs === 0 ? '1' : abs === 1 ? (narrow ? '0.25' : '0.45') : '0';
+                card.style.zIndex = String(10 - abs);
+                card.style.pointerEvents = abs === 0 ? 'auto' : 'none';
+                card.classList.toggle('active', abs === 0);
+                card.setAttribute('aria-hidden', abs === 0 ? 'false' : 'true');
+            });
+            dots.forEach(function (dot, i) { dot.classList.toggle('active', i === idx); });
+        }
+
+        function go(i) { idx = ((i % n) + n) % n; render(); }
+        function next() { go(idx + 1); }
+        function prev() { go(idx - 1); }
+        function restart() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(next, 5000);
+        }
+
+        var prevBtn = document.getElementById('rev-prev');
+        var nextBtn = document.getElementById('rev-next');
+        if (prevBtn) prevBtn.addEventListener('click', function () { prev(); restart(); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { next(); restart(); });
+
+        // dokunmatik kaydırma
+        var startX = null;
+        track.parentElement.addEventListener('touchstart', function (e) {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+        track.parentElement.addEventListener('touchend', function (e) {
+            if (startX === null) return;
+            var dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); restart(); }
+            startX = null;
+        }, { passive: true });
+
+        // kart yüksekliğine göre alan ayarla
+        function fitHeight() {
+            var h = 0;
+            cards.forEach(function (c) { h = Math.max(h, c.offsetHeight); });
+            if (h) track.parentElement.style.minHeight = (h + 40) + 'px';
+        }
+
+        window.addEventListener('resize', function () { render(); fitHeight(); });
+        render();
+        fitHeight();
+        setTimeout(fitHeight, 400); // fontlar yüklenince tekrar ölç
+        restart();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReviews);
+    } else {
+        initReviews();
+    }
+})();

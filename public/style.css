@@ -5333,7 +5333,7 @@ body.menu-open .floating-cta,
     top: 0;
     left: 50%;
     width: min(420px, 86%);
-    margin-left: min(-210px, -43%);
+    margin-left: max(-210px, -43%); /* kart genişliğinin yarısı — tam ortalar */
     background: linear-gradient(165deg, rgba(18, 18, 24, 0.98) 0%, rgba(10, 10, 14, 0.98) 100%);
     border: 1px solid rgba(212, 175, 55, 0.18);
     border-radius: 18px;

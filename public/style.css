@@ -2182,10 +2182,10 @@ a,
 }
 
 .ref-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--glass-border);
+    background: transparent;
+    border: none;
     border-radius: var(--r-lg);
-    padding: 24px;
+    padding: 0;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -2211,10 +2211,7 @@ a,
 }
 
 .ref-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: var(--gold);
     transform: translateY(-6px);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.2);
 }
 
 .ref-card:hover::before {
@@ -2223,13 +2220,11 @@ a,
 
 .ref-img-box {
     width: 100%;
-    height: 300px;
-    background: rgba(12, 12, 18, 0.95);
+    height: auto; /* kutu görselin oranına uyar — resim tam sığar */
+    background: transparent;
     border-radius: var(--r-lg);
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
+    display: block;
     margin-bottom: 20px;
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
     position: relative;
@@ -2239,13 +2234,10 @@ a,
 }
 
 .ref-img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
     height: auto;
-    object-fit: contain;
-    object-position: center;
-    border-radius: var(--r);
+    display: block;
+    border-radius: 0;
     transition: transform var(--t-slow), filter var(--t);
 }
 
@@ -3097,27 +3089,22 @@ a,
     }
 
     .ref-card {
-        padding: 18px 14px;
+        padding: 0;
         border-radius: var(--r-lg);
     }
 
     .ref-img-box {
         width: 100%;
-        height: 240px;
+        height: auto;
         margin-bottom: 14px;
-        padding: 12px;
+        padding: 0;
         border-radius: var(--r-lg);
-        background: rgba(12, 12, 18, 0.95);
+        background: transparent;
     }
 
     .ref-img {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
+        width: 100%;
         height: auto;
-        object-fit: contain;
-        object-position: center;
-        border-radius: var(--r);
     }
 
     .ref-title {
@@ -3380,12 +3367,12 @@ a,
     }
 
     .ref-card {
-        padding: 16px 12px;
+        padding: 0;
     }
 
     .ref-img-box {
-        padding: 10px;
-        height: 200px;
+        padding: 0;
+        height: auto;
     }
 
     .ref-title {
